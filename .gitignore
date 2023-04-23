@@ -1,6 +1,6 @@
 venv/
 node_modules/
 .env/
-./frontend/.env/
-./backend/.env/
+./frontend/.env
+./backend/.env
 ```

@@ -1,8 +1,11 @@
-export const ProductPage = () => {
+import Layout from '../components/Layout';
+import ProductDetail from '../components/products/ProductDetail';
+
+const ProductPage = () => {
     return (
-        <section id="product">
-            <h1>Product</h1>
-        </section>
+        <Layout>
+            <ProductDetail />
+        </Layout>
     );
 };
 

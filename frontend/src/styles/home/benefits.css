@@ -1,0 +1,118 @@
+.benefits-home {
+    margin: 4rem 4rem 0 4rem;
+    padding: 2rem 0 4rem 0;
+    border-top: 0.15rem solid var(--black-color);
+    border-bottom: 0.15rem solid var(--black-color);
+}
+
+.benefits-home-title {
+    position: relative;
+}
+
+.benefits-home-title h2 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--black-color);
+    margin: 1rem 0;
+    display: inline-block;
+}
+
+.benefits-home-title h2::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2.5px;
+    border-radius: 1rem;
+    background-color: var(--gold-color);
+}
+
+.benefits-home-title p {
+    font-size: 1.25rem;
+    margin: 0 10rem;
+    font-weight: 350;
+    color: var(--black-color);
+    margin-bottom: 2rem;
+}
+
+.benefits-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 2rem;
+    margin-top: 2rem;
+}
+
+.benefits-list-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1rem;
+    border: 0.15rem solid var(--black-color);
+    border-radius: 1rem;
+    transition: all 500ms ease-in-out;
+    background-color: var(--medium-color);
+}
+
+.benefits-list-item:nth-child(2) {
+    transition-delay: 300ms;
+}
+
+.benefits-list-item:nth-child(3) {
+    transition-delay: 600ms;
+}
+
+.benefits-list-item:nth-child(4) {
+    transition-delay: 900ms;
+}
+
+.benefits-list-item:hover {
+    transform: scale(1.05);
+    background-color: var(--dark-color);
+    color: var(--light-color);
+    border: 0.15rem solid var(--gold-color);
+}
+
+.benefits-list-item:hover p,
+.benefits-list-item:hover h2 {
+    color: var(--light-color);
+}
+
+.benefits-list-item h2 {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-top: 1rem;
+    display: inline-block;
+    color: var(--black-color);
+    transition: all 500ms ease-in-out;
+}
+
+.benefits-list-item h2::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2.5px;
+    border-radius: 1rem;
+    background-color: var(--gold-color);
+}
+
+.benefits-list-item p {
+    font-weight: 300;
+    letter-spacing: 1px;
+    margin-top: 1rem;
+    color: var(--black-color);
+    transition: all 500ms ease-in-out;
+}
+
+.benefits-list-item svg {
+    font-size: 4rem;
+    font-weight: 200;
+}
+
+.benefits-list-item path {
+    transition: all 600ms ease-in-out;
+}
+
+.benefits-list-item:hover path {
+    fill: var(--gold-color);
+}

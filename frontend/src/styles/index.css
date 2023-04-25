@@ -1,0 +1,251 @@
+/* Variables */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600&display=swap');
+
+:root {
+    --website-width: 100vw;
+    --gold-color: #b59410;
+    --primary-color: #b0b0b0;
+    --light-color: #f4f4f4;
+    --grey-color: #b4b3b3;
+    --medium-color: #636363;
+    --dark-color: #2f2f2f;
+    --black-color: #000;
+    --gradient-dark: linear-gradient(to bottom right, #212121 20%, #6b6a6a);
+    --gradient-light: linear-gradient(to bottom right, #7e7e7e 40%, #474747);
+}
+
+/* General Utilities */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: var(--light-color);
+    font-family: 'Oswald', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+html::-webkit-scrollbar {
+    width: 0.3vw;
+}
+
+html::-webkit-scrollbar-thumb {
+    background-color: var(--black-color);
+    border-radius: 10px;
+}
+
+html::-webkit-scrollbar-track {
+    background-color: var(--dark-color);
+}
+
+body {
+    line-height: 1.75;
+    overflow-x: hidden;
+    background: var(--gradient-light);
+}
+
+a {
+    text-decoration: none;
+    color: var(--light-color);
+}
+
+ul {
+    list-style: none;
+}
+
+p {
+    font-size: 1rem;
+    font-weight: 300;
+    margin: 0 auto;
+}
+
+.section-heading {
+    font-size: 2rem;
+    font-weight: 300;
+    text-align: center;
+    color: var(--black-color);
+    display: inline-block;
+    margin-top: 10rem;
+}
+
+#home .section-heading {
+    margin-top: 5rem;
+}
+
+#cart .section-heading {
+    margin: 10rem auto 1rem auto;
+}
+
+#cart .cart-description .section-heading,
+#cart .cart-total .section-heading,
+#cart .stripe .section-heading,
+#cart .cart-list-grid .section-heading {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.section-heading::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2.5px;
+    border-radius: 1rem;
+    background-color: var(--gold-color);
+}
+
+/* Scroll animation */
+.hidden {
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: transform 2s;
+}
+
+.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Button */
+.icon {
+    align-items: center;
+    margin-left: 1rem;
+    font-size: 1.25rem;
+}
+
+.btn {
+    padding: 0.25rem 2.5rem;
+    border: none;
+    border-radius: 1.25rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.5s ease-in-out;
+    font-size: 1rem;
+}
+
+.btn-nav {
+    padding: 0.5rem 2.5rem;
+    font-size: 1.1rem;
+    font-weight: 300;
+}
+
+.btn-hero {
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+}
+
+.btn-primary {
+    color: var(--light-color);
+    background-color: var(--dark-color);
+    font-weight: 500;
+    transition: all 0.5s ease-in-out;
+}
+
+.btn-primary:hover {
+    background-color: var(--gold-color);
+    color: var(--dark-color);
+}
+
+.btn-primary a,
+.btn-primary svg path {
+    color: var(--light-color);
+    transition: all 600ms ease-in-out;
+}
+
+.btn-primary:hover a,
+.btn-primary:hover svg path {
+    color: var(--dark-color);
+    fill: var(--dark-color);
+}
+
+.btn-secondary {
+    color: var(--dark-color);
+    background-color: var(--light-color);
+    font-weight: 400;
+    transition: all 0.5s ease-in-out;
+    border: none;
+    border-radius: 0.25rem;
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+}
+
+.btn-secondary:hover {
+    background-color: var(--gold-color);
+    color: var(--dark-color);
+}
+
+/* Miscellaeneous */
+.text-center {
+    text-align: center;
+    justify-content: center;
+}
+
+/* Social Button */
+button.twitter {
+    background-color: #00acee;
+}
+
+button.linkedin {
+    background-color: #0072b1;
+}
+
+button.whatsapp {
+    background-color: #075e54;
+}
+
+button.facebook {
+    background-color: #3b5998;
+}
+
+button.youtube {
+    background-color: #ff0000;
+}
+
+button.instagram {
+    background-image: linear-gradient(
+        45deg,
+        #405de6,
+        #5851db,
+        #833ab4,
+        #c13584,
+        #e1306c,
+        #fd1d1d
+    );
+}
+
+button.website {
+    background-color: #7ea7ff;
+}
+
+a.youtube:hover {
+    color: #ff0000;
+}
+
+/* Icons */
+svg:not(.fa-arrow-right):not(.socials svg) {
+    transition: all 600ms ease-in-out;
+}
+
+svg:not(.fa-arrow-right):not(.socials svg):not(.btn-primary svg):hover {
+    transform: rotateY(180deg);
+}
+
+.socials svg {
+    transition: all 600ms ease-in-out;
+}
+
+.socials svg:hover {
+    transform: scale(1.05);
+}
+
+.socials svg path {
+    transition: all 600ms ease-in-out;
+}
+
+.socials svg:hover path {
+    fill: var(--gold-color);
+}

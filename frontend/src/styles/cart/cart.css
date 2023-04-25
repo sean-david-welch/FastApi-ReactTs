@@ -1,0 +1,115 @@
+#cart .cart-view {
+    margin: 1rem 0 2rem 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+#cart .cart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--dark-color);
+    margin: 0 5rem;
+    padding: 1rem;
+    border: 2px solid var(--grey-color);
+    border-radius: 0.5rem;
+    transition: all 500ms ease-in-out;
+}
+
+#cart .cart:hover {
+    border: 2px solid var(--gold-color);
+}
+
+#cart .cart-list-grid {
+    display: grid;
+    margin: 0;
+}
+
+#cart .cart-list-item {
+    display: flex;
+    background-color: var(--dark-color);
+    margin: 0 1rem;
+    padding: 1rem;
+}
+
+#cart .cart-list-item img {
+    max-width: 15rem;
+    border: 2px solid var(--dark-color);
+    border-radius: 1rem;
+    transition: all 600ms ease-in-out;
+}
+
+#cart .cart-list-item img:hover {
+    border: 2px solid var(--gold-color);
+    transform: scale(1.01);
+}
+
+#cart .cart-description {
+    display: grid;
+    margin: 0.25rem 1rem;
+}
+
+#cart .cart-description > * {
+    margin: 0.75rem 0;
+}
+
+#cart .cart-description input {
+    color: var(--dark-color);
+    border: none;
+    border-radius: 0.25rem;
+    padding: 0 1rem;
+}
+
+#cart .cart-description input:focus {
+    outline: none;
+    box-shadow: 0 0 0 1px var(--gold-color);
+}
+
+#cart .cart-total {
+    display: inline-block;
+    background-color: var(--dark-color);
+    padding: 0.25rem 1.5rem;
+    border: 2px solid var(--grey-color);
+    border-radius: 0.5rem;
+    transition: all 600ms ease-in-out;
+    margin: 0 auto;
+}
+
+#cart .cart-total .section-heading {
+    font-size: 1.15rem;
+    color: var(--light-color);
+    transition: all 600ms ease-in-out;
+}
+
+#cart .cart-total:hover {
+    border: 2px solid var(--gold-color);
+    background-color: var(--grey-color);
+}
+
+#cart .cart-total:hover .section-heading {
+    color: var(--dark-color);
+}
+
+/* Empty Cart */
+#cart .empty-cart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+#cart .empty-cart .section-heading {
+    margin: 10rem auto;
+}
+
+#cart .empty-cart > p {
+    font-size: 1.25rem;
+    font-weight: 400;
+}
+
+#cart .empty-cart > :last-child {
+    margin: 1rem;
+}

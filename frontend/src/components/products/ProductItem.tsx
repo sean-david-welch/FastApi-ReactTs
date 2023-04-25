@@ -20,7 +20,9 @@ const ProductItem: React.FC<{ product: Product }> = ({ product }) => {
 
                 <ul className="product-nav">
                     <NavButton
-                        to={`/${product.id}`}
+                        to={`product/${product.id} ${console.log(
+                            `product.id: ${product.id}`
+                        )}}`}
                         icon={<FontAwesomeIcon icon={faArrowRight} />}
                     >
                         View Product

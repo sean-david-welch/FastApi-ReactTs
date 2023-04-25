@@ -19,7 +19,7 @@ export default function AppRoutes() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/payment-success" element={<Success />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/:productId" element={<ProductPage />} />
+            <Route path="/product/:productId" element={<ProductPage />} />
         </Routes>
     );
 }

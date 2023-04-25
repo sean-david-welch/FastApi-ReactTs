@@ -23,6 +23,7 @@ async def get_products():
 
 @app.get("/api/products/{product_id}", response_model=Product)
 async def get_product(product_id: str):
+    print(f"Received request for product ID: {product_id}") 
     response = await fetch_product(product_id)
     if response:
         return response

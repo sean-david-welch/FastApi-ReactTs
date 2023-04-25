@@ -4,8 +4,10 @@ import NavButton from '../navigation/NavButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 
-const productDetail = () => {
+const ProductDetail = () => {
     const { product, loading } = useProductDetail();
+
+    console.log('Product ID from useParams:', product?.id);
 
     if (loading) {
         return <div>Loading...</div>;
@@ -36,4 +38,4 @@ const productDetail = () => {
     );
 };
 
-export default productDetail;
+export default ProductDetail;

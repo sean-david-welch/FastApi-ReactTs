@@ -1,4 +1,5 @@
 import os
+import uuid
 import motor.motor_asyncio
 from dotenv import load_dotenv
 
@@ -21,8 +22,10 @@ async def fetch_all_products():
     return products
 
 async def post_product(product: dict):
+    product['id'] = str(uuid.uuid4())
     document = product
     result = await collection.insert_one(document)
+    document['_id'] = result.product['id']
     return document
 
 async def put_product(product_id: str, product: dict):

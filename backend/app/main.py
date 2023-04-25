@@ -2,6 +2,9 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 
+from models import Product
+from database import (fetch_all_products, fetch_product, create_product, update_product, delete_product)
+
 app = FastAPI()
 origins = ['http://localhost:3000', 'http://localhost:8000']
 
@@ -13,20 +16,33 @@ def root():
 
 @app.get("/api/products")
 async def get_products():
-    pass
+    response = await fetch_all_products()
+    return response
 
-@app.get("/api/products/{product_id}")
+@app.get("/api/products/{product_id}", response_model=Product)
 async def get_product(product_id: str):
-    pass
+    response = await fetch_product(product_id)
+    if response:
+        return response
+    raise HTTPException(status_code=404, detail=f"Product: {product_id} not found")
 
-@app.post("/api/products")
-async def create_product():
-    pass
+@app.post("/api/products", response_model=Product)
+async def create_product(product: Product):
+    response = await create_product(product.dict())
+    if response:
+        return response
+    raise HTTPException(status_code=400, detail="Product not created, something went wrong :(")
 
-@app.put("/api/products/{product_id}")
-async def update_product(product_id: str, product: dict):
-    pass
+@app.put("/api/products/{product_id}", response_model=Product)
+async def update_product(product_id: str, product: str):
+    response = await update_product(product_id, product)
+    if response:
+        return response
+    raise HTTPException(status_code=404, detail=f"Product: {product_id} not found")
 
 @app.delete("/api/products/{product_id}")
-async def delete_product(product_id: str, product: dict):
-    pass
+async def delete_product(product_id: str, product: str):
+    response = await delete_product(product_id, product)
+    if response:
+        return response
+    raise HTTPException(status_code=404, detail=f"Product: {product_id} not found")

@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 
-from models import Product
+from models import Product, ProductUpdate
 from database import (fetch_all_products, fetch_product, post_product, put_product, delete_product)
 
 app = FastAPI()
@@ -34,11 +34,12 @@ async def create_product(product: Product):
     raise HTTPException(status_code=400, detail="Product not created, something went wrong :(")
 
 @app.put("/api/products/{product_id}", response_model=Product)
-async def update_product(product_id: str):
-    response = await put_product(product_id)
+async def update_product(product_id: str, product: ProductUpdate):
+    response = await put_product(product_id, product.dict(exclude_unset=True))
     if response:
         return response
     raise HTTPException(status_code=404, detail=f"Product: {product_id} not found")
+
 
 @app.delete("/api/products/{product_id}")
 async def remove_product(product_id: str):

@@ -26,9 +26,11 @@ async def post_product(product: dict):
     return document
 
 async def put_product(product_id: str, product: dict):
-    await collection.update_one({"id": product_id}, {"$set": product})
-    document = await collection.find_one({"id": product_id})
-    return document
+    result = await collection.update_one({"id": product_id}, {"$set": product})
+    if result.modified_count > 0:
+        document = await collection.find_one({"id": product_id})
+        return document
+    return None
 
 async def delete_product(id: str):
     await collection.delete_one({"id": id})

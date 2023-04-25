@@ -4,9 +4,13 @@ import { Product } from '../../types/Types';
 
 interface fetchProductOptions {
     endpoint: string;
+    isSingleProduct?: boolean;
 }
 
-const useFetchProducts = ({ endpoint }: fetchProductOptions) => {
+const useFetchProducts = ({
+    endpoint,
+    isSingleProduct = false,
+}: fetchProductOptions) => {
     const [products, setProducts] = useState<Product[]>([]);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
@@ -19,7 +23,11 @@ const useFetchProducts = ({ endpoint }: fetchProductOptions) => {
                     endpoint,
                     method: 'GET',
                 });
-                setProducts(responseData);
+                if (isSingleProduct) {
+                    setProducts([responseData]);
+                } else {
+                    setProducts(responseData);
+                }
             } catch (error: any) {
                 setError(error.message);
             } finally {
@@ -27,7 +35,7 @@ const useFetchProducts = ({ endpoint }: fetchProductOptions) => {
             }
         };
         fetchProducts();
-    }, [endpoint]);
+    }, [endpoint, isSingleProduct]);
 
     return { products, error, loading };
 };

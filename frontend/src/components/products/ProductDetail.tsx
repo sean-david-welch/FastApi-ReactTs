@@ -7,8 +7,6 @@ import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 const ProductDetail = () => {
     const { product, loading } = useProductDetail();
 
-    console.log('Product ID from useParams:', product?.id);
-
     if (loading) {
         return <div>Loading...</div>;
     }

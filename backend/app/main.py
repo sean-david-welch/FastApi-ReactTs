@@ -1,11 +1,13 @@
 from fastapi import FastAPI, HTTPException 
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
+from fastapi.staticfiles import StaticFiles
 
 from models import Product, ProductUpdate
 from database import (fetch_all_products, fetch_product, post_product, put_product, delete_product)
 
 app = FastAPI()
+app.mount("/images", StaticFiles(directory="images"), name="images")
 origins = ['http://localhost:3000', 'http://localhost:8000']
 
 app.add_middleware(CORSMiddleware, allow_origins=origins, allow_credentials=True, allow_methods=["*"], allow_headers=["*"])

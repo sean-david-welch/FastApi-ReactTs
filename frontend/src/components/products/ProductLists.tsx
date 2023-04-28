@@ -1,11 +1,12 @@
 import useProductList from '../../hooks/products/useProductList';
 import ProductItem from './ProductItem';
+import LoadingSpinner from '../Loading';
 
 function ProductsList() {
     const { products, loading } = useProductList();
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <LoadingSpinner />;
     }
 
     return (

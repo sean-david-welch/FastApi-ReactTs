@@ -1,10 +1,17 @@
 import Layout from '../components/Layout';
-import ProductsList from '../components/products/ProductLists';
+import { Suspense, lazy } from 'react';
+import Loading from '../components/Loading';
 
 export const Shop = () => {
+    const ProductsList = lazy(
+        async () => await import('../components/products/ProductLists')
+    );
+
     return (
         <Layout>
-            <ProductsList />
+            <Suspense fallback={<Loading />}>
+                <ProductsList />
+            </Suspense>
         </Layout>
     );
 };

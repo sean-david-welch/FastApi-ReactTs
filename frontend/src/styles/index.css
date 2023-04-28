@@ -43,6 +43,7 @@ html::-webkit-scrollbar-track {
 body {
     line-height: 1.75;
     overflow-x: hidden;
+    min-height: 100vh;
     background: var(--gradient-light);
 }
 
@@ -72,18 +73,6 @@ p {
 
 #home .section-heading {
     margin-top: 5rem;
-}
-
-#cart .section-heading {
-    margin: 10rem auto 1rem auto;
-}
-
-#cart .cart-description .section-heading,
-#cart .cart-total .section-heading,
-#cart .stripe .section-heading,
-#cart .cart-list-grid .section-heading {
-    margin: 0;
-    font-size: 1.5rem;
 }
 
 .section-heading::after {
@@ -184,47 +173,6 @@ p {
     justify-content: center;
 }
 
-/* Social Button */
-button.twitter {
-    background-color: #00acee;
-}
-
-button.linkedin {
-    background-color: #0072b1;
-}
-
-button.whatsapp {
-    background-color: #075e54;
-}
-
-button.facebook {
-    background-color: #3b5998;
-}
-
-button.youtube {
-    background-color: #ff0000;
-}
-
-button.instagram {
-    background-image: linear-gradient(
-        45deg,
-        #405de6,
-        #5851db,
-        #833ab4,
-        #c13584,
-        #e1306c,
-        #fd1d1d
-    );
-}
-
-button.website {
-    background-color: #7ea7ff;
-}
-
-a.youtube:hover {
-    color: #ff0000;
-}
-
 /* Icons */
 svg:not(.fa-arrow-right):not(.socials svg) {
     transition: all 600ms ease-in-out;
@@ -248,4 +196,48 @@ svg:not(.fa-arrow-right):not(.socials svg):not(.btn-primary svg):hover {
 
 .socials svg:hover path {
     fill: var(--gold-color);
+}
+
+/* Loading Styles */
+
+.loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 5rem;
+    height: 5rem;
+}
+
+.loading-spinner::before,
+.loading-spinner::after,
+.loading-spinner div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 4px solid var(--dark-color);
+    opacity: 80%;
+    border-radius: 50%;
+    animation: spin 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.loading-spinner div {
+    border-left-color: var(--gold-color);
+    animation-delay: -0.3s;
+}
+
+.loading-spinner::before {
+    border-left-color: var(--gold-color);
+    animation-delay: -0.6s;
+}
+
+.loading-spinner::after {
+    border-left-color: var(--gold-color);
+    animation-delay: -0.9s;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
 }

@@ -1,13 +1,7 @@
 import NavButton from './NavButton';
+import { SectionHeadingProps } from '../../types/Types';
 
-interface Props {
-    headingText: string;
-    buttonLabel: string;
-    buttonUrl: string;
-    buttonIcon: React.ReactNode;
-}
-
-const SectionHeading: React.FC<Props> = ({
+const SectionHeading: React.FC<SectionHeadingProps> = ({
     headingText,
     buttonLabel,
     buttonUrl,

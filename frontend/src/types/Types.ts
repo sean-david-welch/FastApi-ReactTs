@@ -50,6 +50,17 @@ export interface BenefitItemProps {
     description: string;
 }
 
+export interface SectionHeadingProps {
+    headingText: string;
+    buttonLabel: string;
+    buttonUrl: string;
+    buttonIcon: React.ReactNode;
+}
+
+export interface CartViewProps {
+    renderSectionHeading?: React.ReactNode;
+}
+
 // Cart Types
 export interface CartItem extends Product {
     quantity: number;
@@ -60,7 +71,6 @@ export interface CartItemProps {
     item: CartItem;
     handleChangeQuantity: (
         id: string,
-        quantity: number,
         event: React.ChangeEvent<HTMLInputElement>
     ) => void;
     handleRemove: (id: string) => void;

@@ -1,16 +1,10 @@
 import { useEffect, useState } from 'react';
+import { Product, FetchProductOptions } from '../../types/Types';
 import fetchData from '../../utils/fetchData';
-import { Product } from '../../types/Types';
 
-interface fetchProductOptions {
-    endpoint: string;
-    isSingleProduct?: boolean;
-}
+const useFetchProducts = (options: FetchProductOptions) => {
+    const { endpoint, isSingleProduct = false } = options;
 
-const useFetchProducts = ({
-    endpoint,
-    isSingleProduct = false,
-}: fetchProductOptions) => {
     const [products, setProducts] = useState<Product[]>([]);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);

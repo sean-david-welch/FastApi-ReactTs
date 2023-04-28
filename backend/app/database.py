@@ -3,16 +3,18 @@ import uuid
 import motor.motor_asyncio
 from dotenv import load_dotenv
 
-from models import Product 
+from models import Product
 
 load_dotenv()
 client = motor.motor_asyncio.AsyncIOMotorClient(os.environ.get("RAILWAY_MONGO_URI"))
 database = client.ProductsList
 collection = database.products
 
+
 async def fetch_product(id: str):
     document = await collection.find_one({"id": id})
     return document
+
 
 async def fetch_all_products():
     products = []
@@ -21,12 +23,14 @@ async def fetch_all_products():
         products.append(Product(**document))
     return products
 
+
 async def post_product(product: dict):
-    product['id'] = str(uuid.uuid4())
+    product["id"] = str(uuid.uuid4())
     document = product
     result = await collection.insert_one(document)
-    document['_id'] = result.product['id']
+    document["_id"] = result.inserted_id
     return document
+
 
 async def put_product(product_id: str, product: dict):
     result = await collection.update_one({"id": product_id}, {"$set": product})
@@ -34,6 +38,7 @@ async def put_product(product_id: str, product: dict):
         document = await collection.find_one({"id": product_id})
         return document
     return None
+
 
 async def delete_product(id: str):
     await collection.delete_one({"id": id})

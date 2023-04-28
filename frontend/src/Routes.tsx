@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import { CartProvider } from './context/CartContext';
 
 import Home from './pages/Home';
 import About from './pages/About';
@@ -11,15 +12,17 @@ import ProductPage from './pages/ProductPage';
 
 export default function AppRoutes() {
     return (
-        <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/shop" element={<Shop />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/payment-success" element={<Success />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/product/:productId" element={<ProductPage />} />
-        </Routes>
+        <CartProvider>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/shop" element={<Shop />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/checkout" element={<Checkout />} />
+                <Route path="/payment-success" element={<Success />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/product/:productId" element={<ProductPage />} />
+            </Routes>
+        </CartProvider>
     );
 }

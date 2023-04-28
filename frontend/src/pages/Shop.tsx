@@ -1,8 +1,11 @@
+import Layout from '../components/Layout';
+import ProductsList from '../components/products/ProductLists';
+
 export const Shop = () => {
     return (
-        <section id="shop">
-            <h1>Shop</h1>
-        </section>
+        <Layout>
+            <ProductsList />
+        </Layout>
     );
 };
 

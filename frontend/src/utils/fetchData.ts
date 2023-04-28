@@ -11,7 +11,7 @@ const fetchData = async (options: FetchDataOptions) => {
     try {
         const response = await axios({
             method: method,
-            url: `${endpoint}`,
+            url: endpoint,
             data: data,
         });
 

@@ -13,9 +13,7 @@ const ProductDetail = () => {
 
     return (
         <section id="product-detail">
-            <h2 className="section-heading">
-                Primal Formula's - {product?.name}:
-            </h2>
+            <h2 className="section-heading">{product?.name}:</h2>
             <div className="product-detail">
                 <img src={product?.image} alt={product?.name} />
 

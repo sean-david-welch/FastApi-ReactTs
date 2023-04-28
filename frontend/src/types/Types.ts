@@ -11,6 +11,17 @@ export interface Product {
     image: string;
 }
 
+// Fetch Data Types
+export interface FetchDataOptions {
+    endpoint: string;
+    method: Method;
+    data?: any;
+}
+
+export interface FetchProductOptions extends FetchDataOptions {
+    isSingleProduct?: boolean;
+}
+
 // Layout Types
 export interface LayoutProps {
     children: React.ReactNode;
@@ -39,9 +50,29 @@ export interface BenefitItemProps {
     description: string;
 }
 
-// Fetch Data Types
-export interface FetchDataOptions {
-    endpoint: string;
-    method: Method;
-    data?: any;
+// Cart Types
+export interface CartItem extends Product {
+    quantity: number;
+    updated?: boolean;
+}
+
+export interface CartItemProps {
+    item: CartItem;
+    handleChangeQuantity: (
+        id: string,
+        quantity: number,
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => void;
+    handleRemove: (id: string) => void;
+}
+
+export interface CartContextData {
+    cart: CartItem[];
+    addToCart: (item: CartItem) => void;
+    removeFromCart: (id: string) => void;
+    updateQuantity: (id: string, quantity: number) => void;
+}
+
+export interface CartProviderProps {
+    children: React.ReactNode;
 }

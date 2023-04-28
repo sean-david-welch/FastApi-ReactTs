@@ -1,4 +1,8 @@
-#cart .stripe-form {
+#checkout {
+    min-height: 100vh;
+}
+
+#checkout .stripe-form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -6,7 +10,7 @@
     margin: auto;
 }
 
-#cart form {
+#checkout form {
     display: grid;
     margin: auto;
     padding: 2rem;
@@ -15,15 +19,15 @@
     transition: all 600ms ease-in-out;
 }
 
-#cart form:hover {
+#checkout form:hover {
     border: 2px solid var(--gold-color);
 }
 
-#cart form > * {
+#checkout form > * {
     margin: 0.5rem 0;
 }
 
-#cart .stripe {
+#checkout .stripe {
     background-color: var(--dark-color);
     color: var(--light-color);
 }

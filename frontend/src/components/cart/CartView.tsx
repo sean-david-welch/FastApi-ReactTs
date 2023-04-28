@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import CartItem from './CartItem';
+import NavButton from '../navigation/NavButton';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+
 import { useCartContext } from '../../hooks/cart/useCartContext';
 import { CartViewProps } from '../../types/Types';
 
@@ -54,6 +59,22 @@ const CartView: React.FC<CartViewProps> = ({ renderSectionHeading }) => {
                             </h1>
                         </div>
                     </div>
+                    <ul>
+                        <NavButton
+                            to={{
+                                pathname: '/checkout',
+                                state: { total },
+                            }}
+                            icon={
+                                <FontAwesomeIcon
+                                    icon={faArrowRight}
+                                    className="icon"
+                                />
+                            }
+                        >
+                            Checkout
+                        </NavButton>
+                    </ul>
                 </div>
             )}
         </>

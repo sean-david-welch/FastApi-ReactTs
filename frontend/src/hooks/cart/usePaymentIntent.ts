@@ -61,6 +61,5 @@ export const usePaymentIntent = () => {
         clientSecret,
         stripePromise,
         options,
-        updateClientSecret: setClientSecret,
     };
 };

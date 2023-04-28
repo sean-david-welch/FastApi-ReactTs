@@ -32,7 +32,7 @@ export interface NavItemProps extends LinkProps {
 }
 
 export interface NavButtonProps {
-    to: string;
+    to: string | { pathname: string; state?: Record<string, any> };
     children: React.ReactNode;
     icon: React.ReactNode;
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -90,5 +90,4 @@ export interface CartProviderProps {
 export interface CheckoutFormProps {
     clientSecret: string | null;
     totalAmount: number;
-    updateClientSecret: (clientSecret: string | null) => void;
 }

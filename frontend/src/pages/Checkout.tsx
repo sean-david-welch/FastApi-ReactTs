@@ -1,10 +1,11 @@
 import Layout from '../components/Layout';
+import CheckoutPage from '../components/cart/CheckoutPage';
 
 export const Checkout = () => {
     return (
         <Layout>
             <section id="checkout">
-                <h1>Checkout</h1>
+                <CheckoutPage />
             </section>
         </Layout>
     );

@@ -12,7 +12,6 @@ import { CheckoutFormProps } from '../../types/Types';
 const CheckoutForm: React.FC<CheckoutFormProps> = ({
     clientSecret,
     totalAmount,
-    updateClientSecret,
 }) => {
     const stripe = useStripe();
     const elements = useElements();

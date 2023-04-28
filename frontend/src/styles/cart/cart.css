@@ -104,6 +104,10 @@
     color: var(--dark-color);
 }
 
+#cart ul .nav-button {
+    margin: 1rem;
+}
+
 /* Empty Cart */
 #cart .empty-cart {
     display: flex;

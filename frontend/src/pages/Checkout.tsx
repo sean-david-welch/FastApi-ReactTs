@@ -1,8 +1,12 @@
+import Layout from '../components/Layout';
+
 export const Checkout = () => {
     return (
-        <section id="checkout">
-            <h1>Checkout</h1>
-        </section>
+        <Layout>
+            <section id="checkout">
+                <h1>Checkout</h1>
+            </section>
+        </Layout>
     );
 };
 

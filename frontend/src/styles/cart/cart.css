@@ -13,7 +13,7 @@
 #cart .cart-view {
     margin: 1rem 0 2rem 0;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     grid-template-rows: 1fr;
 }
 
@@ -23,8 +23,8 @@
     align-items: center;
     justify-content: center;
     background-color: var(--dark-color);
-    margin: 0 5rem;
-    padding: 1rem;
+    margin: 0 auto;
+    padding: 2rem;
     border: 2px solid var(--grey-color);
     border-radius: 0.5rem;
     transition: all 500ms ease-in-out;

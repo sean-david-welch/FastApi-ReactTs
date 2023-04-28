@@ -86,3 +86,9 @@ export interface CartContextData {
 export interface CartProviderProps {
     children: React.ReactNode;
 }
+
+export interface CheckoutFormProps {
+    clientSecret: string | null;
+    totalAmount: number;
+    updateClientSecret: (clientSecret: string | null) => void;
+}

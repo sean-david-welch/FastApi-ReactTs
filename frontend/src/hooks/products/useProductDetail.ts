@@ -6,6 +6,7 @@ function useProductDetail() {
 
     const { products, error, loading } = useFetchProducts({
         endpoint: `products/${productId}`,
+        method: 'GET',
         isSingleProduct: true,
     });
 

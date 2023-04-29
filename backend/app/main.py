@@ -25,7 +25,7 @@ stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
 
 app = FastAPI()
 app.mount("/images", StaticFiles(directory="images"), name="images")
-origins = ["http://localhost:3000", "http://localhost:8000"]
+origins = ["http://localhost:3000", "http://localhost:5000", "http://localhost:8000"]
 
 app.add_middleware(
     CORSMiddleware,
@@ -82,8 +82,9 @@ async def remove_product(product_id: str):
     raise HTTPException(status_code=404, detail=f"Product: {product_id} not found")
 
 
-@app.post("/create-payment-intent")
+@app.post("/api/create-payment-intent")
 async def create_payment_intent(cart: List[CartItem]):
+    print("Received cart data:", cart)
     if not cart:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="Cart is empty"

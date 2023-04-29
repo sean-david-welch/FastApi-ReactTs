@@ -1,8 +1,10 @@
 #checkout {
     min-height: 100vh;
+    margin: 10rem 0;
 }
 
 #checkout .stripe-form {
+    margin: 10rem auto;
     display: flex;
     flex-direction: column;
     align-items: center;

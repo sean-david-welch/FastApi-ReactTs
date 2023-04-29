@@ -1,22 +1,30 @@
 import React from 'react';
-import { Elements } from '@stripe/react-stripe-js';
-import { useLocation } from 'react-router-dom'; // Import this
 import CheckoutForm from './CheckoutForm';
+import { Elements } from '@stripe/react-stripe-js';
+import { useCartContext } from '../../hooks/cart/useCartContext';
 import { usePaymentIntent } from '../../hooks/cart/usePaymentIntent';
+import { CartItem } from '../../types/Types';
 
 const CheckoutPage: React.FC = () => {
+    const cartContext = useCartContext();
     const { clientSecret, stripePromise, options } = usePaymentIntent();
-    const location = useLocation();
-    const total = location.state ? location.state.total : 0;
+
+    const calculateTotalAmount = (cart: CartItem[]) => {
+        return cart.reduce(
+            (acc: number, item: CartItem) => acc + item.price * item.quantity,
+            0
+        );
+    };
+
+    const totalAmount = calculateTotalAmount(cartContext.cart);
 
     return (
         <>
             {clientSecret && (
-                <Elements stripe={stripePromise} options={options}>
+                <Elements options={options} stripe={stripePromise}>
                     <CheckoutForm
-                        key={clientSecret}
                         clientSecret={clientSecret}
-                        totalAmount={total}
+                        totalAmount={totalAmount}
                     />
                 </Elements>
             )}

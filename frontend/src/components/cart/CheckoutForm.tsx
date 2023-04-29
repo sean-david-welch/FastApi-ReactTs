@@ -28,6 +28,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
 
         if (!clientSecret) {
             setMessage(null);
+            setEmail('');
             return;
         }
 

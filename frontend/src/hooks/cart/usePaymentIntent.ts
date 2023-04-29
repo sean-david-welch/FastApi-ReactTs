@@ -1,49 +1,41 @@
-import { useEffect, useState, useCallback } from 'react';
-import { debounce } from 'lodash';
-import { loadStripe } from '@stripe/stripe-js';
 import fetchData from '../../utils/fetchData';
+import { useEffect, useState } from 'react';
+import { loadStripe } from '@stripe/stripe-js';
 import { useCartContext } from './useCartContext';
+import { STRIPE_PUBLIC_KEY } from '../../utils/config';
 
-const stripePromise = loadStripe(
-    'pk_test_51MXR40LQKZpRvvuEz5IWRCdRssn1c3pOCIwXRYqky1GhyiiCyiuwBjAXJ4IHTMGblLCyuaXlv3SCPtwtDM1iv8OV00EoL8GlJq'
-);
+const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 
 export const usePaymentIntent = () => {
     const [clientSecret, setClientSecret] = useState<string | null>('');
     const cartContext = useCartContext();
 
-    const fetchPaymentIntent = useCallback(
-        debounce(async () => {
+    useEffect(() => {
+        const fetchPaymentIntent = async () => {
             if (cartContext.cart.length === 0) {
                 return;
             }
 
-            const totalAmount = cartContext.cart.reduce(
-                (acc, item) => acc + item.price * item.quantity,
-                0
-            );
+            const items = cartContext.cart.map(item => ({
+                price: item.price,
+                quantity: item.quantity,
+            }));
 
             try {
                 const data = await fetchData({
                     endpoint: 'create-payment-intent',
                     method: 'POST',
-                    data: JSON.stringify({
-                        cart: cartContext.cart,
-                        total: totalAmount,
-                    }),
+                    data: JSON.stringify(items),
                 });
 
                 setClientSecret(data.client_secret);
             } catch (error) {
                 console.log(error);
             }
-        }, 10),
-        [cartContext.cart]
-    );
+        };
 
-    useEffect(() => {
         fetchPaymentIntent();
-    }, [cartContext.cart, fetchPaymentIntent]);
+    }, [cartContext.cart]);
 
     useEffect(() => {
         if (!clientSecret) {

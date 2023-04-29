@@ -20,23 +20,25 @@
     object-fit: cover;
 }
 
-.hero .hero-head {
+.hero-content {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
-    font-size: 3rem;
-    font-weight: 300;
     z-index: 100;
 }
 
+.hero-content > * {
+    margin: 0.5rem;
+}
+
+.hero .hero-head {
+    font-size: 3rem;
+    font-weight: 300;
+}
+
 .hero .hero-para {
-    z-index: 100;
-    position: absolute;
-    top: 57.5%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     font-size: 1.5rem;
     font-weight: 200;
 }

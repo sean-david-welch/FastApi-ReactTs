@@ -19,14 +19,9 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
     const [email, setEmail] = useState<string>('');
     const [message, setMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [paymentAttempted, setPaymentAttempted] = useState(false);
 
     useEffect(() => {
-        if (!stripe || !clientSecret || !paymentAttempted) {
-            return;
-        }
-
-        if (!clientSecret) {
+        if (!stripe || !clientSecret) {
             setMessage(null);
             setEmail('');
             return;
@@ -52,7 +47,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
                     break;
             }
         });
-    }, [stripe, clientSecret, paymentAttempted]);
+    }, [stripe, clientSecret]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -62,7 +57,6 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
         }
 
         setIsLoading(true);
-        setPaymentAttempted(true);
 
         const { error } = await stripe.confirmPayment({
             confirmParams: {

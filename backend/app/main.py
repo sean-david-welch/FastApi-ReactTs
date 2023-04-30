@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException, status, Request, Response, Depends
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -14,7 +15,7 @@ from database import (
 )
 
 from config import settings
-from utils import calculate_cart_total, verify_signature
+from utils import calculate_cart_total, verify_signature, get_current_user
 
 import stripe
 
@@ -32,6 +33,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+OAUTH2_DOMAIN = settings["OAUTH2_DOMAIN"]
+OAUTH2_CLIENT_ID = settings["OAUTH2_CLIENT_ID"]
+OAUTH2_CLIENT_SECRET = settings["OAUTH2_CLIENT_SECRET"]
+O0_CALLBACK_URL = "http://localhost:8000/auth0/callback"
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth0/login")
+
 
 @app.get("/")
 def root():
@@ -41,6 +48,11 @@ def root():
 @app.get("/api/login")
 async def login():
     pass
+
+
+@app.get("/auth0/callback")
+async def auth0_callback(current_user: dict = Depends(get_current_user)):
+    return {"message": "You are authenticated!", "user_id": current_user["sub"]}
 
 
 @app.get("/api/products")

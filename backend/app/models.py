@@ -20,3 +20,17 @@ class ProductUpdate(BaseModel):
 class CartItem(BaseModel):
     price: float
     quantity: int
+
+
+class TokenData(BaseModel):
+    sub: str
+    permissions: list
+
+
+class User(BaseModel):
+    username: str
+    password: str
+    email: str
+    full_name: str
+    disabled: bool = None
+    hashed_password: str = None

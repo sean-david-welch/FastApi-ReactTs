@@ -1,12 +1,12 @@
-import os
 import uuid
 import motor.motor_asyncio
 from dotenv import load_dotenv
 
 from models import Product
+from config import settings
 
 load_dotenv()
-client = motor.motor_asyncio.AsyncIOMotorClient(os.environ.get("RAILWAY_MONGO_URI"))
+client = motor.motor_asyncio.AsyncIOMotorClient(settings["MONGO_URI"])
 database = client.ProductsList
 collection = database.products
 

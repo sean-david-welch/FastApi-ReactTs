@@ -1,10 +1,9 @@
-from fastapi import FastAPI, HTTPException, status, Depends
+from fastapi import FastAPI, HTTPException, status, Request, Response, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from typing import List
 
-from utils import calculate_cart_total
 from models import Product, ProductUpdate, CartItem
 from database import (
     fetch_all_products,
@@ -14,14 +13,12 @@ from database import (
     delete_product,
 )
 
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
+from config import settings
+from utils import calculate_cart_total, verify_signature
 
 import stripe
 
-stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
+stripe.api_key = settings["STRIPE_SECRET_KEY"]
 
 app = FastAPI()
 app.mount("/images", StaticFiles(directory="images"), name="images")
@@ -39,6 +36,11 @@ app.add_middleware(
 @app.get("/")
 def root():
     return RedirectResponse(url="/docs")
+
+
+@app.get("/api/login")
+async def login():
+    pass
 
 
 @app.get("/api/products")
@@ -105,3 +107,18 @@ async def create_payment_intent(cart: List[CartItem]):
         return JSONResponse(
             content={"error": error_message}, status_code=status.HTTP_400_BAD_REQUEST
         )
+
+
+@app.post("/api/stripe_webhook")
+async def stripe_webhook(
+    request: Request, event: stripe.Event = Depends(verify_signature)
+):
+    print("Request headers:", request.headers)
+
+    if event["type"] == "payment_intent.succeeded":
+        payment_intent = event["data"]["object"]
+        print("PaymentIntent was successful!")
+        return {"status": "success", "payment_intent": payment_intent}
+    else:
+        print("Unhandled event type {}".format(event["type"]))
+        return {"status": "unhandled_event_type"}

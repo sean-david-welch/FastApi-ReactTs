@@ -17,8 +17,9 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
     const elements = useElements();
 
     const [email, setEmail] = useState<string>('');
-    const [message, setMessage] = useState<string | null>(null);
+    const [message, setMessage] = useState<string | null>('');
     const [isLoading, setIsLoading] = useState(false);
+    const [paymentAttempted, setpaymentAttempted] = useState(false);
 
     useEffect(() => {
         if (!stripe || !clientSecret) {
@@ -27,26 +28,36 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
             return;
         }
 
-        stripe.retrievePaymentIntent(clientSecret).then(result => {
-            const paymentIntent = result.paymentIntent as PaymentIntent;
+        const retrievePaymentIntentStatus = async () => {
+            setpaymentAttempted(false);
+            try {
+                const result = await stripe.retrievePaymentIntent(clientSecret);
+                const paymentIntent = result.paymentIntent as PaymentIntent;
 
-            switch (paymentIntent.status) {
-                case 'succeeded':
-                    setMessage('Payment succeeded!');
-                    break;
-                case 'processing':
-                    setMessage('Your payment is processing.');
-                    break;
-                case 'requires_payment_method':
-                    setMessage(
-                        'Your payment was not successful, please try again.'
-                    );
-                    break;
-                default:
-                    setMessage('Something went wrong.');
-                    break;
+                switch (paymentIntent.status) {
+                    case 'succeeded':
+                        setMessage('Payment succeeded!');
+                        break;
+                    case 'processing':
+                        setMessage('Your payment is processing.');
+                        break;
+                    case 'requires_payment_method':
+                        if (paymentAttempted) {
+                            setMessage(
+                                'Your payment was not successful, please try again.'
+                            );
+                        }
+                        break;
+                    default:
+                        setMessage('Something went wrong.');
+                        break;
+                }
+            } catch (error) {
+                console.error('Error retrieving payment intent:', error);
             }
-        });
+        };
+
+        retrievePaymentIntentStatus();
     }, [stripe, clientSecret]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

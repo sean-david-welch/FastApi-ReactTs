@@ -1,3 +1,7 @@
 #login {
     min-height: 100vh;
 }
+
+#login button {
+    margin: 10rem auto;
+}

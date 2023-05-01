@@ -4,4 +4,4 @@ export const FRONTEND_BASE_URL =
     import.meta.env.VITE_FRONTEND_BASE_FALLBACK_URL;
 export const STRIPE_PUBLIC_KEY = import.meta.env.VITE_STRIPE_PUBLIC_KEY;
 export const AUTH0_DOMAIN = import.meta.env.VITE_FRONTEND_AUTH0_DOMAIN;
-export const AUTH0_CLIENT_ID = import.meta.env.VITE_FRONTEND_AUTH0_CLIENT_ID;
+export const AUTH0_CLIENT_ID = import.meta.env.VITE_FRONTEND_AUTH0_CLIENTID;

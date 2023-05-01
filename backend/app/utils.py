@@ -34,7 +34,7 @@ async def get_current_user(request: Request):
         raise HTTPException(status_code=401, detail="Invalid token")
 
     user = response.json()
-    return user
+    return user, token
 
 
 async def verify_signature(request: Request, api_key_header: str):

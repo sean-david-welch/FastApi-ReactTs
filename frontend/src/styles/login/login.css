@@ -1,7 +1,38 @@
 #login {
     min-height: 100vh;
+    padding: 12.5rem 0 5rem 0;
 }
 
-#login button {
+#login .btn-login {
     margin: 10rem auto;
+}
+
+.cl-rootBox {
+    margin: 0 auto;
+}
+
+.cl-profilePage span,
+.cl-profilePage div {
+    color: var(--dark-color);
+}
+
+.cl-logoBox,
+.cl-logoBox > * {
+    margin: 0 auto;
+}
+
+.cl-internal-b3fm6y,
+.cl-formButtonPrimary {
+    background-color: var(--dark-color);
+    transition: all 600ms ease-in-out;
+}
+
+.cl-internal-b3fm6y:hover,
+.cl-formButtonPrimary:hover {
+    background-color: var(--gold-color);
+    color: var(--dark-color);
+}
+
+.cl-userPreview div p {
+    color: var(--dark-color);
 }

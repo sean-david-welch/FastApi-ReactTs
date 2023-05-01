@@ -98,8 +98,8 @@ p {
 
 /* Button */
 .icon {
-    align-items: center;
-    margin-left: 1rem;
+    margin: auto 0;
+    margin-left: 0.75rem;
     font-size: 1.25rem;
 }
 

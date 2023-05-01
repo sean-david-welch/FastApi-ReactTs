@@ -21,7 +21,7 @@ function SideNavbar() {
                         <NavItem to="/about">About</NavItem>
                         <NavItem to="/shop">Products</NavItem>
                         <NavItem to="/cart">Cart</NavItem>
-                        <NavItem to="/login">Login</NavItem>
+                        <NavItem to="/login">Account</NavItem>
                     </ul>
                     <ul className="icon-nav">
                         <NavItem to="/cart">

@@ -6,6 +6,7 @@ import {
     faCircleUser,
     faArrowRight,
 } from '@fortawesome/free-solid-svg-icons';
+import { SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
 
 import logo from '../../assets/logo.png';
 import useTransparentHeader from '../../hooks/navigation/useTransparentHeader';
@@ -37,9 +38,14 @@ function Navbar() {
                     <NavItem to="/cart">
                         <FontAwesomeIcon icon={faCartShopping} size="xl" />
                     </NavItem>
-                    <NavItem to="/login">
-                        <FontAwesomeIcon icon={faCircleUser} size="2xl" />
-                    </NavItem>
+                    <SignedIn>
+                        <UserButton />
+                    </SignedIn>
+                    <SignedOut>
+                        <NavItem to="/login">
+                            <FontAwesomeIcon icon={faCircleUser} size="2xl" />
+                        </NavItem>
+                    </SignedOut>
                 </div>
             </ul>
         </nav>

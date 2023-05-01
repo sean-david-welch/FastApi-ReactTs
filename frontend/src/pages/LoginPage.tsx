@@ -1,14 +1,17 @@
 import Layout from '../components/Layout';
-import LoginButton from '../components/login/LoginButton';
-import LogoutButton from '../components/login/LogoutButton';
+import { SignedIn, SignedOut, UserProfile } from '@clerk/clerk-react';
+import { SignIn } from '@clerk/clerk-react';
 
 export const Login = () => {
     return (
         <Layout>
             <section id="login">
-                <h1>Login</h1>
-                <LoginButton></LoginButton>
-                <LogoutButton></LogoutButton>
+                <SignedIn>
+                    <UserProfile />
+                </SignedIn>
+                <SignedOut>
+                    <SignIn />
+                </SignedOut>
             </section>
         </Layout>
     );

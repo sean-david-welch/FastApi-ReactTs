@@ -19,24 +19,6 @@ def calculate_cart_total(cart: List[CartItem]):
     return total_price
 
 
-async def get_current_user(request: Request):
-    auth_header = request.headers.get("Authorization")
-    if not auth_header:
-        raise HTTPException(status_code=401, detail="Missing authorization header")
-
-    token = auth_header.replace("Bearer ", "")
-
-    url = f"https://{OAUTH2_DOMAIN}/userinfo"
-    headers = {"Authorization": auth_header}
-    response = await httpx.get(url, headers=headers)
-
-    if response.status_code != 200:
-        raise HTTPException(status_code=401, detail="Invalid token")
-
-    user = response.json()
-    return user, token
-
-
 async def verify_signature(request: Request, api_key_header: str):
     payload = await request.body()
     sig_header = api_key_header

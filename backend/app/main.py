@@ -1,5 +1,5 @@
 from fastapi import FastAPI, HTTPException, status, Request, Response, Depends
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordBearer, OAuth2AuthorizationCodeBearer
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -15,7 +15,7 @@ from database import (
 )
 
 from config import settings
-from utils import calculate_cart_total, verify_signature, get_current_user
+from utils import calculate_cart_total, verify_signature
 
 import stripe
 
@@ -48,11 +48,6 @@ def root():
 @app.get("/api/login")
 async def login():
     pass
-
-
-@app.get("/auth0/callback")
-async def auth0_callback(current_user: dict = Depends(get_current_user)):
-    return {"message": "You are authenticated!", "user_id": current_user["sub"]}
 
 
 @app.get("/api/products")

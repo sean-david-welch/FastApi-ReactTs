@@ -1,7 +1,7 @@
 venv/
 node_modules/
 .env/
-./frontend/.env
-./backend/.env
+./client/.env
+./api/.env
 .vscode/
 ```

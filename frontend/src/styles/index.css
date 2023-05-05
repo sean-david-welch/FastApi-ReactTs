@@ -1,9 +1,4 @@
-/* Variables */
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600&display=swap');
-
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities; */
 
 :root {
     --website-width: 100vw;
@@ -18,7 +13,6 @@
     --gradient-light: linear-gradient(to bottom right, #7e7e7e 40%, #474747);
 }
 
-/* General Utilities */
 * {
     margin: 0;
     padding: 0;
@@ -88,7 +82,6 @@ p {
     background-color: var(--gold-color);
 }
 
-/* Scroll animation */
 .hidden {
     opacity: 0;
     transform: translateX(-100%);
@@ -100,7 +93,6 @@ p {
     transform: translateX(0);
 }
 
-/* Button */
 .icon {
     margin: auto 0;
     margin-left: 0.75rem;
@@ -163,13 +155,11 @@ p {
     color: var(--dark-color);
 }
 
-/* Miscellaeneous */
 .text-center {
     text-align: center;
     justify-content: center;
 }
 
-/* Icons */
 svg:not(.fa-arrow-right):not(.socials svg) {
     transition: all 600ms ease-in-out;
 }
@@ -193,8 +183,6 @@ svg:not(.fa-arrow-right):not(.socials svg):not(.btn-primary svg):hover {
 .socials svg:hover path {
     fill: var(--gold-color);
 }
-
-/* Loading Styles */
 
 .loading-spinner {
     position: absolute;

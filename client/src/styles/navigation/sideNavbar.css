@@ -1,0 +1,141 @@
+.side-nav {
+    z-index: 10000;
+    position: fixed;
+    width: 22.5rem;
+    height: 100vh;
+    background-color: var(--dark-color);
+    transition: all 700ms;
+    pointer-events: none;
+    border-right: 3px solid var(--medium-color);
+}
+
+.side-nav:hover {
+    border-right: 3px solid var(--gold-color);
+}
+
+.side-nav.open {
+    left: 0;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.side-nav.closed {
+    left: -22.5rem;
+    opacity: 0;
+}
+
+.side-nav__menu {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    margin-left: 3rem;
+    height: 100%;
+    margin: 0 3rem;
+    padding: 0;
+}
+
+.side-nav__menu .nav-item {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin: 3rem 0;
+    position: relative;
+}
+.side-nav__menu .nav-item,
+.side-nav__menu .nav-item a {
+    transition: all 500ms ease-in-out;
+}
+
+.side-nav__menu .nav-item:hover,
+.side-nav__menu .nav-item a:hover {
+    color: var(--gold-color);
+}
+
+.side-nav__menu .nav-item::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -10px;
+    left: -1rem;
+    width: 400%;
+    height: 2px;
+    background-color: var(--light-color);
+    transition: all 500ms ease-in-out;
+}
+
+.side-nav__menu .nav-item:hover::after {
+    background-color: var(--gold-color);
+}
+
+.icon-nav {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.icon-nav .nav-item {
+    margin: 0 0.75rem;
+    border: 2.5px solid var(--light-color);
+    border-radius: 1rem;
+    height: 50px;
+    width: 100px;
+}
+
+.icon-nav .nav-item:hover {
+    border: 2.5px solid var(--gold-color);
+}
+
+.icon-nav .nav-item::after {
+    display: none;
+}
+
+/* .icon-nav .nav-item::before {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 50px;
+    background-color: var(--light-color);
+    border-radius: 50%;
+} */
+
+.side-nav__icon {
+    z-index: 10000;
+    font-size: 2rem;
+    position: fixed;
+    top: 1.75rem;
+    left: 3rem;
+    pointer-events: auto;
+}
+
+.side-nav__icon p {
+    position: fixed;
+    font-size: 1.5rem;
+    font-weight: 400;
+    top: 1.85rem;
+    left: 6.5rem;
+    transition: all 500ms ease-in-out;
+}
+
+.side-nav__icon p:hover {
+    color: var(--gold-color);
+}
+
+.side-nav__icon p::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 150%;
+    height: 2px;
+    background-color: var(--light-color);
+    transition: all 500ms ease-in-out;
+}
+
+.side-nav__icon p:hover:after {
+    background-color: var(--gold-color);
+}

@@ -1,0 +1,69 @@
+header {
+    width: 100vw;
+}
+
+header #logo {
+    display: flex;
+    margin: 0 10rem;
+    max-width: 7.5rem;
+    transition: all 600ms ease-in-out;
+}
+
+header #logo:hover {
+    transform: scale(1.025);
+}
+
+#navbar {
+    z-index: 1000;
+    background-color: var(--dark-color);
+    border-bottom: 0.15rem solid var(--black-color);
+    position: fixed;
+    top: 0;
+    padding: 0.25rem;
+    width: 100vw;
+    transition: all 600ms ease-in-out;
+}
+
+#navbar:hover {
+    border-bottom: 0.15rem solid var(--gold-color);
+}
+
+#navbar.transparent {
+    background: transparent;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    transition: all 600ms ease-in-out;
+    border-bottom: none;
+}
+
+#navbar ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+#navbar .nav-list-side {
+    display: flex;
+    margin: 0 5rem;
+    align-items: center;
+}
+
+#navbar .nav-list-side > * {
+    margin: 0 1rem;
+}
+
+#navbar .nav-item a {
+    font-size: 1.1rem;
+    font-weight: 300;
+}
+
+.nav-item path {
+    transition: all 600ms ease-in-out;
+}
+
+.nav-item:hover path {
+    fill: var(--gold-color);
+}

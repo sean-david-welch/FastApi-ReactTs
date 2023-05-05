@@ -1,0 +1,26 @@
+@import 'index.css';
+
+@import './navigation/header.css';
+@import './navigation/footer.css';
+@import './navigation/sideNavbar.css';
+@import './navigation/toTop.css';
+
+@import './products/products.css';
+
+@import './home/hero.css';
+@import './home/benefits.css';
+
+@import './cart/cart.css';
+@import './cart/stripe.css';
+@import './cart/success.css';
+
+@import './login/login.css';
+
+@import './about/about.css';
+
+.App {
+    max-width: 100vw;
+    min-height: 100vh;
+    margin: 0 auto;
+    text-align: center;
+}

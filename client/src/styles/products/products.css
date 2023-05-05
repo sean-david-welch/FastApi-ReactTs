@@ -1,5 +1,8 @@
+#products {
+    min-height: 100vh;
+}
+
 #products .products {
-    height: 100vh;
     margin: 1rem auto 3rem auto;
     padding: 1rem 5rem;
 }
@@ -67,8 +70,12 @@
 }
 
 /* Individual Product Detail */
-#product-detail .product-detail {
+
+#product-detail {
     min-height: 100vh;
+}
+
+#product-detail .product-detail {
     margin: 1rem auto 3rem auto;
     padding: 1rem 7.5rem;
     display: grid;

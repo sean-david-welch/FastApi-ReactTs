@@ -25,7 +25,11 @@ const ProductDetail = () => {
     }, [addToCart, product]);
 
     if (loading) {
-        return <LoadingSpinner />;
+        return (
+            <section id="product-detail">
+                <LoadingSpinner />
+            </section>
+        );
     }
 
     return (

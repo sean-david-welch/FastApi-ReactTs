@@ -6,7 +6,11 @@ function ProductsList() {
     const { products, loading } = useProductList();
 
     if (loading) {
-        return <LoadingSpinner />;
+        return (
+            <section id="products">
+                <LoadingSpinner />
+            </section>
+        );
     }
 
     return (

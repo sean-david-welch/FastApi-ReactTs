@@ -1,10 +1,8 @@
 from typing import List
 from models import CartItem
-from fastapi import Request, Response, Depends, HTTPException, Request
-from fastapi.security import OAuth2AuthorizationCodeBearer
+from fastapi import Depends, HTTPException, status, Request, Response
 from config import settings
-import httpx
-import stripe, stripe.error
+import stripe.error
 
 endpoint_secret = settings["STRIPE_WEBHOOK_ENDPOINT_SECRET"]
 OAUTH2_DOMAIN = settings["OAUTH2_DOMAIN"]

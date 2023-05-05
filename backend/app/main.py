@@ -1,11 +1,21 @@
-from fastapi import FastAPI, HTTPException, status, Request, Response, Depends
-from fastapi.security import OAuth2PasswordBearer, OAuth2AuthorizationCodeBearer
+from fastapi import FastAPI, HTTPException, status, Request, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse, JSONResponse
+from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.staticfiles import StaticFiles
 from typing import List
+from datetime import datetime, timedelta
+import stripe
+from config import settings
+from utils import calculate_cart_total, verify_signature
+from security import (
+    ACCESS_TOKEN_EXPIRE_MINUTES,
+    authenticate_user,
+    create_access_token,
+    get_current_active_user,
+)
 
-from models import Product, ProductUpdate, CartItem
+from models import Product, ProductUpdate, CartItem, Token, User
 from database import (
     fetch_all_products,
     fetch_product,
@@ -13,13 +23,6 @@ from database import (
     put_product,
     delete_product,
 )
-
-from config import settings
-from utils import calculate_cart_total, verify_signature
-
-import stripe
-
-stripe.api_key = settings["STRIPE_SECRET_KEY"]
 
 app = FastAPI()
 app.mount("/images", StaticFiles(directory="images"), name="images")
@@ -32,12 +35,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-OAUTH2_DOMAIN = settings["OAUTH2_DOMAIN"]
-OAUTH2_CLIENT_ID = settings["OAUTH2_CLIENT_ID"]
-OAUTH2_CLIENT_SECRET = settings["OAUTH2_CLIENT_SECRET"]
-O0_CALLBACK_URL = "http://localhost:8000/auth0/callback"
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth0/login")
+stripe.api_key = settings["STRIPE_SECRET_KEY"]
 
 
 @app.get("/")
@@ -45,9 +43,25 @@ def root():
     return RedirectResponse(url="/docs")
 
 
-@app.get("/api/login")
-async def login():
-    pass
+@app.get("/api/login", response_model=Token)
+async def login(form_data: OAuth2PasswordRequestForm = Depends()):
+    user = authenticate_user(db, form_data.username, form_data.password)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_toek = create_access_token(
+        data={"sub": user.username}, expires_delta=access_token_expires
+    )
+    return {"access_token": access_token, "token_type": "bearer"}
+
+
+@app.get("/api/users/current_user", response_model=User)
+async def return_current_user(current_user: User = Depends(get_current_active_user)):
+    return current_user
 
 
 @app.get("/api/products")

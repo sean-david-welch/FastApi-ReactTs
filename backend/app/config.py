@@ -10,4 +10,6 @@ settings = {
     "OAUTH2_DOMAIN": os.getenv("OAUTH2_DOMAIN"),
     "OAUTH2_CLIENT_ID": os.getenv("OAUTH2_CLIENT_ID"),
     "OAUTH2_CLIENT_SECRET": os.getenv("OAUTH2_CLIENT_SECRET"),
+    "SECRET_KEY": os.getenv("SECRET_KEY"),
+    "ALGORITHM": os.getenv("ALGORITHM"),
 }

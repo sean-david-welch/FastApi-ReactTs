@@ -3,16 +3,28 @@ import { API_BASE_URL } from './config';
 import { FetchDataOptions } from '../types/Types';
 
 axios.defaults.baseURL = API_BASE_URL;
-axios.defaults.headers.post['Content-Type'] = 'application/json';
 
-const fetchData = async (options: FetchDataOptions) => {
+const fetchData = async (
+    options: FetchDataOptions,
+    token?: string,
+    contentType: string = 'application/json'
+) => {
     const { endpoint, method, data } = options;
+
+    const headers = token
+        ? {
+              'Content-Type': contentType,
+              Authorization: `Bearer ${token}`,
+          }
+        : { 'Content-Type': contentType };
 
     try {
         const response = await axios({
             method: method,
             url: endpoint,
             data: data,
+            headers: headers,
+            withCredentials: true,
         });
 
         if (response.status < 200 || response.status >= 300) {

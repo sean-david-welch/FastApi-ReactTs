@@ -3,36 +3,19 @@
     padding: 12.5rem 0 5rem 0;
 }
 
-#login .btn-login {
-    margin: 10rem auto;
-}
-
-.cl-rootBox {
-    margin: 0 auto;
-}
-
-.cl-profilePage span,
-.cl-profilePage div {
-    color: var(--dark-color);
-}
-
-.cl-logoBox,
-.cl-logoBox > * {
-    margin: 0 auto;
-}
-
-.cl-internal-b3fm6y,
-.cl-formButtonPrimary {
+#form {
+    margin: 0 20rem;
+    padding: 1rem;
+    border: 2px solid var(--grey-color);
+    border-radius: 0.5rem;
     background-color: var(--dark-color);
-    transition: all 600ms ease-in-out;
 }
 
-.cl-internal-b3fm6y:hover,
-.cl-formButtonPrimary:hover {
-    background-color: var(--gold-color);
-    color: var(--dark-color);
+#form .input-box {
+    margin: 1rem;
 }
 
-.cl-userPreview div p {
+#form .input-box input {
+    margin: 1rem;
     color: var(--dark-color);
 }

@@ -29,6 +29,13 @@ class User(BaseModel):
     disabled: Optional[bool] = None
 
 
+class UserCreate(BaseModel):
+    username: str
+    email: Optional[str] = None
+    full_name: Optional[str] = None
+    password: str
+
+
 class UserDB(User):
     hashed_password: str
 

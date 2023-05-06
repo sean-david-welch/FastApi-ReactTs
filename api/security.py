@@ -1,11 +1,13 @@
-from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer, OAuth2AuthorizationCodeBearer
+from fastapi import Depends, Cookie, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer
 from datetime import datetime, timedelta
+from typing import Optional
 from jose import jwt, JWTError
 from passlib.context import CryptContext
 from config import settings
 
-from models import User, UserDB, Token, TokenData
+from models import UserDB, TokenData
+from database import get_user
 
 SECRET_KEY = settings["SECRET_KEY"]
 ALGORITHM = settings["ALGORITHM"]
@@ -24,25 +26,17 @@ def get_password_hash(password):
     return password_context.hash(password)
 
 
-def get_user(db, username: str):
-    if username in db:
-        user_data = db[username]
-        return UserDB(**user_data)
-
-
-def authenticate_user(db, username: str, password: str):
-    user = get_user(db, username)
-    if not user:
-        return False
-    if not verify_password(password, user.hashed_password):
-        return False
-    return user
+async def authenticate_user(username: str, password: str) -> Optional[UserDB]:
+    user = await get_user(username)
+    if user and verify_password(password, user.hashed_password):
+        return user
+    return None
 
 
 def create_access_token(data: dict, expires_delta: timedelta = None):
     to_encode = data.copy()
     if expires_delta:
-        expire = datetime.utcnow() + expires_delta
+        expires = datetime.utcnow() + expires_delta
     else:
         expires = datetime.utcnow() + timedelta(minutes=15)
 
@@ -57,6 +51,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
+
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username: str = payload.get("sub")
@@ -66,14 +61,8 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
     except JWTError:
         raise credentials_exception
 
-    user = get_user(db, username=token_data.username)
+    user = await get_user(token_data.username)
     if user is None:
         raise credentials_exception
 
     return user
-
-
-async def get_current_active_user(current_user: UserDB = Depends(get_current_user)):
-    if current_user.disabled:
-        raise HTTPException(status_code=400, detail="Inactive user")
-    return current_user

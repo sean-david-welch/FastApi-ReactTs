@@ -73,6 +73,12 @@ async def login(response: Response, form_data: OAuth2PasswordRequestForm = Depen
     return {"access_token": access_token, "token_type": "bearer"}
 
 
+@app.post("/api/logout")
+async def logout(response: Response):
+    response.delete_cookie("access_token")
+    return {"message": "Logged out successfully"}
+
+
 @app.get("/api/users/current_user", response_model=User)
 async def return_current_user(current_user: User = Depends(get_current_user)):
     return current_user

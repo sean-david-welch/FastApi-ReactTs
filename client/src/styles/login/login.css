@@ -19,3 +19,21 @@
     margin: 1rem;
     color: var(--dark-color);
 }
+
+#login .current-user {
+    margin: 0 20rem;
+    padding: 1rem;
+    border: 2px solid var(--grey-color);
+    border-radius: 0.5rem;
+    background-color: var(--dark-color);
+    transition: all 600ms ease-in-out;
+}
+
+#login .current-user > * {
+    transition: all 600ms ease-in-out;
+}
+
+#login .current-user:hover {
+    border: 2px solid var(--gold-color);
+    transform: scale(1.01);
+}

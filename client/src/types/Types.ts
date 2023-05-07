@@ -32,10 +32,13 @@ export interface LoginFormProps {
     setLoggedIn: (loggedIn: boolean) => void;
 }
 
+export interface LogoutButtonProps extends LoginFormProps {
+    isLoggedIn: boolean;
+}
+
 export interface CurrentUserProps {
     isLoggedIn: boolean;
     token: string;
-    attemptedLogin: boolean;
 }
 
 // Layout Types

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Layout from '../components/Layout';
 import LoginForm from '../components/login/LoginForm';
 import CurrentUser from '../components/login/CurrentUser';
+import LogoutButton from '../components/login/LogoutButton';
 
 export const Login = () => {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -10,8 +11,14 @@ export const Login = () => {
     return (
         <Layout>
             <section id="login">
-                <LoginForm setLoggedIn={setIsLoggedIn} />
-                <CurrentUser isLoggedIn={isLoggedIn} />
+                {!isLoggedIn ? (
+                    <LoginForm setLoggedIn={setIsLoggedIn} />
+                ) : (
+                    <div>
+                        <CurrentUser isLoggedIn={isLoggedIn} token={''} />
+                        <LogoutButton setLoggedIn={setIsLoggedIn} />
+                    </div>
+                )}
             </section>
         </Layout>
     );

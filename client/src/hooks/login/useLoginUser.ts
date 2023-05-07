@@ -14,10 +14,10 @@ async function loginUser(username: string, password: string): Promise<boolean> {
         });
 
         console.log('Logged in:', response);
-        return true; // Indicate that the login was successful
+        return true;
     } catch (error) {
         console.error('Login failed:', error);
-        return false; // Indicate that the login was unsuccessful
+        return false;
     }
 }
 

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import loginUser from '../../hooks/login/useLoginUser';
+import { useState } from 'react';
 import { LoginFormProps } from '../../types/Types';
+import loginUser from '../../hooks/login/useLoginUser';
 
 const LoginForm: React.FC<LoginFormProps> = ({ setLoggedIn }) => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

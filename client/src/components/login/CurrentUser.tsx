@@ -1,24 +1,19 @@
-import React from 'react';
 import getCurrentUser from '../../hooks/login/useCurrentUser';
 import { useQuery } from '@tanstack/react-query';
 import { CurrentUserProps } from '../../types/Types';
 import LoadingSpinner from '../Loading';
 
-const CurrentUser: React.FC<CurrentUserProps> = ({
-    isLoggedIn,
-    token,
-    attemptedLogin,
-}) => {
+const CurrentUser: React.FC<CurrentUserProps> = ({ isLoggedIn, token }) => {
     const {
         data: currentUser,
         isLoading,
         error,
     } = useQuery(['currentUser', token], () => getCurrentUser(token), {
-        enabled: isLoggedIn && attemptedLogin,
+        enabled: isLoggedIn,
         retry: false,
     });
 
-    if (isLoading && attemptedLogin) {
+    if (isLoading) {
         return (
             <div>
                 <LoadingSpinner />
@@ -31,9 +26,10 @@ const CurrentUser: React.FC<CurrentUserProps> = ({
     }
 
     return (
-        <div>
-            <h1>Current User</h1>
+        <div className="current-user">
+            <h1>Current User: {currentUser.full_name}</h1>
             <p>Username: {currentUser.username}</p>
+            <p>Email: {currentUser.email}</p>
         </div>
     );
 };

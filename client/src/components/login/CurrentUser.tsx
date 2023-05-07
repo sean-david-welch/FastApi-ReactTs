@@ -2,14 +2,17 @@ import getCurrentUser from '../../hooks/login/useCurrentUser';
 import { useQuery } from '@tanstack/react-query';
 import { CurrentUserProps } from '../../types/Types';
 import LoadingSpinner from '../Loading';
+import { useAuth } from '../../context/AuthContext';
 
-const CurrentUser: React.FC<CurrentUserProps> = ({ isLoggedIn, token }) => {
+const CurrentUser: React.FC<CurrentUserProps> = ({ token }) => {
+    const { loginAttempted } = useAuth();
+
     const {
         data: currentUser,
         isLoading,
         error,
     } = useQuery(['currentUser', token], () => getCurrentUser(token), {
-        enabled: isLoggedIn,
+        enabled: loginAttempted,
         retry: false,
     });
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
 
 import Layout from '../components/Layout';
 import LoginForm from '../components/login/LoginForm';
@@ -6,7 +6,7 @@ import CurrentUser from '../components/login/CurrentUser';
 import LogoutButton from '../components/login/LogoutButton';
 
 export const Login = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const { isLoggedIn, setIsLoggedIn } = useAuth();
 
     return (
         <Layout>

@@ -26,13 +26,6 @@ def get_password_hash(password):
     return password_context.hash(password)
 
 
-async def authenticate_user(username: str, password: str) -> Optional[UserDB]:
-    user = await get_user(username)
-    if user and verify_password(password, user.hashed_password):
-        return user
-    return None
-
-
 def create_access_token(data: dict, expires_delta: timedelta = None):
     to_encode = data.copy()
     if expires_delta:
@@ -45,6 +38,13 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
     return encoded_jwt
 
 
+async def authenticate_user(username: str, password: str) -> Optional[UserDB]:
+    user = await get_user(username)
+    if user and verify_password(password, user.hashed_password):
+        return user
+    return None
+
+
 async def cookie_oauth2_scheme(request: Request):
     token = request.cookies.get("access_token")
     if token is None:
@@ -54,6 +54,17 @@ async def cookie_oauth2_scheme(request: Request):
             headers={"WWW-Authenticate": "Bearer"},
         )
     return token
+
+
+async def is_authenticated(token: str = Depends(cookie_oauth2_scheme)) -> bool:
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username: Optional[str] = payload.get("sub")
+        if username is None:
+            return False
+        return True
+    except JWTError:
+        return False
 
 
 async def get_current_user(token: str = Depends(cookie_oauth2_scheme)):

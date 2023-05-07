@@ -1,13 +1,16 @@
 import { useState } from 'react';
-import { LoginFormProps } from '../../types/Types';
+import { useAuth } from '../../context/AuthContext';
 import loginUser from '../../hooks/login/useLoginUser';
 
-const LoginForm: React.FC<LoginFormProps> = ({ setLoggedIn }) => {
+const LoginForm: React.FC = () => {
+    const { setIsLoggedIn, setLoginAttempted } = useAuth();
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setLoginAttempted(true);
         const loggedInUser = await loginUser(username, password);
         if (loggedInUser) {
-            setLoggedIn(true);
+            setIsLoggedIn(true);
         }
     };
     const [username, setUsername] = useState('');

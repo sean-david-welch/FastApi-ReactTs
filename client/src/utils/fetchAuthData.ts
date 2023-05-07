@@ -27,16 +27,15 @@ const fetchAuthData = async (options: FetchAuthDataOptions) => {
             withCredentials: true,
         });
 
-        if (response.status < 200 || response.status >= 300) {
-            const errorData = response;
-            throw new Error(errorData.statusText || 'Error fetching data');
-        }
-
         const responseData = response.data;
 
         return responseData;
     } catch (error: any) {
-        throw new Error(error.message);
+        if (error.response && error.response.status === 401) {
+            return { is_authenticated: false };
+        } else {
+            throw new Error(error.message);
+        }
     }
 };
 

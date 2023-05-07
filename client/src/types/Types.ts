@@ -28,6 +28,10 @@ export interface FetchProductOptions extends FetchDataOptions {
 }
 
 // Login Types
+export interface AuthProviderProps {
+    children: React.ReactNode;
+}
+
 export interface LoginFormProps {
     setLoggedIn: (loggedIn: boolean) => void;
 }

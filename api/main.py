@@ -13,6 +13,7 @@ from security import (
     get_password_hash,
     authenticate_user,
     create_access_token,
+    is_authenticated,
     get_current_user,
 )
 
@@ -39,12 +40,22 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+####################
+#  API Endpoints   #
+####################
 
+
+########################
+######### HOME #########
+########################
 @app.get("/")
-def root():
+def root() -> RedirectResponse:
     return RedirectResponse(url="/docs")
 
 
+########################
+######### AUTH #########
+########################
 @app.post("/api/register")
 async def register(user: UserCreate):
     existing_user = await get_user(user.username)
@@ -79,11 +90,19 @@ async def logout(response: Response):
     return {"message": "Logged out successfully"}
 
 
+@app.get("/api/is-authenticated")
+async def get_authentication_status(authenticated: bool = Depends(is_authenticated)):
+    return {"is_authenticated": authenticated}
+
+
 @app.get("/api/users/current_user", response_model=User)
 async def return_current_user(current_user: User = Depends(get_current_user)):
     return current_user
 
 
+############################
+######### PRODUCTS #########
+############################
 @app.get("/api/products")
 async def get_products():
     response = await fetch_all_products()
@@ -125,6 +144,9 @@ async def remove_product(product_id: str):
     raise HTTPException(status_code=404, detail=f"Product: {product_id} not found")
 
 
+##########################
+######### STRIPE #########
+##########################
 @app.post("/api/create-payment-intent")
 async def create_payment_intent(cart: List[CartItem]):
     stripe.api_key = settings["STRIPE_SECRET_KEY"]

@@ -1,4 +1,5 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { AuthProviderProps } from '../types/Types';
 import { AuthContextValue } from '../types/Types';
 import fetchAuthData from '../utils/fetchAuthData';
@@ -11,23 +12,26 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const [loginAttempted, setLoginAttempted] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (loginAttempted) {
-            checkAuthStatus();
-        }
-    }, [loginAttempted]);
-
-    const checkAuthStatus = async () => {
-        try {
+    const { refetch } = useQuery(
+        ['auth'],
+        async () => {
             const isAuthenticated = await fetchAuthData({
                 endpoint: '/is-authenticated',
                 method: 'GET',
             });
-            setIsLoggedIn(isAuthenticated);
-        } catch (error) {
-            setIsLoggedIn(false);
+            return isAuthenticated;
+        },
+        {
+            enabled: loginAttempted,
+            onSuccess: data => {
+                setIsLoggedIn(data);
+            },
+            onError: () => {
+                setIsLoggedIn(false);
+            },
+            retry: false,
         }
-    };
+    );
 
     return (
         <AuthContext.Provider
@@ -36,6 +40,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                 setIsLoggedIn,
                 loginAttempted,
                 setLoginAttempted,
+                refetch,
             }}
         >
             {children}

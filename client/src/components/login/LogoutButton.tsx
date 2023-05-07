@@ -8,7 +8,11 @@ const LogoutButton: React.FC<LoginFormProps> = ({ setLoggedIn }) => {
         logoutUser.mutate();
     };
 
-    return <button onClick={handleLogout}>Log out</button>;
+    return (
+        <button className="btn btn-primary btn-nav" onClick={handleLogout}>
+            Log out
+        </button>
+    );
 };
 
 export default LogoutButton;

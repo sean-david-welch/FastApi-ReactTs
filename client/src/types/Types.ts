@@ -1,5 +1,6 @@
 import { LinkProps } from 'react-router-dom';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { QueryFunctionContext } from '@tanstack/react-query';
 import { Method } from 'axios';
 
 // Product Types
@@ -37,6 +38,7 @@ export interface AuthContextValue {
     setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
     loginAttempted: boolean;
     setLoginAttempted: React.Dispatch<React.SetStateAction<boolean>>;
+    refetch: (options?: QueryFunctionContext) => Promise<unknown>;
 }
 
 export interface LoginFormProps {

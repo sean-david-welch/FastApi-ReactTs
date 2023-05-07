@@ -3,18 +3,24 @@ import { useAuth } from '../../hooks/login/useAuthContext';
 import loginUser from '../../hooks/login/useLoginUser';
 
 const LoginForm: React.FC = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState<string>('');
     const { setIsLoggedIn, setLoginAttempted } = useAuth();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setLoginAttempted(true);
-        const loggedInUser = await loginUser(username, password);
-        if (loggedInUser) {
-            setIsLoggedIn(true);
+        setErrorMessage('');
+        try {
+            const loggedInUser = await loginUser(username, password);
+            if (loggedInUser) {
+                setIsLoggedIn(true);
+                setLoginAttempted(true);
+            }
+        } catch (error) {
+            setErrorMessage('Invalid username or password');
         }
     };
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
 
     return (
         <form id="form" onSubmit={handleSubmit}>
@@ -38,6 +44,8 @@ const LoginForm: React.FC = () => {
                     autoComplete="current-password"
                 />
             </div>
+            {errorMessage && <p className="error">{errorMessage}</p>}
+
             <button className="btn btn-primary btn-nav" type="submit">
                 Login
             </button>

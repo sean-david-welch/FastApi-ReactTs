@@ -17,7 +17,7 @@ async function loginUser(username: string, password: string): Promise<boolean> {
         return true;
     } catch (error) {
         console.error('Login failed:', error);
-        return false;
+        throw new Error('Invalid username or password');
     }
 }
 

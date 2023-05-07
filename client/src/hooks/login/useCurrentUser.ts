@@ -3,7 +3,7 @@ import fetchAuthData from '../../utils/fetchAuthData';
 async function getCurrentUser(token: string) {
     try {
         const response = await fetchAuthData({
-            endpoint: '/users/current_user',
+            endpoint: '/current_user',
             method: 'GET',
             token: token,
         });

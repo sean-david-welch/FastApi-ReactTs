@@ -1,23 +1,11 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import { AuthProviderProps } from '../types/Types';
+import { AuthContextValue } from '../types/Types';
 import fetchAuthData from '../utils/fetchAuthData';
 
-interface AuthContextValue {
-    isLoggedIn: boolean;
-    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
-    loginAttempted: boolean;
-    setLoginAttempted: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const AuthContext = createContext<AuthContextValue | undefined>(undefined);
-
-export const useAuth = () => {
-    const context = useContext(AuthContext);
-    if (!context) {
-        throw new Error('useAuth must be used within an AuthProvider');
-    }
-    return context;
-};
+export const AuthContext = createContext<AuthContextValue | undefined>(
+    undefined
+);
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);

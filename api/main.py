@@ -90,14 +90,14 @@ async def logout(response: Response):
     return {"message": "Logged out successfully"}
 
 
+@app.get("/api/current_user", response_model=User)
+async def return_current_user(current_user: User = Depends(get_current_user)):
+    return current_user
+
+
 @app.get("/api/is-authenticated")
 async def get_authentication_status(authenticated: bool = Depends(is_authenticated)):
     return {"is_authenticated": authenticated}
-
-
-@app.get("/api/users/current_user", response_model=User)
-async def return_current_user(current_user: User = Depends(get_current_user)):
-    return current_user
 
 
 ############################

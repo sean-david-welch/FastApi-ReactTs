@@ -11,29 +11,29 @@ users_collection = database.Users
 
 
 # User CRUD
+async def create_user(user: UserDB):
+    result = await users_collection.insert_one(user.dict())
+    return result.inserted_id
+
+
 async def get_user(username: str) -> User:
     user_data = await users_collection.find_one({"username": username})
     if user_data:
         return UserDB(**user_data)
 
 
-async def create_user(user: UserDB):
-    result = await users_collection.insert_one(user.dict())
-    return result.inserted_id
-
-
 # Product CRUD
-async def fetch_product(id: str):
-    document = await products_collection.find_one({"id": id})
-    return document
-
-
 async def fetch_all_products():
     products = []
     cursor = products_collection.find({})
     async for document in cursor:
         products.append(Product(**document))
     return products
+
+
+async def fetch_product(id: str):
+    document = await products_collection.find_one({"id": id})
+    return document
 
 
 async def post_product(product: dict):

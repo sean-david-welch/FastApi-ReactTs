@@ -32,6 +32,13 @@ export interface AuthProviderProps {
     children: React.ReactNode;
 }
 
+export interface AuthContextValue {
+    isLoggedIn: boolean;
+    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+    loginAttempted: boolean;
+    setLoginAttempted: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 export interface LoginFormProps {
     setLoggedIn: (loggedIn: boolean) => void;
 }

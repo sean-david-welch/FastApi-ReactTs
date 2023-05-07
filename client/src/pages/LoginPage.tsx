@@ -1,4 +1,4 @@
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../hooks/login/useAuthContext';
 
 import Layout from '../components/Layout';
 import LoginForm from '../components/login/LoginForm';

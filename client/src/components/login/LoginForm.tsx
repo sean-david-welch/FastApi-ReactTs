@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/login/useAuthContext';
 import loginUser from '../../hooks/login/useLoginUser';
 
 const LoginForm: React.FC = () => {

@@ -2,7 +2,7 @@ import getCurrentUser from '../../hooks/login/useCurrentUser';
 import { useQuery } from '@tanstack/react-query';
 import { CurrentUserProps } from '../../types/Types';
 import LoadingSpinner from '../Loading';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/login/useAuthContext';
 
 const CurrentUser: React.FC<CurrentUserProps> = ({ token }) => {
     const { loginAttempted } = useAuth();

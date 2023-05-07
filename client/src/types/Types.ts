@@ -18,8 +18,24 @@ export interface FetchDataOptions {
     data?: any;
 }
 
+export interface FetchAuthDataOptions extends FetchDataOptions {
+    token?: string;
+    contentType?: string;
+}
+
 export interface FetchProductOptions extends FetchDataOptions {
     isSingleProduct?: boolean;
+}
+
+// Login Types
+export interface LoginFormProps {
+    setLoggedIn: (loggedIn: boolean) => void;
+}
+
+export interface CurrentUserProps {
+    isLoggedIn: boolean;
+    token: string;
+    attemptedLogin: boolean;
 }
 
 // Layout Types

@@ -1,18 +1,30 @@
 import axios from 'axios';
 import { API_BASE_URL } from './config';
-import { FetchDataOptions } from '../types/Types';
+import { FetchAuthDataOptions } from '../types/Types';
 
 axios.defaults.baseURL = API_BASE_URL;
-axios.defaults.headers.post['Content-Type'] = 'application/json';
 
-const fetchData = async (options: FetchDataOptions) => {
-    const { endpoint, method, data } = options;
+const fetchAuthData = async (options: FetchAuthDataOptions) => {
+    const {
+        endpoint,
+        method,
+        data,
+        token,
+        contentType = 'application/json',
+    } = options;
+
+    const headers = {
+        'Content-Type': contentType,
+        Authorization: `Bearer ${token}`,
+    };
 
     try {
         const response = await axios({
             method: method,
             url: endpoint,
             data: data,
+            headers: headers,
+            withCredentials: true,
         });
 
         if (response.status < 200 || response.status >= 300) {
@@ -28,4 +40,4 @@ const fetchData = async (options: FetchDataOptions) => {
     }
 };
 
-export default fetchData;
+export default fetchAuthData;

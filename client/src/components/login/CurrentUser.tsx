@@ -1,36 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import getCurrentUser from '../../hooks/login/useCurrentUser';
+import { useQuery } from '@tanstack/react-query';
+import { CurrentUserProps } from '../../types/Types';
+import LoadingSpinner from '../Loading';
 
-interface CurrentUserProps {
-    isLoggedIn: boolean;
-}
+const CurrentUser: React.FC<CurrentUserProps> = ({
+    isLoggedIn,
+    token,
+    attemptedLogin,
+}) => {
+    const {
+        data: currentUser,
+        isLoading,
+        error,
+    } = useQuery(['currentUser', token], () => getCurrentUser(token), {
+        enabled: isLoggedIn && attemptedLogin,
+        retry: false,
+    });
 
-const CurrentUser: React.FC<CurrentUserProps> = ({ isLoggedIn }) => {
-    const [currentUser, setCurrentUser] = useState<any>(null);
-    const [loading, setLoading] = useState<boolean>(true);
-
-    useEffect(() => {
-        const fetchCurrentUser = async () => {
-            try {
-                const user = await getCurrentUser();
-                setCurrentUser(user);
-            } catch (error) {
-                console.error('Failed to fetch current user:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        if (isLoggedIn) {
-            fetchCurrentUser();
-        }
-    }, [isLoggedIn]);
-
-    if (loading) {
-        return <div>Loading...</div>;
+    if (isLoading && attemptedLogin) {
+        return (
+            <div>
+                <LoadingSpinner />
+            </div>
+        );
     }
 
-    if (!currentUser) {
+    if (error || !currentUser) {
         return <div>Error fetching current user</div>;
     }
 
@@ -38,7 +34,6 @@ const CurrentUser: React.FC<CurrentUserProps> = ({ isLoggedIn }) => {
         <div>
             <h1>Current User</h1>
             <p>Username: {currentUser.username}</p>
-            {/* Display other user properties here */}
         </div>
     );
 };

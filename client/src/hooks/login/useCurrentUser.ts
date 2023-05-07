@@ -1,10 +1,11 @@
-import fetchData from '../../utils/fetchData';
+import fetchAuthData from '../../utils/fetchAuthData';
 
-async function getCurrentUser() {
+async function getCurrentUser(token: string) {
     try {
-        const response = await fetchData({
+        const response = await fetchAuthData({
             endpoint: '/users/current_user',
             method: 'GET',
+            token: token,
         });
 
         console.log('Current user:', response);

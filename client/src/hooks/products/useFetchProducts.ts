@@ -1,35 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { Product, FetchProductOptions } from '../../types/Types';
 import fetchData from '../../utils/fetchData';
 
 const useFetchProducts = (options: FetchProductOptions) => {
     const { endpoint, isSingleProduct = false } = options;
 
-    const [products, setProducts] = useState<Product[]>([]);
-    const [error, setError] = useState<string | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
+    const fetchProducts = async () => {
+        const responseData = await fetchData({
+            endpoint,
+            method: 'GET',
+        });
+        return isSingleProduct ? [responseData] : responseData;
+    };
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                setLoading(true);
-                const responseData = await fetchData({
-                    endpoint,
-                    method: 'GET',
-                });
-                if (isSingleProduct) {
-                    setProducts([responseData]);
-                } else {
-                    setProducts(responseData);
-                }
-            } catch (error: any) {
-                setError(error.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchProducts();
-    }, [endpoint, isSingleProduct]);
+    const {
+        data: products,
+        error,
+        isLoading: loading,
+    } = useQuery<Product[], Error>(
+        ['products', endpoint, isSingleProduct],
+        fetchProducts,
+        { retry: false }
+    );
 
     return { products, error, loading };
 };

@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 import loginUser from '../../hooks/login/useLoginUser';
-
-interface LoginFormProps {
-    setLoggedIn: (loggedIn: boolean) => void;
-}
+import { LoginFormProps } from '../../types/Types';
 
 const LoginForm: React.FC<LoginFormProps> = ({ setLoggedIn }) => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // ...
         const loggedInUser = await loginUser(username, password);
         if (loggedInUser) {
             setLoggedIn(true);

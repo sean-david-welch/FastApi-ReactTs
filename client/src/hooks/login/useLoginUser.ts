@@ -1,4 +1,4 @@
-import fetchData from '../../utils/fetchData';
+import fetchAuthData from '../../utils/fetchAuthData';
 
 async function loginUser(username: string, password: string): Promise<boolean> {
     try {
@@ -6,15 +6,12 @@ async function loginUser(username: string, password: string): Promise<boolean> {
         formData.append('username', username);
         formData.append('password', password);
 
-        const response = await fetchData(
-            {
-                endpoint: '/login',
-                method: 'POST',
-                data: formData,
-            },
-            undefined,
-            'multipart/form-data'
-        );
+        const response = await fetchAuthData({
+            endpoint: '/login',
+            method: 'POST',
+            data: formData,
+            contentType: 'multipart/form-data',
+        });
 
         console.log('Logged in:', response);
         return true; // Indicate that the login was successful

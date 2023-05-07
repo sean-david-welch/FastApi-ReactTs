@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FRONTEND_BASE_URL } from '../../utils/config';
 import {
     PaymentElement,
@@ -6,6 +6,7 @@ import {
     useStripe,
     useElements,
 } from '@stripe/react-stripe-js';
+
 import { PaymentIntent } from '@stripe/stripe-js';
 import { CheckoutFormProps } from '../../types/Types';
 

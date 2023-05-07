@@ -21,7 +21,11 @@ const CheckoutPage: React.FC = () => {
     return (
         <>
             {clientSecret && (
-                <Elements options={options} stripe={stripePromise}>
+                <Elements
+                    options={options}
+                    stripe={stripePromise}
+                    key={clientSecret}
+                >
                     <CheckoutForm
                         clientSecret={clientSecret}
                         totalAmount={totalAmount}

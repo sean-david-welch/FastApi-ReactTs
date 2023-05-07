@@ -1,47 +1,40 @@
-import fetchData from '../../utils/fetchData';
-import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { loadStripe } from '@stripe/stripe-js';
 import { useCartContext } from './useCartContext';
 import { STRIPE_PUBLIC_KEY } from '../../utils/config';
+import fetchData from '../../utils/fetchData';
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 
 export const usePaymentIntent = () => {
-    const [clientSecret, setClientSecret] = useState<string | null>('');
     const cartContext = useCartContext();
 
-    useEffect(() => {
-        const fetchPaymentIntent = async () => {
-            if (cartContext.cart.length === 0) {
-                return;
-            }
-
-            const items = cartContext.cart.map(item => ({
-                price: item.price,
-                quantity: item.quantity,
-            }));
-
-            try {
-                const data = await fetchData({
-                    endpoint: 'create-payment-intent',
-                    method: 'POST',
-                    data: JSON.stringify(items),
-                });
-
-                setClientSecret(data.client_secret);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-
-        fetchPaymentIntent();
-    }, [cartContext.cart]);
-
-    useEffect(() => {
-        if (!clientSecret) {
-            return;
+    const fetchPaymentIntent = async () => {
+        if (cartContext.cart.length === 0) {
+            return null;
         }
-    }, [clientSecret]);
+
+        const items = cartContext.cart.map(item => ({
+            price: item.price,
+            quantity: item.quantity,
+        }));
+
+        const data = await fetchData({
+            endpoint: 'create-payment-intent',
+            method: 'POST',
+            data: JSON.stringify(items),
+        });
+
+        return data.client_secret;
+    };
+
+    const {
+        data: clientSecret,
+        isLoading,
+        error,
+    } = useQuery(['paymentIntent'], fetchPaymentIntent, {
+        enabled: cartContext.cart.length > 0,
+    });
 
     const options = clientSecret
         ? {
@@ -53,5 +46,7 @@ export const usePaymentIntent = () => {
         clientSecret,
         stripePromise,
         options,
+        isLoading,
+        error,
     };
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import CartItem from './CartItem';
 import NavButton from '../navigation/NavButton';
 

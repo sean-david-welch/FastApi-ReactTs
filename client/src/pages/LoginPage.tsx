@@ -12,7 +12,7 @@ export const Login = () => {
         <Layout>
             <section id="login">
                 {!isLoggedIn ? (
-                    <LoginForm setLoggedIn={setIsLoggedIn} />
+                    <LoginForm />
                 ) : (
                     <div>
                         <CurrentUser isLoggedIn={isLoggedIn} token={''} />

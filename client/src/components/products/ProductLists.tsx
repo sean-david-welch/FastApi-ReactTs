@@ -5,7 +5,7 @@ import LoadingSpinner from '../Loading';
 function ProductsList() {
     const { products, loading } = useProductList();
 
-    if (loading) {
+    if (loading || !products) {
         return (
             <section id="products">
                 <LoadingSpinner />

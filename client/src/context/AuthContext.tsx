@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { AuthProviderProps } from '../types/Types';
 import { AuthContextValue } from '../types/Types';
@@ -32,6 +32,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             retry: false,
         }
     );
+
+    useEffect(() => {
+        if (!loginAttempted) {
+            setLoginAttempted(true);
+            refetch();
+        }
+    }, [loginAttempted, refetch]);
 
     return (
         <AuthContext.Provider

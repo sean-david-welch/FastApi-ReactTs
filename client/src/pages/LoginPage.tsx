@@ -11,7 +11,7 @@ export const Login = () => {
     return (
         <Layout>
             <section id="login">
-                {!isLoggedIn ? (
+                {isLoggedIn === false ? (
                     <LoginForm />
                 ) : (
                     <div>

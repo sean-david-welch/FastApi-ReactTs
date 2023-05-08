@@ -9,7 +9,7 @@ export const AuthContext = createContext<AuthContextValue | undefined>(
 );
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
     const [loginAttempted, setLoginAttempted] = useState<boolean>(false);
 
     const { refetch } = useQuery(
@@ -24,7 +24,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         {
             enabled: loginAttempted,
             onSuccess: data => {
-                setIsLoggedIn(data);
+                setIsLoggedIn(data.is_authenticated);
             },
             onError: () => {
                 setIsLoggedIn(false);
@@ -34,11 +34,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     );
 
     useEffect(() => {
-        if (!loginAttempted) {
+        const checkAuthenticationStatus = async () => {
+            try {
+                await refetch();
+            } catch (error) {
+                setIsLoggedIn(false);
+            }
             setLoginAttempted(true);
-            refetch();
-        }
-    }, [loginAttempted, refetch]);
+        };
+        checkAuthenticationStatus();
+    }, []);
+
+    if (isLoggedIn === null) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <AuthContext.Provider

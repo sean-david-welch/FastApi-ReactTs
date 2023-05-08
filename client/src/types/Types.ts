@@ -35,7 +35,7 @@ export interface AuthProviderProps {
 
 export interface AuthContextValue {
     isLoggedIn: boolean;
-    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean | null>>;
     loginAttempted: boolean;
     setLoginAttempted: React.Dispatch<React.SetStateAction<boolean>>;
     refetch: (options?: QueryFunctionContext) => Promise<unknown>;

@@ -12,7 +12,7 @@ const CurrentUser: React.FC<CurrentUserProps> = ({ token }) => {
         isLoading,
         error,
     } = useQuery(['currentUser', token], () => getCurrentUser(token), {
-        enabled: loginAttempted,
+        enabled: isLoggedIn && loginAttempted,
         retry: false,
     });
 
@@ -22,7 +22,7 @@ const CurrentUser: React.FC<CurrentUserProps> = ({ token }) => {
 
     if (isLoading) {
         return (
-            <div>
+            <div id="login">
                 <LoadingSpinner />
             </div>
         );

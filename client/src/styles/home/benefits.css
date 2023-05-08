@@ -50,20 +50,8 @@
     padding: 1rem;
     border: 0.15rem solid var(--black-color);
     border-radius: 1rem;
-    transition: all 500ms ease-in-out;
     background-color: var(--medium-color);
-}
-
-.benefits-list-item:nth-child(2) {
-    transition-delay: 300ms;
-}
-
-.benefits-list-item:nth-child(3) {
-    transition-delay: 600ms;
-}
-
-.benefits-list-item:nth-child(4) {
-    transition-delay: 900ms;
+    transition: all 800ms ease-in-out;
 }
 
 .benefits-list-item:hover {

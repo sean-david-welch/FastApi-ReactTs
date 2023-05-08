@@ -1,4 +1,4 @@
-import { createContext, useState, useCallback } from 'react';
+import { createContext, useState, useCallback, useEffect } from 'react';
 import { CartItem, CartContextData, CartProviderProps } from '../types/Types';
 
 export const CartContext = createContext<CartContextData>(
@@ -6,7 +6,14 @@ export const CartContext = createContext<CartContextData>(
 );
 
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
-    const [cart, setCart] = useState<CartItem[]>([]);
+    const [cart, setCart] = useState<CartItem[]>(() => {
+        const savedCart = localStorage.getItem('cart');
+        return savedCart ? JSON.parse(savedCart) : [];
+    });
+
+    useEffect(() => {
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }, [cart]);
 
     const findItemById = (id: string) =>
         cart.find(cartItem => cartItem.id === id);

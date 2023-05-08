@@ -83,7 +83,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
             setIsLoading(false);
             return;
         } else {
-            setMessage('An unexpected error occurred.');
+            setMessage('Payment successfully processed. Redirecting...');
         }
 
         setIsLoading(false);

@@ -1,5 +1,7 @@
-import Layout from '../components/Layout';
+import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import Layout from '../components/Layout';
+import { useCartContext } from '../hooks/cart/useCartContext';
 
 export const Success = () => {
     const [searchParams] = useSearchParams();
@@ -8,6 +10,11 @@ export const Success = () => {
         'payment_intent_client_secret'
     );
     const redirectStatus = searchParams.get('redirect_status');
+    const { clearCart } = useCartContext();
+
+    useEffect(() => {
+        clearCart();
+    }, [clearCart]);
 
     return (
         <Layout>

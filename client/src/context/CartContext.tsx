@@ -15,6 +15,10 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         localStorage.setItem('cart', JSON.stringify(cart));
     }, [cart]);
 
+    const clearCart = useCallback(() => {
+        setCart([]);
+    }, []);
+
     const findItemById = (id: string) =>
         cart.find(cartItem => cartItem.id === id);
 
@@ -52,7 +56,13 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         [cart]
     );
 
-    const value = { cart, updateQuantity, addToCart, removeFromCart };
+    const value = {
+        cart,
+        updateQuantity,
+        addToCart,
+        removeFromCart,
+        clearCart,
+    };
 
     return (
         <CartContext.Provider value={value}>{children}</CartContext.Provider>

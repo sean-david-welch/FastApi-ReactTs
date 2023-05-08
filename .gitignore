@@ -5,3 +5,4 @@ node_modules/
 ./api/.env
 .vscode/
 ```
+client/.env.production

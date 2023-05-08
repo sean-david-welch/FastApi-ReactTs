@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faCartShopping,
@@ -7,11 +6,10 @@ import {
     faArrowRight,
 } from '@fortawesome/free-solid-svg-icons';
 
-import logo from '../../assets/logo.png';
-import useTransparentHeader from '../../hooks/navigation/useTransparentHeader';
-
 import NavItem from './NavItem';
 import NavButton from './NavButton';
+import logo from '../../assets/logo.png';
+import useTransparentHeader from '../../hooks/navigation/useTransparentHeader';
 
 function Navbar() {
     const isTransparent = useTransparentHeader();

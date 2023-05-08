@@ -1,3 +1,29 @@
 #success .success-message {
-    margin: 10rem;
+    background-color: var(--dark-color);
+    margin: 15rem 10rem 5rem 10rem;
+    padding: 1rem;
+    border: 2px solid var(--grey-color);
+    border-radius: 0.5rem;
+    transition: all 600ms ease-in-out;
+}
+
+#success .success-message:hover {
+    border: 2px solid var(--gold-color);
+}
+
+#success .success-message img {
+    display: flex;
+    margin: 0 auto;
+    max-width: 7.5rem;
+    transition: all 600ms ease-in-out;
+}
+
+#success .success-message img:hover {
+    transform: scale(1.025);
+}
+
+#success .section-heading {
+    color: var(--light-color);
+    font-size: 1.5rem;
+    margin: 1rem;
 }

@@ -12,6 +12,22 @@
     margin: auto;
 }
 
+#checkout .stripe-form img {
+    display: flex;
+    margin: 0 10rem;
+    max-width: 7rem;
+    transition: all 600ms ease-in-out;
+}
+
+#checkout .stripe-form img:hover {
+    transform: scale(1.025);
+}
+
+#checkout .section-heading {
+    color: var(--light-color);
+    font-size: 1.5rem;
+}
+
 #checkout form {
     display: grid;
     margin: auto;

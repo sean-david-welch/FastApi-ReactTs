@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
 import CartItem from './CartItem';
 import NavButton from '../navigation/NavButton';
 
+import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 

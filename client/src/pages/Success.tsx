@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import Layout from '../components/Layout';
 import { useCartContext } from '../hooks/cart/useCartContext';
+import { Link } from 'react-router-dom';
+import Layout from '../components/Layout';
+import logo from '../assets/logo.png';
 
 export const Success = () => {
     const [searchParams] = useSearchParams();
@@ -20,7 +22,10 @@ export const Success = () => {
         <Layout>
             <section id="success">
                 <div className="success-message">
-                    <h1>Payment Successful</h1>
+                    <Link to="/">
+                        <img src={logo} id="logo" alt="Logo" />
+                    </Link>
+                    <h2 className="section-heading">Payment Successful</h2>
                     <p>Payment Intent ID: {paymentIntent}</p>
                     <p>
                         Payment Intent Client Secret:{' '}

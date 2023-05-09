@@ -52,9 +52,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-####################
-#  API Endpoints   #
-####################
+#######################
+#### API Endpoints ####
+#######################
 
 
 ########################
@@ -69,7 +69,10 @@ def root() -> RedirectResponse:
 ###### AUTH CRUD #######
 ########################
 @app.post("/api/register")
-async def register(user: UserCreate):
+async def register(user: UserCreate, current_user: User = Depends(get_current_user)):
+    if not current_user.is_superuser:
+        raise HTTPException(status_code=403, detail="Permission denied")
+
     existing_user = await get_user(user.username)
     if existing_user:
         raise HTTPException(status_code=400, detail="Username already exists")

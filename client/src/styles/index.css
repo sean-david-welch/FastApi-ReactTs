@@ -60,13 +60,18 @@ p {
     margin: 0 auto;
 }
 
+.container {
+    min-height: 100vh;
+    padding-top: 10rem;
+}
+
 .section-heading {
     font-size: 2rem;
     font-weight: 300;
     text-align: center;
     color: var(--black-color);
     display: inline-block;
-    margin-top: 10rem;
+    margin-bottom: 1rem;
 }
 
 #home .section-heading {

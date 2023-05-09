@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { Product } from '../../types/Types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus, faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { useCartContext } from '../../hooks/cart/useCartContext';
+import { useCart } from '../../hooks/cart/useCartContext';
 import { useCallback } from 'react';
 
 import NavButton from '../navigation/NavButton';
@@ -12,7 +12,7 @@ const ProductItem: React.FC<{ product: Product }> = ({ product }) => {
     const productCardRef = useRef<HTMLDivElement>(null);
     useIntersectionObserver(productCardRef);
 
-    const { addToCart } = useCartContext();
+    const { addToCart } = useCart();
     const handleAddToCart = useCallback(() => {
         if (product) {
             addToCart({

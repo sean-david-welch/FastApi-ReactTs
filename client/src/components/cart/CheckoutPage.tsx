@@ -1,12 +1,11 @@
 import React from 'react';
 import CheckoutForm from './CheckoutForm';
 import { Elements } from '@stripe/react-stripe-js';
-import { useCartContext } from '../../hooks/cart/useCartContext';
-import { usePaymentIntent } from '../../hooks/cart/usePaymentIntent';
+import { useCart } from '../../hooks/cart/useCartContext';
+import { usePaymentIntent } from '../../hooks/cart/useFetchIntent';
 import { CartItem } from '../../types/Types';
-
 const CheckoutPage: React.FC = () => {
-    const cartContext = useCartContext();
+    const cartContext = useCart();
     const { clientSecret, stripePromise, options } = usePaymentIntent();
 
     const calculateTotalAmount = (cart: CartItem[]) => {

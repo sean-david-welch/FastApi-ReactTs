@@ -174,6 +174,15 @@ async def create_payment_intent(cart: List[CartItem]):
         )
 
 
+@app.get("/api/get-payment-intent/{payment_intent_id}")
+async def get_payment_intent(payment_intent_id: str) -> JSONResponse:
+    try:
+        payment_intent = stripe.PaymentIntent.retrieve(payment_intent_id)
+        return JSONResponse({"payment_intent": payment_intent})
+    except Exception as e:
+        return JSONResponse({"error": str(e)}, status_code=400)
+
+
 @app.post("/api/stripe_webhook")
 async def stripe_webhook(
     request: Request, event: stripe.Event = Depends(verify_signature)

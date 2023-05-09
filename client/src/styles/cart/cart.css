@@ -1,5 +1,5 @@
 #cart .section-heading {
-    margin: 10rem auto 1rem auto;
+    margin: 0 auto;
 }
 
 #cart .cart-description .section-heading,
@@ -47,7 +47,7 @@
 }
 
 #cart .cart-list-item img {
-    max-width: 15rem;
+    max-width: 20rem;
     border: 2px solid var(--dark-color);
     border-radius: 1rem;
     transition: all 600ms ease-in-out;
@@ -64,7 +64,7 @@
 }
 
 #cart .cart-description > * {
-    margin: 0.75rem 0;
+    margin: 0.5rem 0;
 }
 
 #cart .cart-description input {

@@ -4,6 +4,9 @@ import Layout from '../components/Layout';
 import LoginForm from '../components/login/LoginForm';
 import CurrentUser from '../components/login/CurrentUser';
 import LogoutButton from '../components/login/LogoutButton';
+import SectionHeading from '../components/navigation/SectionHeading';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 export const Login = () => {
     const { isLoggedIn, setIsLoggedIn } = useAuth();
@@ -11,6 +14,14 @@ export const Login = () => {
     return (
         <Layout>
             <section id="login">
+                <SectionHeading
+                    headingText="Primal Formulas Login"
+                    buttonLabel="Continue Shopping"
+                    buttonUrl="/Shop"
+                    buttonIcon={
+                        <FontAwesomeIcon icon={faArrowRight} className="icon" />
+                    }
+                />
                 {isLoggedIn === false ? (
                     <LoginForm />
                 ) : (

@@ -5,12 +5,13 @@ import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
-import { useCartContext } from '../../hooks/cart/useCartContext';
+import { useCart } from '../../hooks/cart/useCartContext';
 import { CartViewProps } from '../../types/Types';
 
 const CartView: React.FC<CartViewProps> = ({ renderSectionHeading }) => {
     const [total, setTotal] = useState(0);
-    const { cart, removeFromCart, updateQuantity } = useCartContext();
+    useCart;
+    const { cart, removeFromCart, updateQuantity } = useCart();
 
     useEffect(() => {
         const newTotal = cart.reduce(

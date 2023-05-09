@@ -5,15 +5,13 @@ import ProductsList from '../components/products/ProductLists';
 
 export const Home = () => {
     return (
-        <div>
-            <Layout>
-                <section id="home">
-                    <Hero />
-                    <BenefitsHome />
-                    <ProductsList />
-                </section>
-            </Layout>
-        </div>
+        <Layout>
+            <section id="home">
+                <Hero />
+                <BenefitsHome />
+                <ProductsList />
+            </section>
+        </Layout>
     );
 };
 

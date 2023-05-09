@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useAuth } from '../../hooks/login/useAuthContext';
+import { Link } from 'react-router-dom';
 import loginUser from '../../hooks/login/useLoginUser';
+import logo from '../../assets/logo.png';
 
 const LoginForm: React.FC = () => {
     const [username, setUsername] = useState('');
@@ -24,6 +26,9 @@ const LoginForm: React.FC = () => {
 
     return (
         <form id="form" onSubmit={handleSubmit}>
+            <Link to="/">
+                <img src={logo} id="logo" alt="Logo" />
+            </Link>
             <div className="input-box">
                 <label htmlFor="username">Username:</label>
                 <input

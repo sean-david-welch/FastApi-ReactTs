@@ -1,13 +1,13 @@
+import { STRIPE_PUBLIC_KEY } from '../../utils/config';
 import { useQuery } from '@tanstack/react-query';
 import { loadStripe } from '@stripe/stripe-js';
-import { useCartContext } from './useCartContext';
-import { STRIPE_PUBLIC_KEY } from '../../utils/config';
+import { useCart } from './useCartContext';
 import fetchData from '../../utils/fetchData';
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 
 export const usePaymentIntent = () => {
-    const cartContext = useCartContext();
+    const cartContext = useCart();
 
     const fetchPaymentIntent = async () => {
         if (cartContext.cart.length === 0) {

@@ -12,9 +12,6 @@ if (import.meta.env.MODE === 'production') {
 
 export { FRONTEND_BASE_URL };
 
-console.log('FRONTEND_BASE_URL', FRONTEND_BASE_URL);
-console.log('MODE', import.meta.env.MODE);
-
 export const STRIPE_PUBLIC_KEY = import.meta.env.VITE_STRIPE_PUBLIC_KEY;
 
 export const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;

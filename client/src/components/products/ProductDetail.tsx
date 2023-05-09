@@ -4,12 +4,12 @@ import LoadingSpinner from '../Loading';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
-import { useCartContext } from '../../hooks/cart/useCartContext';
+import { useCart } from '../../hooks/cart/useCartContext';
 import { useCallback } from 'react';
 
 const ProductDetail = () => {
     const { product, loading } = useProductDetail();
-    const { addToCart } = useCartContext();
+    const { addToCart } = useCart();
 
     const handleAddToCart = useCallback(() => {
         if (product) {

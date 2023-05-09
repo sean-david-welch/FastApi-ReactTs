@@ -1,5 +1,6 @@
 import uuid
 import motor.motor_asyncio
+from bson import ObjectId
 
 from models import Product, UserDB, User
 from config import settings
@@ -12,7 +13,9 @@ users_collection = database.Users
 
 # User CRUD
 async def create_user(user: UserDB):
-    result = await users_collection.insert_one(user.dict())
+    user_data = user.dict()
+    user_data["id"] = str(user_data["id"])
+    result = await users_collection.insert_one(user_data)
     return result.inserted_id
 
 
@@ -20,6 +23,20 @@ async def get_user(username: str) -> User:
     user_data = await users_collection.find_one({"username": username})
     if user_data:
         return UserDB(**user_data)
+
+
+async def get_user_by_id(user_id: str) -> User:
+    user_data = await users_collection.find_one({"id": user_id})
+    if user_data:
+        return UserDB(**user_data)
+
+
+async def update_user(user_id: str, user_data: dict):
+    await users_collection.update_one({"id": user_id}, {"$set": user_data})
+
+
+async def delete_user(user_id: str):
+    await users_collection.delete_one({"id": user_id})
 
 
 # Product CRUD

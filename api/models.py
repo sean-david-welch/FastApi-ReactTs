@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
 from typing import Optional
+from uuid import uuid4
 
 
 class Product(BaseModel):
@@ -23,10 +24,12 @@ class CartItem(BaseModel):
 
 
 class User(BaseModel):
+    id: Optional[str] = Field(default_factory=uuid4, example="null")
     username: str
     email: Optional[str] = None
     full_name: Optional[str] = None
     disabled: Optional[bool] = None
+    is_superuser: Optional[bool] = False
 
 
 class UserCreate(BaseModel):
@@ -34,10 +37,17 @@ class UserCreate(BaseModel):
     email: Optional[str] = None
     full_name: Optional[str] = None
     password: str
+    is_superuser: Optional[bool] = False
 
 
 class UserDB(User):
     hashed_password: str
+
+
+class UserEdit(BaseModel):
+    username: Optional[str] = None
+    password: Optional[str] = None
+    email: Optional[str] = None
 
 
 class Token(BaseModel):

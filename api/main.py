@@ -17,7 +17,16 @@ from security import (
     get_current_user,
 )
 
-from models import Product, ProductUpdate, CartItem, Token, User, UserCreate, UserDB
+from models import (
+    Product,
+    ProductUpdate,
+    CartItem,
+    Token,
+    User,
+    UserCreate,
+    UserDB,
+    UserEdit,
+)
 from database import (
     fetch_all_products,
     fetch_product,
@@ -26,6 +35,9 @@ from database import (
     delete_product,
     get_user,
     create_user,
+    update_user,
+    delete_user,
+    get_user_by_id,
 )
 
 app = FastAPI()
@@ -54,7 +66,7 @@ def root() -> RedirectResponse:
 
 
 ########################
-######### AUTH #########
+###### AUTH CRUD #######
 ########################
 @app.post("/api/register")
 async def register(user: UserCreate):
@@ -69,6 +81,36 @@ async def register(user: UserCreate):
     return {"message": "User created successfully"}
 
 
+@app.delete("/api/users/{user_id}")
+async def delete_user_account(
+    user_id: str, current_user: User = Depends(get_current_user)
+):
+    if not current_user.is_superuser:
+        raise HTTPException(status_code=403, detail="Permission denied")
+
+    await delete_user(user_id)
+    return {"message": "User deleted successfully"}
+
+
+@app.put("/api/users/{user_id}", response_model=UserDB)
+async def edit_user_account(
+    user_id: str, user: UserEdit, current_user: User = Depends(get_current_user)
+):
+    if not current_user.is_superuser:
+        raise HTTPException(status_code=403, detail="Permission denied")
+
+    user_data = user.dict(exclude_unset=True)
+    if "password" in user_data:
+        user_data["hashed_password"] = get_password_hash(user_data.pop("password"))
+
+    await update_user(user_id, user_data)
+    updated_user = await get_user_by_id(user_id)
+    return updated_user
+
+
+########################
+######### AUTH #########
+########################
 @app.post("/api/login", response_model=Token)
 async def login(response: Response, form_data: OAuth2PasswordRequestForm = Depends()):
     user = await authenticate_user(form_data.username, form_data.password)
@@ -119,7 +161,12 @@ async def get_product(product_id: str):
 
 
 @app.post("/api/products", response_model=Product)
-async def create_product(product: Product):
+async def create_product(
+    product: Product, current_user: User = Depends(get_current_user)
+):
+    if not current_user.is_superuser:
+        raise HTTPException(status_code=403, detail="Permission denied")
+
     response = await post_product(product.dict())
     if response:
         return response
@@ -129,7 +176,14 @@ async def create_product(product: Product):
 
 
 @app.put("/api/products/{product_id}", response_model=Product)
-async def update_product(product_id: str, product: ProductUpdate):
+async def update_product(
+    product_id: str,
+    product: ProductUpdate,
+    current_user: User = Depends(get_current_user),
+):
+    if not current_user.is_superuser:
+        raise HTTPException(status_code=403, detail="Permission denied")
+
     response = await put_product(product_id, product.dict(exclude_unset=True))
     if response:
         return response
@@ -137,7 +191,12 @@ async def update_product(product_id: str, product: ProductUpdate):
 
 
 @app.delete("/api/products/{product_id}")
-async def remove_product(product_id: str):
+async def remove_product(
+    product_id: str, current_user: User = Depends(get_current_user)
+):
+    if not current_user.is_superuser:
+        raise HTTPException(status_code=403, detail="Permission denied")
+
     response = await delete_product(product_id)
     if response:
         return response

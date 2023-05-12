@@ -4,14 +4,15 @@ import { Suspense, lazy } from 'react';
 import Loading from './components/Loading';
 
 export default function AppRoutes() {
-    const Home = lazy(async () => await import('./pages/Home'));
-    const About = lazy(async () => await import('./pages/About'));
-    const Shop = lazy(async () => await import('./pages/Shop'));
-    const Cart = lazy(async () => await import('./pages/Cart'));
-    const Checkout = lazy(async () => await import('./pages/Checkout'));
-    const Login = lazy(async () => await import('./pages/LoginPage'));
-    const Success = lazy(async () => await import('./pages/Success'));
-    const ProductPage = lazy(async () => await import('./pages/ProductPage'));
+    const Home = lazy(() => import('./pages/Home'));
+    const About = lazy(() => import('./pages/About'));
+    const Shop = lazy(() => import('./pages/Shop'));
+    const Cart = lazy(() => import('./pages/Cart'));
+    const Checkout = lazy(() => import('./pages/Checkout'));
+    const Login = lazy(() => import('./pages/LoginPage'));
+    const Success = lazy(() => import('./pages/Success'));
+    const ProductPage = lazy(() => import('./pages/ProductPage'));
+    const ProductFormPage = lazy(() => import('./pages/ProductFormPage'));
 
     return (
         <CartProvider>
@@ -27,6 +28,10 @@ export default function AppRoutes() {
                     <Route
                         path="/product/:productId"
                         element={<ProductPage />}
+                    />
+                    <Route
+                        path="/create-product"
+                        element={<ProductFormPage />}
                     />
                 </Routes>
             </Suspense>

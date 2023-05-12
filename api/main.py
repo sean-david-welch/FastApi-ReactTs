@@ -124,7 +124,11 @@ async def login(response: Response, form_data: OAuth2PasswordRequestForm = Depen
         data={"sub": user.username}, expires_delta=access_token_expires
     )
 
-    response.set_cookie(key="access_token", value=access_token, httponly=True)
+    response.set_cookie(
+        key="access_token",
+        value=access_token,
+        httponly=True,
+    )
 
     return {"access_token": access_token, "token_type": "bearer"}
 
@@ -143,6 +147,11 @@ async def return_current_user(current_user: User = Depends(get_current_user)):
 @app.get("/api/is-authenticated")
 async def get_authentication_status(authenticated: bool = Depends(is_authenticated)):
     return {"is_authenticated": authenticated}
+
+
+@app.get("/api/is-superuser")
+async def get_superuser_status(current_user: User = Depends(get_current_user)):
+    return {"is_superuser": current_user.is_superuser}
 
 
 ############################

@@ -52,6 +52,7 @@ const ProductDetail = () => {
                     <FontAwesomeIcon icon={faArrowRight} className="icon" />
                 }
             />
+
             <div className="product-detail">
                 <img src={product?.image} alt={product?.name} />
 

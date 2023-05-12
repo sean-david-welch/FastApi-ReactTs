@@ -5,20 +5,30 @@
 #form {
     display: flex;
     flex-direction: column;
-    margin: 2rem 20rem 0 20rem;
+    margin: 2rem 20rem;
     padding: 1rem;
     border: 2px solid var(--grey-color);
     border-radius: 0.5rem;
     background-color: var(--dark-color);
 }
 
-#form .input-box {
-    margin: 1rem;
+#form .input-box label {
+    margin: auto 2rem;
+    font-size: 1.25rem;
 }
 
 #form .input-box input {
-    margin: 1rem;
-    color: var(--dark-color);
+    margin: 0.5rem auto;
+    padding: 0.5rem 2rem;
+    border-radius: 0.5rem;
+    border: 0.2rem solid var(--grey-color);
+    background-color: var(--dark-color);
+    color: var(--white-color);
+    transition: all 500ms ease-in-out;
+}
+
+#login #form button {
+    margin: 1rem auto;
 }
 
 #login .current-user {

@@ -1,6 +1,7 @@
 import { Product } from '../../types/Types';
 import { useState } from 'react';
-import LogoHeading from '../navigation/LogoHeading';
+import { useNavigate } from 'react-router-dom';
+import ProductForm from './ProductForm';
 import useCreateProduct from '../../hooks/products/useCreateProduct';
 
 const CreateProductForm = () => {
@@ -11,6 +12,7 @@ const CreateProductForm = () => {
         image: '',
     } as Product);
     const createProduct = useCreateProduct();
+    const navigate = useNavigate();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -23,47 +25,23 @@ const CreateProductForm = () => {
         createProduct.mutate(product, {
             onSuccess: () => {
                 setProduct({} as Product);
+                navigate(`/shop`);
             },
             onError: () => {},
         });
     };
 
     return (
-        <form className="product-form" onSubmit={handleSubmit}>
-            <LogoHeading headingText={`Create New Product:`} />
-
-            {Object.keys(product).map(
-                key =>
-                    ['name', 'description', 'price', 'image'].includes(key) && (
-                        <div className="input-fields" key={key}>
-                            <label>
-                                {key.charAt(0).toUpperCase() + key.slice(1)}:
-                            </label>
-                            <input
-                                type="text"
-                                name={key}
-                                placeholder={key}
-                                value={product[key as keyof Product] || ''}
-                                onChange={handleChange}
-                            />
-                        </div>
-                    )
-            )}
-            <button
-                className="btn btn-nav btn-primary"
-                type="submit"
-                disabled={createProduct.isLoading}
-            >
-                {createProduct.isLoading ? 'Creating...' : 'Create Product'}
-            </button>
-            {createProduct.isSuccess && <p>Product created successfully!</p>}
-            {createProduct.isError && (
-                <p>
-                    Error:{' '}
-                    {createProduct.error.message || 'Something went wrong.'}
-                </p>
-            )}
-        </form>
+        <ProductForm
+            product={product}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+            isLoading={createProduct.isLoading}
+            isSuccess={createProduct.isSuccess}
+            isError={createProduct.isError}
+            errorMessage={createProduct.error?.message || ''}
+            operation="Create"
+        />
     );
 };
 

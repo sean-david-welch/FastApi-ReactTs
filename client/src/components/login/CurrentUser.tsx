@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '../../hooks/login/useAuthContext';
 import { CurrentUserProps } from '../../types/Types';
+import LogoutButton from './LogoutButton';
 import LogoHeading from '../navigation/LogoHeading';
 import getCurrentUser from '../../hooks/login/useCurrentUser';
 import LoadingSpinner from '../Loading';
@@ -38,6 +39,7 @@ const CurrentUser: React.FC<CurrentUserProps> = ({ token }) => {
             <LogoHeading headingText={`Welcome, ${currentUser.username}`} />
             <p>Username: {currentUser.username}</p>
             <p>Email: {currentUser.email}</p>
+            <LogoutButton />
         </div>
     );
 };

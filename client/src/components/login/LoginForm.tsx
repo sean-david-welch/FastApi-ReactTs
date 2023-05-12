@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useAuth } from '../../hooks/login/useAuthContext';
 import loginUser from '../../hooks/login/useLoginUser';
 import LogoHeading from '../navigation/LogoHeading';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 const LoginForm: React.FC = () => {
     const [username, setUsername] = useState('');
@@ -50,7 +52,7 @@ const LoginForm: React.FC = () => {
             {errorMessage && <p className="error">{errorMessage}</p>}
 
             <button className="btn btn-primary btn-nav" type="submit">
-                Login
+                Login <FontAwesomeIcon icon={faArrowRight} className="icon" />
             </button>
         </form>
     );

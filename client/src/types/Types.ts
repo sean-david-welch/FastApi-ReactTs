@@ -2,6 +2,7 @@ import { LinkProps } from 'react-router-dom';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { QueryFunctionContext } from '@tanstack/react-query';
 import { Method } from 'axios';
+import { UseMutationResult } from '@tanstack/react-query';
 
 // Product Types
 export interface Product {
@@ -83,6 +84,8 @@ export interface NavItemProps extends LinkProps {
 
 export interface NavButtonProps {
     to: string | { pathname: string; state?: Record<string, any> };
+    type?: 'button' | 'submit' | 'reset';
+    disabled?: UseMutationResult;
     label: string;
     icon: React.ReactNode;
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;

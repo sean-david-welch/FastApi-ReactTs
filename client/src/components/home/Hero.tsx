@@ -1,6 +1,6 @@
 import hero1 from '../../assets/hero1.mp4';
+import NavButton from '../navigation/NavButton';
 
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
@@ -16,12 +16,13 @@ export const Hero = () => {
                 <p className="hero-para">
                     Reach your wellness potential with our comprehnsive formulas
                 </p>
-                <button className="btn btn-primary btn-nav">
-                    <Link to="/shop">
-                        {'Shop Primal Formulas'}
-                        <FontAwesomeIcon icon={faArrowRight} className="icon" />
-                    </Link>
-                </button>
+                <ul className="nav-button">
+                    <NavButton
+                        to="/shop"
+                        icon={<FontAwesomeIcon icon={faArrowRight} />}
+                        label="Shop Primal Formulas"
+                    />
+                </ul>
             </div>
         </div>
     );

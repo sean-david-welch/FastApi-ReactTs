@@ -3,13 +3,12 @@ import { useAuth } from '../hooks/login/useAuthContext';
 import Layout from '../components/Layout';
 import LoginForm from '../components/login/LoginForm';
 import CurrentUser from '../components/login/CurrentUser';
-import LogoutButton from '../components/login/LogoutButton';
 import SectionHeading from '../components/navigation/SectionHeading';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 export const Login = () => {
-    const { isLoggedIn, setIsLoggedIn } = useAuth();
+    const { isLoggedIn } = useAuth();
 
     return (
         <Layout>
@@ -25,10 +24,7 @@ export const Login = () => {
                 {isLoggedIn === false ? (
                     <LoginForm />
                 ) : (
-                    <div>
-                        <CurrentUser isLoggedIn={isLoggedIn} token={''} />
-                        <LogoutButton setLoggedIn={setIsLoggedIn} />
-                    </div>
+                    <CurrentUser isLoggedIn={isLoggedIn} token={''} />
                 )}
             </section>
         </Layout>

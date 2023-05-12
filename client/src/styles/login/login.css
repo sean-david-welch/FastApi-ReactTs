@@ -2,17 +2,9 @@
     min-height: 100vh;
 }
 
-#login img {
-    margin: 1rem auto;
-    max-width: 10rem;
-    transition: all 600ms ease-in-out;
-}
-
-#login img:hover {
-    transform: scale(1.01);
-}
-
 #form {
+    display: flex;
+    flex-direction: column;
     margin: 2rem 20rem 0 20rem;
     padding: 1rem;
     border: 2px solid var(--grey-color);

@@ -8,7 +8,6 @@ async function getCurrentUser(token: string) {
             token: token,
         });
 
-        console.log('Current user:', response);
         return response;
     } catch (error) {
         console.error('Failed to fetch current user:', error);

@@ -48,7 +48,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
                 endpoint: '/is-superuser',
                 method: 'GET',
             });
-            console.log('superUserStatus:', superUserStatus);
             return superUserStatus;
         },
         {

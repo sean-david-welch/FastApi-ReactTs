@@ -12,6 +12,13 @@ export interface Product {
     image: string;
 }
 
+export interface ProductUpdate {
+    name: string;
+    price: number;
+    description: string;
+    image: string;
+}
+
 // Fetch Data Types
 export interface FetchDataOptions {
     endpoint: string;
@@ -76,7 +83,7 @@ export interface NavItemProps extends LinkProps {
 
 export interface NavButtonProps {
     to: string | { pathname: string; state?: Record<string, any> };
-    children: React.ReactNode;
+    label: string;
     icon: React.ReactNode;
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
@@ -94,10 +101,16 @@ export interface BenefitItemProps {
 }
 
 export interface SectionHeadingProps {
+    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
     headingText: string;
     buttonLabel: string;
     buttonUrl: string;
     buttonIcon: React.ReactNode;
+}
+
+export interface LogoHeadingProps {
+    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+    headingText: string;
 }
 
 export interface CartViewProps {

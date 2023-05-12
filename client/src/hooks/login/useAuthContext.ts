@@ -8,8 +8,23 @@ export const useAuth = () => {
         throw new Error('useAuth must be used within an AuthProvider');
     }
 
-    const { user, isLoggedIn, setIsLoggedIn, loginAttempted } = context;
+    const {
+        user,
+        isLoggedIn,
+        loginAttempted,
+        setIsLoggedIn,
+        setLoginAttempted,
+        setIsSuperUser,
+    } = context;
     const isSuperUser = user && user.is_superuser;
 
-    return { user, isLoggedIn, setIsLoggedIn, isSuperUser, loginAttempted };
+    return {
+        user,
+        isLoggedIn,
+        isSuperUser,
+        loginAttempted,
+        setIsLoggedIn,
+        setLoginAttempted,
+        setIsSuperUser,
+    };
 };

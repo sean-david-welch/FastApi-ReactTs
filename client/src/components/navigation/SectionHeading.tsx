@@ -6,14 +6,18 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
     buttonLabel,
     buttonUrl,
     buttonIcon,
+    onClick,
 }) => {
     return (
         <>
             <h2 className="section-heading">{headingText}</h2>
             <ul>
-                <NavButton to={buttonUrl} icon={buttonIcon}>
-                    {buttonLabel}
-                </NavButton>
+                <NavButton
+                    onClick={onClick}
+                    to={buttonUrl}
+                    icon={buttonIcon}
+                    label={buttonLabel}
+                />
             </ul>
         </>
     );

@@ -2,12 +2,12 @@ import { useMutation } from '@tanstack/react-query';
 import { Product } from '../../types/Types';
 import { AxiosError } from 'axios';
 
-import fetchData from '../../utils/fetchData';
+import fetchAuthData from '../../utils/fetchAuthData';
 
 const useCreateProduct = () => {
     const createProduct = useMutation<Product, AxiosError, Product>(
         async (product: Product) => {
-            const response = await fetchData({
+            const response = await fetchAuthData({
                 endpoint: '/products',
                 method: 'POST',
                 data: product,

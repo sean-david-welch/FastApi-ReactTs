@@ -1,16 +1,19 @@
 import { Product } from '../../types/Types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import LogoHeading from '../navigation/LogoHeading';
-import useCreateProduct from '../../hooks/products/useCreateProduct';
+import useUpdateProduct from '../../hooks/products/useUpdateProduct';
 
-const CreateProductForm = () => {
-    const [product, setProduct] = useState<Product>({
-        name: '',
-        description: '',
-        price: 0,
-        image: '',
-    } as Product);
-    const createProduct = useCreateProduct();
+interface ProductUpdateFormProps {
+    initialProduct: Product;
+}
+
+const ProductUpdateForm = ({ initialProduct }: ProductUpdateFormProps) => {
+    const [product, setProduct] = useState<Product>(initialProduct);
+    const updateProduct = useUpdateProduct();
+
+    useEffect(() => {
+        setProduct(initialProduct);
+    }, [initialProduct]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -20,25 +23,26 @@ const CreateProductForm = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        createProduct.mutate(product, {
-            onSuccess: () => {
-                setProduct({} as Product);
-            },
-            onError: () => {},
-        });
+        updateProduct.mutate(
+            { product_id: product.id, product },
+            {
+                onSuccess: () => {
+                    setProduct(initialProduct);
+                },
+                onError: () => {},
+            }
+        );
     };
 
     return (
         <form className="product-form" onSubmit={handleSubmit}>
-            <LogoHeading headingText={`Create New Product:`} />
+            <LogoHeading headingText={`Update ${product.name}`} />
 
             {Object.keys(product).map(
                 key =>
                     ['name', 'description', 'price', 'image'].includes(key) && (
                         <div className="input-fields" key={key}>
-                            <label>
-                                {key.charAt(0).toUpperCase() + key.slice(1)}:
-                            </label>
+                            <label>{key}</label>
                             <input
                                 type="text"
                                 name={key}
@@ -52,19 +56,19 @@ const CreateProductForm = () => {
             <button
                 className="btn btn-nav btn-primary"
                 type="submit"
-                disabled={createProduct.isLoading}
+                disabled={updateProduct.isLoading}
             >
-                {createProduct.isLoading ? 'Creating...' : 'Create Product'}
+                {updateProduct.isLoading ? 'Updating...' : 'Update Product'}
             </button>
-            {createProduct.isSuccess && <p>Product created successfully!</p>}
-            {createProduct.isError && (
+            {updateProduct.isSuccess && <p>Product updated successfully!</p>}
+            {updateProduct.isError && (
                 <p>
                     Error:{' '}
-                    {createProduct.error.message || 'Something went wrong.'}
+                    {updateProduct.error.message || 'Something went wrong.'}
                 </p>
             )}
         </form>
     );
 };
 
-export default CreateProductForm;
+export default ProductUpdateForm;

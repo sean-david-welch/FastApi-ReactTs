@@ -1,11 +1,14 @@
 import useProductDetail from '../../hooks/products/useProductDetail';
 import NavButton from '../navigation/NavButton';
+import SectionHeading from '../navigation/SectionHeading';
 import LoadingSpinner from '../Loading';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 import { useCart } from '../../hooks/cart/useCartContext';
 import { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 const ProductDetail = () => {
     const { product, loading } = useProductDetail();
@@ -24,6 +27,12 @@ const ProductDetail = () => {
         }
     }, [addToCart, product]);
 
+    const navigate = useNavigate();
+
+    const handleUpdateClick = () => {
+        navigate('/product-form', { state: { action: 'update', product } });
+    };
+
     if (loading) {
         return (
             <section id="product-detail">
@@ -34,7 +43,15 @@ const ProductDetail = () => {
 
     return (
         <section id="product-detail">
-            <h2 className="section-heading">{product?.name}:</h2>
+            <SectionHeading
+                onClick={handleUpdateClick}
+                headingText={`${product ? product.name : ''}`}
+                buttonLabel="Update Product"
+                buttonUrl="/product-form"
+                buttonIcon={
+                    <FontAwesomeIcon icon={faArrowRight} className="icon" />
+                }
+            />
             <div className="product-detail">
                 <img src={product?.image} alt={product?.name} />
 
@@ -45,9 +62,8 @@ const ProductDetail = () => {
                             to="/cart"
                             icon={<FontAwesomeIcon icon={faCartPlus} />}
                             onClick={handleAddToCart}
-                        >
-                            Add to Cart - €{product?.price}
-                        </NavButton>
+                            label={`Add to Cart - €${product?.price ?? 'N/A'}`}
+                        />
                     </ul>
                     <p>{product?.description}</p>
                 </div>

@@ -29,10 +29,7 @@ export default function AppRoutes() {
                         path="/product/:productId"
                         element={<ProductPage />}
                     />
-                    <Route
-                        path="/create-product"
-                        element={<ProductFormPage />}
-                    />
+                    <Route path="/product-form" element={<ProductFormPage />} />
                 </Routes>
             </Suspense>
         </CartProvider>

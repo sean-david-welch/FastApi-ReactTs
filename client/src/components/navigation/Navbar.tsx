@@ -23,15 +23,9 @@ function Navbar() {
                 <div className="nav-list-side">
                     <NavButton
                         to="/shop"
-                        icon={
-                            <FontAwesomeIcon
-                                icon={faArrowRight}
-                                className="icon"
-                            />
-                        }
-                    >
-                        Products
-                    </NavButton>
+                        icon={<FontAwesomeIcon icon={faArrowRight} />}
+                        label="Products"
+                    />
                     <NavItem to="/cart">
                         <FontAwesomeIcon icon={faCartShopping} size="xl" />
                     </NavItem>

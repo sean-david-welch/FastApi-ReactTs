@@ -1,10 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import { CurrentUserProps } from '../../types/Types';
 import { useAuth } from '../../hooks/login/useAuthContext';
-import { Link } from 'react-router-dom';
+import { CurrentUserProps } from '../../types/Types';
+import LogoHeading from '../navigation/LogoHeading';
 import getCurrentUser from '../../hooks/login/useCurrentUser';
 import LoadingSpinner from '../Loading';
-import logo from '../../assets/logo.png';
 
 const CurrentUser: React.FC<CurrentUserProps> = ({ token }) => {
     const { isLoggedIn, loginAttempted } = useAuth();
@@ -36,12 +35,7 @@ const CurrentUser: React.FC<CurrentUserProps> = ({ token }) => {
 
     return (
         <div className="current-user">
-            <Link to="/">
-                <img src={logo} id="logo" alt="Logo" />
-            </Link>
-            <h2 className="section-heading">
-                Current User: {currentUser.full_name}
-            </h2>
+            <LogoHeading headingText={`Welcome, ${currentUser.username}`} />
             <p>Username: {currentUser.username}</p>
             <p>Email: {currentUser.email}</p>
         </div>

@@ -1,6 +1,6 @@
-import useProductList from '../../hooks/products/useProductList';
 import ProductItem from './ProductItem';
 import LoadingSpinner from '../Loading';
+import useProductList from '../../hooks/products/useProductList';
 
 function ProductsList() {
     const { products, loading } = useProductList();
@@ -15,9 +15,6 @@ function ProductsList() {
 
     return (
         <section id="products">
-            <h2 className="section-heading">
-                Browse Primal Formula's Products:
-            </h2>
             <div className="products">
                 <ul>
                     {products.map(product => (

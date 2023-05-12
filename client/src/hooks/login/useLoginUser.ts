@@ -13,8 +13,7 @@ async function loginUser(username: string, password: string): Promise<boolean> {
             contentType: 'multipart/form-data',
         });
 
-        console.log('Logged in:', response);
-        return true;
+        return response;
     } catch (error) {
         console.error('Login failed:', error);
         throw new Error('Invalid username or password');

@@ -1,12 +1,18 @@
 import Layout from '../components/Layout';
-import ProductForm from '../components/products/createProductForm';
+import CreateProductForm from '../components/products/CreateProductForm';
+import UpdateProductForm from '../components/products/UpdateProductForm';
+import { useLocation } from 'react-router-dom';
 
 export const ProductFormPage = () => {
+    const { state } = useLocation();
     return (
         <Layout>
-            <section id="Product-Form">
-                <h1>Product Form</h1>
-                <ProductForm />
+            <section id="product-form">
+                {state?.action === 'update' && state.product ? (
+                    <UpdateProductForm initialProduct={state.product} />
+                ) : (
+                    <CreateProductForm />
+                )}
             </section>
         </Layout>
     );

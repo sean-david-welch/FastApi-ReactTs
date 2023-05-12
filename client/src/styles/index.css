@@ -74,6 +74,17 @@ p {
     margin-bottom: 1rem;
 }
 
+.logo-heading {
+    display: flex;
+    margin: 0.25rem auto;
+    max-width: 10rem;
+    transition: all 600ms ease-in-out;
+}
+
+.logo-heading:hover {
+    transform: scale(1.01);
+}
+
 #home .section-heading {
     margin-top: 5rem;
 }

@@ -1,15 +1,20 @@
 import { Link } from 'react-router-dom';
 import { NavButtonProps } from '../../types/Types';
 
-function NavButton({ to, children, icon, onClick }: NavButtonProps) {
+function NavButton({ to, label, icon, onClick }: NavButtonProps) {
     return (
-        <li className="nav-button">
-            <button className="btn btn-nav btn-primary" onClick={onClick}>
+        <>
+            <li className="nav-button">
                 <Link to={to}>
-                    {children} {icon}
+                    <button
+                        className="btn btn-nav btn-primary"
+                        onClick={onClick}
+                    >
+                        {label} <i className="icon">{icon}</i>
+                    </button>
                 </Link>
-            </button>
-        </li>
+            </li>
+        </>
     );
 }
 

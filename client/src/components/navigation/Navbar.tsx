@@ -17,21 +17,23 @@ function Navbar() {
     return (
         <nav id="navbar" className={isTransparent ? 'transparent' : ''}>
             <ul className="nav-list">
-                <Link to="/">
-                    <img src={logo} id="logo" alt="Logo" />
+                <Link className="logo" to="/">
+                    <img src={logo} className="logo" id="logo" alt="Logo" />
                 </Link>
                 <div className="nav-list-side">
-                    <NavButton
-                        to="/shop"
-                        icon={<FontAwesomeIcon icon={faArrowRight} />}
-                        label="Products"
-                    />
-                    <NavItem to="/cart">
-                        <FontAwesomeIcon icon={faCartShopping} size="xl" />
-                    </NavItem>
-                    <NavItem to="/login">
-                        <FontAwesomeIcon icon={faCircleUser} size="2xl" />
-                    </NavItem>
+                    <ul className="nav-list">
+                        <NavButton
+                            to="/shop"
+                            icon={<FontAwesomeIcon icon={faArrowRight} />}
+                            label="Products"
+                        />
+                        <NavItem id="cart" aria-label="cart-nav" to="/cart">
+                            <FontAwesomeIcon icon={faCartShopping} size="xl" />
+                        </NavItem>
+                        <NavItem id="user" aria-label="user-nav" to="/login">
+                            <FontAwesomeIcon icon={faCircleUser} size="2xl" />
+                        </NavItem>
+                    </ul>
                 </div>
             </ul>
         </nav>

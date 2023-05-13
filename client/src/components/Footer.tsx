@@ -27,13 +27,15 @@ function Footer() {
                 <Link to="/">
                     <img src={logo} alt="Logo" id="logo" />
                 </Link>
-                <ul>
-                    <li>Primal Formulas Ltd.</li>
-                    <li>Clonross, Drumree</li>
-                    <li>Co. Meath,</li>
-                    <li>A85 PK30</li>
-                    <li>Tel: 01 - 8259289</li>
-                    <li>Email: info@primalformulas.ie</li>
+                <ul className="address-list">
+                    <li className="address-item">Primal Formulas Ltd.</li>
+                    <li className="address-item">Clonross, Drumree</li>
+                    <li className="address-item">Co. Meath,</li>
+                    <li className="address-item">A85 PK30</li>
+                    <li className="address-item">Tel: 01 - 8259289</li>
+                    <li className="address-item">
+                        Email: info@primalformulas.ie
+                    </li>
                 </ul>
             </div>
             <div className="social-links">

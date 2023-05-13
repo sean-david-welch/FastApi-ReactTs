@@ -17,7 +17,7 @@ function SideNavbar() {
         <>
             <div className={`side-nav ${isOpen ? 'open' : 'closed'}`}>
                 <nav className="side-nav__menu">
-                    <ul>
+                    <ul className="nav-list">
                         <NavItem to="/about">About</NavItem>
                         <NavItem to="/shop">Products</NavItem>
                         <NavItem to="/cart">Cart</NavItem>

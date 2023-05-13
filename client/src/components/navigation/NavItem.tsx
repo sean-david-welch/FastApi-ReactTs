@@ -4,7 +4,9 @@ import { NavItemProps } from '../../types/Types';
 function NavItem({ to, children }: NavItemProps) {
     return (
         <li className="nav-item">
-            <Link to={to}>{children}</Link>
+            <Link className="nav-link" to={to}>
+                {children}
+            </Link>
         </li>
     );
 }

@@ -11,7 +11,7 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
     return (
         <>
             <h2 className="section-heading">{headingText}</h2>
-            <ul>
+            <ul className="nav-list">
                 <NavButton
                     onClick={onClick}
                     to={buttonUrl}

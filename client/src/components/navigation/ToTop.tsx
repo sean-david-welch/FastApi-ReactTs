@@ -5,7 +5,12 @@ import scrollToTop from '../../utils/scrollToTop';
 
 const ToTopButton: React.FC = () => {
     return (
-        <button className="toTopButton" onClick={scrollToTop}>
+        <button
+            id="toTopButton"
+            aria-label="scroll-to-top-button"
+            className="toTopButton"
+            onClick={scrollToTop}
+        >
             <FontAwesomeIcon icon={faArrowUp} size="2x" />
         </button>
     );

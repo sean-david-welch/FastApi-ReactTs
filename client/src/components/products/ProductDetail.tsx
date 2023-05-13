@@ -1,32 +1,18 @@
-import useProductDetail from '../../hooks/products/useProductDetail';
 import NavButton from '../navigation/NavButton';
 import SectionHeading from '../navigation/SectionHeading';
 import Loading from '../Loading';
-
-import { useCart } from '../../hooks/cart/useCartContext';
-import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { ProductDetailProps } from '../../types/Types';
 
-const ProductDetail = () => {
-    const { product, loading } = useProductDetail();
-    const { addToCart } = useCart();
-
-    const handleAddToCart = useCallback(() => {
-        if (product) {
-            addToCart({
-                id: product.id,
-                name: product.name,
-                price: product.price,
-                image: product.image,
-                description: product.description,
-                quantity: 1,
-            });
-        }
-    }, [addToCart, product]);
-
+const ProductDetail: React.FC<ProductDetailProps> = ({
+    product,
+    loading,
+    handleAddToCart,
+    isLoggedIn,
+    isSuperUser,
+}) => {
     const navigate = useNavigate();
 
     const handleUpdateClick = () => {
@@ -43,21 +29,28 @@ const ProductDetail = () => {
 
     return (
         <section id="product-detail">
-            <SectionHeading
-                onClick={handleUpdateClick}
-                headingText={`${product ? product.name : ''}`}
-                buttonLabel="Update Product"
-                buttonUrl="/product-form"
-                buttonIcon={
-                    <FontAwesomeIcon icon={faArrowRight} className="icon" />
-                }
-            />
+            {isLoggedIn && isSuperUser ? (
+                <SectionHeading
+                    onClick={handleUpdateClick}
+                    headingText={`${product ? product.name : ''}`}
+                    buttonLabel="Update Product"
+                    buttonUrl="/product-form"
+                    buttonIcon={
+                        <FontAwesomeIcon icon={faArrowRight} className="icon" />
+                    }
+                />
+            ) : (
+                <h2 className="section-heading">
+                    {`${product ? product.name : ''}`}
+                </h2>
+            )}
 
             <div className="product-detail">
                 <img src={product?.image} alt={product?.name} />
 
                 <div className="product-info">
                     <h2>Price: €{product?.price}</h2>
+                    <p>{product?.description}</p>
                     <ul className="product-nav">
                         <NavButton
                             to="/cart"
@@ -66,7 +59,6 @@ const ProductDetail = () => {
                             label={`Add to Cart - €${product?.price ?? 'N/A'}`}
                         />
                     </ul>
-                    <p>{product?.description}</p>
                 </div>
             </div>
         </section>

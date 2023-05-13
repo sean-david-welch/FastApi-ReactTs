@@ -20,6 +20,14 @@ export interface ProductUpdate {
     image: string;
 }
 
+export interface ProductDetailProps {
+    product: Product | null;
+    loading: boolean;
+    handleAddToCart: () => void;
+    isLoggedIn: boolean;
+    isSuperUser: boolean;
+}
+
 export interface ProductFormProps {
     product: Product;
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

@@ -9,17 +9,15 @@ export const useAuth = () => {
     }
 
     const {
-        user,
         isLoggedIn,
+        isSuperUser,
         loginAttempted,
         setIsLoggedIn,
         setLoginAttempted,
         setIsSuperUser,
     } = context;
-    const isSuperUser = user && user.is_superuser;
 
     return {
-        user,
         isLoggedIn,
         isSuperUser,
         loginAttempted,

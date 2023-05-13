@@ -6,6 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useCart } from '../hooks/cart/useCartContext';
 import { Link } from 'react-router-dom';
 import { useGetPaymentIntent } from '../hooks/cart/useGetIntent';
+import Loading from '../components/Loading';
 
 import SectionHeading from '../components/navigation/SectionHeading';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -27,7 +28,11 @@ export const Success = () => {
     }, [clearCart]);
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return (
+            <div>
+                <Loading />
+            </div>
+        );
     }
 
     if (error) {

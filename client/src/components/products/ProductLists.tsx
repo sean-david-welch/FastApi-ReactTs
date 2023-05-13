@@ -1,5 +1,5 @@
 import ProductItem from './ProductItem';
-import LoadingSpinner from '../Loading';
+import Loading from '../Loading';
 import useProductList from '../../hooks/products/useProductList';
 
 function ProductsList() {
@@ -8,7 +8,7 @@ function ProductsList() {
     if (loading || !products) {
         return (
             <section id="products">
-                <LoadingSpinner />
+                <Loading />
             </section>
         );
     }

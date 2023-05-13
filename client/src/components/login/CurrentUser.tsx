@@ -4,7 +4,7 @@ import { CurrentUserProps } from '../../types/Types';
 import LogoutButton from './LogoutButton';
 import LogoHeading from '../navigation/LogoHeading';
 import getCurrentUser from '../../hooks/login/useCurrentUser';
-import LoadingSpinner from '../Loading';
+import Loading from '../Loading';
 
 const CurrentUser: React.FC<CurrentUserProps> = ({ token }) => {
     const { isLoggedIn, loginAttempted } = useAuth();
@@ -25,7 +25,7 @@ const CurrentUser: React.FC<CurrentUserProps> = ({ token }) => {
     if (isLoading) {
         return (
             <div id="login">
-                <LoadingSpinner />
+                <Loading />
             </div>
         );
     }

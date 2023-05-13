@@ -1,7 +1,7 @@
 import useProductDetail from '../../hooks/products/useProductDetail';
 import NavButton from '../navigation/NavButton';
 import SectionHeading from '../navigation/SectionHeading';
-import LoadingSpinner from '../Loading';
+import Loading from '../Loading';
 
 import { useCart } from '../../hooks/cart/useCartContext';
 import { useCallback } from 'react';
@@ -36,7 +36,7 @@ const ProductDetail = () => {
     if (loading) {
         return (
             <section id="product-detail">
-                <LoadingSpinner />
+                <Loading />
             </section>
         );
     }

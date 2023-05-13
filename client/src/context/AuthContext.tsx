@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { AuthProviderProps } from '../types/Types';
 import { AuthContextValue } from '../types/Types';
 import fetchAuthData from '../utils/fetchAuthData';
-import LoadingSpinner from '../components/Loading';
+import Loading from '../components/Loading';
 
 export const AuthContext = createContext<AuthContextValue | undefined>(
     undefined
@@ -82,7 +82,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     if (isLoggedIn === null) {
         return (
             <section id="login">
-                <LoadingSpinner />
+                <Loading />
             </section>
         );
     }

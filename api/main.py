@@ -1,4 +1,5 @@
-from fastapi import FastAPI, HTTPException, status, Request, Response, Depends
+from fastapi import FastAPI, status, Request, Response, Depends
+from fastapi.exceptions import RequestValidationError, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse, JSONResponse
 from fastapi.security import OAuth2PasswordRequestForm
@@ -20,6 +21,7 @@ from security import (
 from models import (
     Product,
     ProductUpdate,
+    PaymentIntentData,
     CartItem,
     Token,
     User,
@@ -40,7 +42,18 @@ from database import (
     get_user_by_id,
 )
 
-app = FastAPI()
+app = FastAPI(debug=True)
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request, exc):
+    print("Validation error:", exc.errors())
+    return JSONResponse(
+        {"detail": "Request validation failed", "errors": exc.errors()},
+        status_code=422,
+    )
+
+
 app.mount("/images", StaticFiles(directory="images"), name="images")
 origins = ["http://localhost:3000", "http://localhost:5000", "http://localhost:8000"]
 
@@ -205,7 +218,7 @@ async def update_product(
 @app.delete("/api/products/{product_id}")
 async def remove_product(
     product_id: str, current_user: User = Depends(get_current_user)
-):
+) -> JSONResponse:
     if not current_user.is_superuser:
         raise HTTPException(status_code=403, detail="Permission denied")
 
@@ -219,29 +232,56 @@ async def remove_product(
 ######### STRIPE #########
 ##########################
 @app.post("/api/create-payment-intent")
-async def create_payment_intent(cart: List[CartItem]):
+async def create_payment_intent(data: PaymentIntentData) -> JSONResponse:
+    payload = await Request.json()
+    print("Received payload:", payload)
     stripe.api_key = settings["STRIPE_SECRET_KEY"]
+    try:
+        customer = stripe.Customer.create(
+            email=data.receipt_email,
+            shipping={
+                "name": data.customer.name,
+                "address": {
+                    "line1": data.customer.address.line1,
+                    "line2": data.customer.address.line2,
+                    "city": data.customer.address.city,
+                    "state": data.customer.address.state,
+                    "postal_code": data.customer.address.postal_code,
+                    "country": data.customer.address.country,
+                },
+            },
+        )
+        print("Customer created:", customer)
+    except stripe.error.StripeError as e:
+        print("Error creating customer:", e)
+        return JSONResponse(
+            content={"error": str(e)}, status_code=status.HTTP_400_BAD_REQUEST
+        )
 
-    print("Received cart data:", cart)
-    if not cart:
+    if not data.cart:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="Cart is empty"
         )
 
-    calculated_total_amount = calculate_cart_total(cart)
+    calculated_total_amount = calculate_cart_total(data.cart)
+    print("Calculated total amount:", calculated_total_amount)
+
     try:
         payment_intent = stripe.PaymentIntent.create(
+            customer=customer["id"],
+            setup_future_usage="off_session",
             amount=calculated_total_amount,
             currency="eur",
             automatic_payment_methods={"enabled": True},
+            shipping=data.customer.dict(),
+            receipt_email=data.receipt_email,
         )
         print("Payment intent created:", payment_intent)
         return JSONResponse({"client_secret": payment_intent.client_secret})
-    except (Exception, stripe.error.CardError) as e:
-        error_message = str(e) if isinstance(e, Exception) else e.user_message
-        print("Error:", error_message)
+    except stripe.error.StripeError as e:
+        print("Error creating payment intent:", e)
         return JSONResponse(
-            content={"error": error_message}, status_code=status.HTTP_400_BAD_REQUEST
+            content={"error": str(e)}, status_code=status.HTTP_400_BAD_REQUEST
         )
 
 

@@ -6,15 +6,22 @@ import usePaymentProcessor from '../../hooks/cart/usePaymentProcessor';
 const CheckoutForm: React.FC<CheckoutFormProps> = ({
     clientSecret,
     totalAmount,
+    email,
+    setEmail,
+    address,
+    setAddress,
 }) => {
     const stripe = useStripe();
     const elements = useElements();
-    const { email, setEmail, message, isLoading, handleSubmit } =
-        usePaymentProcessor({
-            stripe,
-            elements,
-            clientSecret,
-        });
+    const { message, isLoading, handleSubmit } = usePaymentProcessor({
+        stripe,
+        elements,
+        clientSecret,
+        email,
+        setEmail,
+        address,
+        setAddress,
+    });
 
     return (
         <div className="stripe-form">
@@ -25,6 +32,8 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
                 isLoading={isLoading}
                 stripe={stripe}
                 elements={elements}
+                address={address}
+                onAddressChange={setAddress}
                 totalAmount={totalAmount}
             />
             {message && <div id="payment-message">{message}</div>}

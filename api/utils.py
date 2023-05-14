@@ -16,6 +16,26 @@ def calculate_cart_total(cart: List[CartItem]):
     return total_price
 
 
+def charge_customer(customer_id, cart: List[CartItem]):
+    payment_methods = stripe.PaymentMethod.list(customer=customer_id, type="card")
+    calculated_total_amount = calculate_cart_total(cart)
+
+    try:
+        stripe.PaymentIntent.create(
+            amount=calculated_total_amount,
+            currency="eur",
+            customer=customer_id,
+            payment_method=payment_methods.data[0].id,
+            off_session=True,
+            confirm=True,
+        )
+    except stripe.error.CardError as e:
+        err = e.error
+        print("Code is: %s" % err.code)
+        payment_intent_id = err.payment_intent["id"]
+        payment_intent = stripe.PaymentIntent.retrieve(payment_intent_id)
+
+
 async def verify_signature(request: Request, api_key_header: str):
     payload = await request.body()
     sig_header = api_key_header

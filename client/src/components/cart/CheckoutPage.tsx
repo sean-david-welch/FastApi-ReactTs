@@ -1,12 +1,26 @@
-import React from 'react';
 import CheckoutForm from './CheckoutForm';
-import { Elements } from '@stripe/react-stripe-js';
+import { useState } from 'react';
 import { useCart } from '../../hooks/cart/useCartContext';
-import { usePaymentIntent } from '../../hooks/cart/useFetchIntent';
 import { CartItem } from '../../types/Types';
+import { Elements } from '@stripe/react-stripe-js';
+import { usePaymentIntent } from '../../hooks/cart/useFetchIntent';
+
 const CheckoutPage: React.FC = () => {
     const cartContext = useCart();
-    const { clientSecret, stripePromise, options } = usePaymentIntent();
+    const [email, setEmail] = useState('');
+    const [address, setAddress] = useState({
+        line1: '',
+        line2: '',
+        city: '',
+        state: '',
+        postal_code: '',
+        country: '',
+    });
+
+    const { clientSecret, stripePromise, options } = usePaymentIntent(
+        email,
+        address
+    );
 
     const calculateTotalAmount = (cart: CartItem[]) => {
         return cart.reduce(
@@ -28,6 +42,10 @@ const CheckoutPage: React.FC = () => {
                     <CheckoutForm
                         clientSecret={clientSecret}
                         totalAmount={totalAmount}
+                        email={email}
+                        setEmail={setEmail}
+                        address={address}
+                        setAddress={setAddress}
                     />
                 </Elements>
             )}

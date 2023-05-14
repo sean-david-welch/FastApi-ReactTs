@@ -3,6 +3,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { QueryFunctionContext } from '@tanstack/react-query';
 import { Method } from 'axios';
 import { UseMutationResult } from '@tanstack/react-query';
+import { Stripe, StripeElements } from '@stripe/stripe-js';
 
 // Product Types
 export interface Product {
@@ -179,4 +180,46 @@ export interface CartProviderProps {
 export interface CheckoutFormProps {
     clientSecret: string | null;
     totalAmount: number;
+    email: string;
+    setEmail: React.Dispatch<React.SetStateAction<string>>;
+    address: Address;
+    setAddress: React.Dispatch<React.SetStateAction<Address>>;
+}
+
+export interface PaymentFormProps {
+    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+    setEmail: (email: string) => void;
+    onAddressChange: (address: any) => void;
+    address: Address;
+    email: string;
+    isLoading: boolean;
+    stripe: Stripe | null;
+    elements: StripeElements | null;
+    totalAmount: number;
+}
+
+export interface UsePaymentProps {
+    stripe: Stripe | null;
+    elements: StripeElements | null;
+    clientSecret: string | null;
+    email: string;
+    setEmail: (email: string) => void;
+    address: Address;
+    setAddress: (address: Address) => void;
+}
+
+export interface Address {
+    line1: string;
+    line2: string;
+    city: string;
+    state: string;
+    postal_code: string;
+    country: string;
+}
+
+export interface CustomerDataProps {
+    name: string;
+    email: string;
+    phone: string;
+    address: Address;
 }

@@ -1,20 +1,10 @@
+import { PaymentFormProps } from '../../types/Types';
 import {
     PaymentElement,
     LinkAuthenticationElement,
+    AddressElement,
 } from '@stripe/react-stripe-js';
-import { Stripe, StripeElements } from '@stripe/stripe-js';
-import { Link } from 'react-router-dom';
-import logo from '../../assets/logo.png';
-
-interface PaymentFormProps {
-    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-    email: string;
-    setEmail: (email: string) => void;
-    isLoading: boolean;
-    stripe: Stripe | null;
-    elements: StripeElements | null;
-    totalAmount: number;
-}
+import LogoHeading from '../navigation/LogoHeading';
 
 const PaymentForm: React.FC<PaymentFormProps> = ({
     handleSubmit,
@@ -22,15 +12,21 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
     stripe,
     elements,
     totalAmount,
+    onAddressChange,
 }) => {
     return (
         <form id="payment-form" className="stripe" onSubmit={handleSubmit}>
-            <Link to="/">
-                <img src={logo} id="logo" alt="Logo" />
-            </Link>
-
-            <h2 className="section-heading">Primal Formulas Checkout</h2>
+            <LogoHeading headingText={'Primal Formulas Checkout'} />
             <LinkAuthenticationElement id="link-authentication-element" />
+            <AddressElement
+                id="address-element"
+                options={{ mode: 'shipping' }}
+                onChange={event => {
+                    if (event.complete) {
+                        onAddressChange(event.value.address as any);
+                    }
+                }}
+            />
             <PaymentElement id="payment-element" />
             <button disabled={isLoading || !stripe || !elements} id="submit">
                 <span id="button-text">

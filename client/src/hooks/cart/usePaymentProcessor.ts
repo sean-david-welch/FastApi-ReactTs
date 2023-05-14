@@ -1,23 +1,31 @@
-import { useState, useEffect } from 'react';
-import { PaymentIntent } from '@stripe/stripe-js';
 import { FRONTEND_BASE_URL } from '../../utils/config';
-import { Stripe, StripeElements } from '@stripe/stripe-js';
-
-interface UsePaymentProps {
-    stripe: Stripe | null;
-    elements: StripeElements | null;
-    clientSecret: string | null;
-}
+import { PaymentIntent } from '@stripe/stripe-js';
+import { UsePaymentProps } from '../../types/Types';
+import { useState, useEffect } from 'react';
 
 const usePaymentProcessor = ({
     stripe,
     elements,
     clientSecret,
+    email,
+    setEmail,
+    address,
+    setAddress,
 }: UsePaymentProps) => {
-    const [email, setEmail] = useState<string>('');
     const [message, setMessage] = useState<string | null>('');
     const [isLoading, setIsLoading] = useState(false);
     const [paymentAttempted, setpaymentAttempted] = useState(false);
+
+    useEffect(() => {
+        setAddress({
+            line1: '',
+            line2: '',
+            city: '',
+            state: '',
+            postal_code: '',
+            country: '',
+        });
+    }, []);
 
     useEffect(() => {
         if (!stripe || !clientSecret) {
@@ -67,26 +75,45 @@ const usePaymentProcessor = ({
 
         setIsLoading(true);
 
-        const { error } = await stripe.confirmPayment({
-            confirmParams: {
-                return_url: `${FRONTEND_BASE_URL}payment-success`,
-                receipt_email: email,
-            },
-            elements,
-        });
+        try {
+            if (address) {
+                const { error: stripeError } = await stripe.confirmPayment({
+                    confirmParams: {
+                        return_url: `${FRONTEND_BASE_URL}payment-success`,
+                        receipt_email: email,
+                        shipping: {
+                            name: email,
+                            address: address,
+                        },
+                    },
+                    elements,
+                });
 
-        if (error.message) {
-            setMessage(error.message);
+                if (stripeError?.message) {
+                    setMessage(stripeError.message);
+                } else {
+                    setMessage(
+                        'Payment successfully processed. Redirecting...'
+                    );
+                }
+            }
+        } catch (error) {
+            console.error('Error processing payment:', error);
+            setMessage('Something went wrong.');
+        } finally {
             setIsLoading(false);
-            return;
-        } else {
-            setMessage('Payment successfully processed. Redirecting...');
         }
-
-        setIsLoading(false);
     };
 
-    return { email, setEmail, message, isLoading, handleSubmit };
+    return {
+        email,
+        setEmail,
+        message,
+        address,
+        setAddress,
+        isLoading,
+        handleSubmit,
+    };
 };
 
 export default usePaymentProcessor;

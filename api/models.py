@@ -1,5 +1,5 @@
-from pydantic import BaseModel, Field
-from typing import Optional
+from pydantic import BaseModel, Field, EmailStr
+from typing import Optional, List
 from uuid import uuid4
 
 
@@ -21,6 +21,26 @@ class ProductUpdate(BaseModel):
 class CartItem(BaseModel):
     price: float
     quantity: int
+
+
+class Address(BaseModel):
+    line1: str
+    line2: str
+    city: str
+    state: str
+    postal_code: str
+    country: str
+
+
+class Customer(BaseModel):
+    name: str
+    address: Address
+
+
+class PaymentIntentData(BaseModel):
+    cart: List[CartItem]
+    customer: Customer
+    receipt_email: EmailStr
 
 
 class User(BaseModel):

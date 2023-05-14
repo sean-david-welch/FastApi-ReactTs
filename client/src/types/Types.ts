@@ -178,24 +178,24 @@ export interface CartProviderProps {
 }
 
 export interface CheckoutFormProps {
-    clientSecret: string | null;
-    totalAmount: number;
     email: string;
-    setEmail: React.Dispatch<React.SetStateAction<string>>;
     address: Address;
+    totalAmount: number;
+    clientSecret: string | null;
+    setEmail: React.Dispatch<React.SetStateAction<string>>;
     setAddress: React.Dispatch<React.SetStateAction<Address>>;
 }
 
 export interface PaymentFormProps {
-    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-    setEmail: (email: string) => void;
-    onAddressChange: (address: any) => void;
     address: Address;
     email: string;
     isLoading: boolean;
+    totalAmount: number;
     stripe: Stripe | null;
     elements: StripeElements | null;
-    totalAmount: number;
+    setEmail: (email: string) => void;
+    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+    onAddressChange: (address: any) => void;
 }
 
 export interface UsePaymentProps {
@@ -203,8 +203,8 @@ export interface UsePaymentProps {
     elements: StripeElements | null;
     clientSecret: string | null;
     email: string;
-    setEmail: (email: string) => void;
     address: Address;
+    setEmail: (email: string) => void;
     setAddress: (address: Address) => void;
 }
 
@@ -222,4 +222,11 @@ export interface CustomerDataProps {
     email: string;
     phone: string;
     address: Address;
+}
+
+// About types
+export interface InfoItemProps {
+    image: string;
+    title: string;
+    description: string;
 }

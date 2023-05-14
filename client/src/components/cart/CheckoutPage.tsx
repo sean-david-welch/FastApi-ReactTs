@@ -7,7 +7,7 @@ import { usePaymentIntent } from '../../hooks/cart/useFetchIntent';
 
 const CheckoutPage: React.FC = () => {
     const cartContext = useCart();
-    const [email, setEmail] = useState('');
+    const [email, setEmail] = useState('example@example.com');
     const [address, setAddress] = useState({
         line1: '',
         line2: '',
@@ -17,10 +17,10 @@ const CheckoutPage: React.FC = () => {
         country: '',
     });
 
-    const { clientSecret, stripePromise, options } = usePaymentIntent(
-        email,
-        address
-    );
+    const { clientSecret, stripePromise, options } = usePaymentIntent({
+        email: email,
+        address: address,
+    });
 
     const calculateTotalAmount = (cart: CartItem[]) => {
         return cart.reduce(

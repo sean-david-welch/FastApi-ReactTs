@@ -1,23 +1,28 @@
 import { PaymentFormProps } from '../../types/Types';
-import {
-    PaymentElement,
-    LinkAuthenticationElement,
-    AddressElement,
-} from '@stripe/react-stripe-js';
+import { PaymentElement, AddressElement } from '@stripe/react-stripe-js';
 import LogoHeading from '../navigation/LogoHeading';
 
 const PaymentForm: React.FC<PaymentFormProps> = ({
-    handleSubmit,
-    isLoading,
     stripe,
+    email,
     elements,
+    isLoading,
     totalAmount,
+    setEmail,
+    handleSubmit,
     onAddressChange,
 }) => {
     return (
         <form id="payment-form" className="stripe" onSubmit={handleSubmit}>
             <LogoHeading headingText={'Primal Formulas Checkout'} />
-            <LinkAuthenticationElement id="link-authentication-element" />
+            <input
+                type="email"
+                value={email}
+                onChange={e => setEmail(() => e.target.value)}
+                // console.log('Email input changed: ', e.target.value);
+                placeholder="Email address"
+            />
+
             <AddressElement
                 id="address-element"
                 options={{ mode: 'shipping' }}

@@ -4,11 +4,11 @@ import PaymentForm from './PaymentForm';
 import usePaymentProcessor from '../../hooks/cart/usePaymentProcessor';
 
 const CheckoutForm: React.FC<CheckoutFormProps> = ({
-    clientSecret,
-    totalAmount,
     email,
-    setEmail,
     address,
+    totalAmount,
+    clientSecret,
+    setEmail,
     setAddress,
 }) => {
     const stripe = useStripe();
@@ -18,8 +18,8 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
         elements,
         clientSecret,
         email,
-        setEmail,
         address,
+        setEmail,
         setAddress,
     });
 

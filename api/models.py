@@ -18,11 +18,6 @@ class ProductUpdate(BaseModel):
     image: str = Field(default="http://localhost:8000/images/default.jpg")
 
 
-class CartItem(BaseModel):
-    price: float
-    quantity: int
-
-
 class Address(BaseModel):
     line1: str
     line2: str
@@ -37,10 +32,15 @@ class Customer(BaseModel):
     address: Address
 
 
+class CartItem(BaseModel):
+    price: float
+    quantity: int
+
+
 class PaymentIntentData(BaseModel):
     cart: List[CartItem]
     customer: Customer
-    receipt_email: EmailStr
+    receipt_email: Optional[EmailStr] = None
 
 
 class User(BaseModel):

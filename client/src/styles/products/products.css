@@ -15,7 +15,7 @@
 }
 
 #products .products li {
-    transition: all 500ms ease-in;
+    transition: all 800ms ease-in;
 }
 
 #products .products li:hover {

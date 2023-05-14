@@ -1,4 +1,42 @@
 #about {
     min-height: 100vh;
-    border-bottom: 0.15rem solid var(--black-color);
+}
+
+#about .info-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+#about .info-list > * {
+    margin-bottom: 1rem;
+}
+
+#about .info-list-item:nth-child(odd) {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1rem;
+}
+
+#about .info-list-item:nth-child(even) {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-bottom: 1rem;
+}
+
+#about .info-list-item .info-description {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    align-items: center;
+    margin: 0 1rem;
+}
+
+#about .info-list-item .info-description p {
+    font-weight: 400;
+    font-size: 1.25rem;
+    color: var(--dark-color);
 }

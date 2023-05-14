@@ -233,8 +233,6 @@ async def remove_product(
 ##########################
 @app.post("/api/create-payment-intent")
 async def create_payment_intent(data: PaymentIntentData) -> JSONResponse:
-    payload = await Request.json()
-    print("Received payload:", payload)
     stripe.api_key = settings["STRIPE_SECRET_KEY"]
     try:
         customer = stripe.Customer.create(

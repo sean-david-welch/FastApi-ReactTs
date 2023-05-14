@@ -4,12 +4,12 @@ import { UsePaymentProps } from '../../types/Types';
 import { useState, useEffect } from 'react';
 
 const usePaymentProcessor = ({
+    email,
     stripe,
+    address,
     elements,
     clientSecret,
-    email,
     setEmail,
-    address,
     setAddress,
 }: UsePaymentProps) => {
     const [message, setMessage] = useState<string | null>('');
@@ -17,20 +17,9 @@ const usePaymentProcessor = ({
     const [paymentAttempted, setpaymentAttempted] = useState(false);
 
     useEffect(() => {
-        setAddress({
-            line1: '',
-            line2: '',
-            city: '',
-            state: '',
-            postal_code: '',
-            country: '',
-        });
-    }, []);
-
-    useEffect(() => {
         if (!stripe || !clientSecret) {
-            setMessage(null);
             setEmail('');
+            setMessage(null);
             return;
         }
 
@@ -69,9 +58,11 @@ const usePaymentProcessor = ({
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (!stripe || !elements || !clientSecret) {
+        if (!stripe || !elements || !clientSecret || !email) {
             return;
         }
+
+        console.log('Email at the time of submitting: ', email);
 
         setIsLoading(true);
 
@@ -82,13 +73,12 @@ const usePaymentProcessor = ({
                         return_url: `${FRONTEND_BASE_URL}payment-success`,
                         receipt_email: email,
                         shipping: {
-                            name: email,
+                            name: 'Jane Doe',
                             address: address,
                         },
                     },
                     elements,
                 });
-
                 if (stripeError?.message) {
                     setMessage(stripeError.message);
                 } else {
@@ -107,11 +97,11 @@ const usePaymentProcessor = ({
 
     return {
         email,
-        setEmail,
         message,
         address,
-        setAddress,
         isLoading,
+        setEmail,
+        setAddress,
         handleSubmit,
     };
 };

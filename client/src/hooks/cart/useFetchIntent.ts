@@ -7,7 +7,13 @@ import fetchData from '../../utils/fetchData';
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 
-export const usePaymentIntent = (email: string, address: Address) => {
+export const usePaymentIntent = ({
+    email,
+    address,
+}: {
+    email: string;
+    address: Address;
+}) => {
     const cartContext = useCart();
 
     const fetchPaymentIntent = async () => {
@@ -19,14 +25,17 @@ export const usePaymentIntent = (email: string, address: Address) => {
             price: item.price,
             quantity: item.quantity,
         }));
+
         const dataToSend = {
             cart: items,
-            shipping: {
-                name: email,
-                address: address,
+            customer: {
+                name: 'Jane Doe',
+                address: { ...address },
             },
             receipt_email: email,
         };
+
+        console.log('Data being sent to the backend:', dataToSend);
 
         const data = await fetchData({
             endpoint: 'create-payment-intent',
@@ -52,10 +61,12 @@ export const usePaymentIntent = (email: string, address: Address) => {
         : {};
 
     return {
-        clientSecret,
-        stripePromise,
+        error,
+        email,
+        address,
         options,
         isLoading,
-        error,
+        clientSecret,
+        stripePromise,
     };
 };

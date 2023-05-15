@@ -1,10 +1,10 @@
 import { useState } from 'react';
+import { useCustomer } from '../../hooks/cart/useCustomerContext';
 import { Address, CheckoutFormProps } from '../../Types/CartTypes';
 import { useStripe, useElements } from '@stripe/react-stripe-js';
 import PaymentForm from './PaymentForm';
 import AddressForm from './AddressForm';
 import usePaymentProcessor from '../../hooks/cart/usePaymentProcessor';
-import { useCustomer } from '../../hooks/cart/useCustomerContext';
 
 const CheckoutForm: React.FC<CheckoutFormProps> = ({
     totalAmount,

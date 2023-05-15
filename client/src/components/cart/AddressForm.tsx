@@ -1,6 +1,6 @@
-import { AddressElement } from '@stripe/react-stripe-js';
-import { useCustomer } from '../../hooks/cart/useCustomerContext';
 import { Customer } from '../../Types/CartTypes';
+import { useCustomer } from '../../hooks/cart/useCustomerContext';
+import { AddressElement } from '@stripe/react-stripe-js';
 import LogoHeading from '../navigation/LogoHeading';
 
 interface AddressFormProps {

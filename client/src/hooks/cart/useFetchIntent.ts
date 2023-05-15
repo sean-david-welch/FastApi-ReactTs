@@ -1,18 +1,29 @@
-import { STRIPE_PUBLIC_KEY } from '../../utils/config';
+import fetchData from '../../utils/fetchData';
 import { useCart } from './useCartContext';
-import { useCustomer } from './useCustomerContext';
 import { useQuery } from '@tanstack/react-query';
 import { loadStripe } from '@stripe/stripe-js';
-import fetchData from '../../utils/fetchData';
+import { useCustomer } from './useCustomerContext';
+import { STRIPE_PUBLIC_KEY } from '../../utils/config';
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 
 export const usePaymentIntent = () => {
+    console.log('fetchPaymentIntent called');
+
     const cartContext = useCart();
     const { customer } = useCustomer();
 
     const fetchPaymentIntent = async () => {
-        if (cartContext.cart.length === 0 || !customer.email) {
+        console.log('cart length:', cartContext.cart.length);
+        console.log('customer email:', customer.email);
+        if (
+            cartContext.cart.length === 0 ||
+            !customer.email ||
+            customer.email.trim() === null ||
+            undefined ||
+            ''
+        ) {
+            console.log('fetchPaymentIntent early exit condition met');
             return null;
         }
 
@@ -37,6 +48,8 @@ export const usePaymentIntent = () => {
             method: 'POST',
             data: JSON.stringify(data),
         });
+
+        console.log('Response from create-payment-intent endpoint:', postData);
 
         return postData.client_secret;
     };

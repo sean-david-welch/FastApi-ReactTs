@@ -1,7 +1,7 @@
+import { useCustomer } from './useCustomerContext';
 import { PaymentIntent } from '@stripe/stripe-js';
 import { UsePaymentProps } from '../../Types/CartTypes';
 import { useState, useEffect } from 'react';
-import { useCustomer } from './useCustomerContext';
 
 const usePaymentProcessor = ({
     stripe,

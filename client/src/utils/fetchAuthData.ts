@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API_BASE_URL } from './config';
-import { FetchAuthDataOptions } from '../Types/Types';
+import { FetchAuthDataOptions } from '../Types/FetchTypes';
 
 axios.defaults.baseURL = API_BASE_URL;
 

@@ -27,6 +27,7 @@ const CheckoutPage: React.FC = () => {
     const totalAmount = calculateTotalAmount(cartContext.cart);
 
     useEffect(() => {
+        console.log('CheckoutPage useEffect called');
         console.log('clientSecret:', clientSecret);
         console.log('stripePromise:', stripePromise);
         console.log('options:', options);

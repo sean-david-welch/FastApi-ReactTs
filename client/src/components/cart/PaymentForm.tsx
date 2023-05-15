@@ -1,5 +1,5 @@
-import { PaymentFormProps } from '../../Types/CartTypes';
 import { PaymentElement } from '@stripe/react-stripe-js';
+import { PaymentFormProps } from '../../Types/CartTypes';
 import LogoHeading from '../navigation/LogoHeading';
 
 const PaymentForm: React.FC<PaymentFormProps> = ({

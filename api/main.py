@@ -1,14 +1,21 @@
 from fastapi import FastAPI, status, Request, Response, Depends
 from fastapi.exceptions import RequestValidationError, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse, JSONResponse
 from fastapi.security import OAuth2PasswordRequestForm
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from typing import List
 from datetime import timedelta
 import stripe
-from config import settings
-from utils import calculate_cart_total, verify_signature
+
+
+from utils import (
+    calculate_cart_total,
+    verify_signature,
+    create_customer,
+    handle_stripe_error,
+    create_payment_intent,
+)
+
 from security import (
     ACCESS_TOKEN_EXPIRE_MINUTES,
     get_password_hash,
@@ -22,7 +29,6 @@ from models import (
     Product,
     ProductUpdate,
     PaymentIntentData,
-    CartItem,
     Token,
     User,
     UserCreate,
@@ -47,7 +53,6 @@ from database import (
 
 app = FastAPI(debug=True)
 
-
 app.mount("/images", StaticFiles(directory="images"), name="images")
 origins = ["http://localhost:3000", "http://localhost:5000", "http://localhost:8000"]
 
@@ -64,7 +69,7 @@ app.add_middleware(
 #### API Endpoints ####
 #######################
 @app.exception_handler(RequestValidationError)
-async def validation_exception_handler(request, exc):
+async def validation_exception_handler(exc):
     print("Validation error:", exc.errors())
     return JSONResponse(
         {"detail": "Request validation failed", "errors": exc.errors()},
@@ -83,8 +88,6 @@ def root() -> RedirectResponse:
 ########################
 ####### Content ########
 ########################
-
-
 @app.post("/api/content")
 async def create_content(
     content: StaticContent, current_user: User = Depends(get_current_user)
@@ -265,41 +268,11 @@ async def remove_product(
 ##########################
 @app.post("/api/create-payment-intent")
 async def create_payment_intent(data: PaymentIntentData) -> JSONResponse:
-    stripe.api_key = settings["STRIPE_SECRET_KEY"]
     try:
-        customer = stripe.Customer.create(
-            email=data.receipt_email,
-            shipping={
-                "name": data.customer.name,
-                "address": {
-                    "line1": data.customer.address.line1,
-                    "line2": data.customer.address.line2,
-                    "city": data.customer.address.city,
-                    "state": data.customer.address.state,
-                    "postal_code": data.customer.address.postal_code,
-                    "country": data.customer.address.country,
-                },
-            },
-        )
+        customer = create_customer(data)
         print("Customer created:", customer)
     except stripe.error.StripeError as e:
-        if isinstance(e, stripe.error.CardError):
-            print("A card error occurred:", e)
-        elif isinstance(e, stripe.error.RateLimitError):
-            print("Too many requests made to the API too quickly:", e)
-        elif isinstance(e, stripe.error.InvalidRequestError):
-            print("Invalid parameters were supplied to Stripe's API:", e)
-        elif isinstance(e, stripe.error.AuthenticationError):
-            print("Authentication with Stripe's API failed:", e)
-        elif isinstance(e, stripe.error.APIConnectionError):
-            print("Network communication with Stripe failed:", e)
-        elif isinstance(e, stripe.error.StripeError):
-            print(
-                "Display a very generic error to the user, and maybe send yourself an email:",
-                e,
-            )
-        else:
-            print("An unexpected error occurred:", e)
+        handle_stripe_error(e)
         return JSONResponse(
             content={"error": str(e)}, status_code=status.HTTP_400_BAD_REQUEST
         )
@@ -313,19 +286,11 @@ async def create_payment_intent(data: PaymentIntentData) -> JSONResponse:
     print("Calculated total amount:", calculated_total_amount)
 
     try:
-        payment_intent = stripe.PaymentIntent.create(
-            customer=customer["id"],
-            setup_future_usage="off_session",
-            amount=calculated_total_amount,
-            currency="eur",
-            automatic_payment_methods={"enabled": True},
-            shipping=data.customer.dict(),
-            receipt_email=data.receipt_email,
-        )
+        payment_intent = create_payment_intent(customer, calculated_total_amount, data)
         print("Payment intent created:", payment_intent)
         return JSONResponse({"client_secret": payment_intent.client_secret})
     except stripe.error.StripeError as e:
-        print("Error creating payment intent:", e)
+        handle_stripe_error(e)
         return JSONResponse(
             content={"error": str(e)}, status_code=status.HTTP_400_BAD_REQUEST
         )

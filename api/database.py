@@ -11,10 +11,9 @@ users_collection = database.Users
 content_collection = database.Content
 
 
-# Content CRUD
-async def create_content(content: StaticContent):
+#### Content CRUD ####
+async def create_content(content: dict):
     content_data = content.dict()
-    content_data["id"] = str(content_data["id"])
     result = await content_collection.insert_one(content_data)
     return result.inserted_id
 
@@ -25,7 +24,7 @@ async def get_content(name: str) -> StaticContent:
         return StaticContent(**content_data)
 
 
-# User CRUD
+#### User CRUD ####
 async def create_user(user: UserDB):
     user_data = user.dict()
     user_data["id"] = str(user_data["id"])
@@ -53,7 +52,7 @@ async def delete_user(user_id: str):
     await users_collection.delete_one({"id": user_id})
 
 
-# Product CRUD
+#### Product CRUD ####
 async def fetch_all_products():
     products = []
     cursor = products_collection.find({})

@@ -3,12 +3,19 @@ from typing import Optional, List
 from uuid import uuid4
 
 
+##### Static Content #####
 class StaticContent(BaseModel):
-    id: Optional[str] = Field(default_factory=uuid4, example="null")
     name: str
     content: str = Field(default="http://localhost:8000/images/default.jpg")
 
 
+class BenefitItem(BaseModel):
+    icon: str
+    title: str
+    description: str
+
+
+##### Products #####
 class Product(BaseModel):
     id: Optional[str] = Field(default=None, example="null")
     name: str = Field(default="Product")
@@ -24,6 +31,7 @@ class ProductUpdate(BaseModel):
     image: str = Field(default="http://localhost:8000/images/default.jpg")
 
 
+##### Stripe #####
 class Address(BaseModel):
     line1: str
     line2: Optional[str] = None
@@ -49,6 +57,7 @@ class PaymentIntentData(BaseModel):
     receipt_email: Optional[EmailStr] = None
 
 
+##### Users #####
 class User(BaseModel):
     id: Optional[str] = Field(default_factory=uuid4, example="null")
     username: str

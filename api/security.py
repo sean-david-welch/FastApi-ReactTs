@@ -1,9 +1,9 @@
-from fastapi import Depends, Cookie, HTTPException, status, Request
+from fastapi import Depends, HTTPException, status, Request
 from fastapi.security import OAuth2PasswordBearer
 from datetime import datetime, timedelta
-from typing import Optional
-from jose import jwt, JWTError
 from passlib.context import CryptContext
+from jose import jwt, JWTError
+from typing import Optional
 from config import settings
 
 from models import UserDB, TokenData
@@ -12,7 +12,6 @@ from database import get_user
 SECRET_KEY = settings["SECRET_KEY"]
 ALGORITHM = settings["ALGORITHM"]
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
-
 
 password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 

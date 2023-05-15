@@ -65,9 +65,13 @@ export interface Address {
     country: string;
 }
 
-export interface CustomerDataProps {
+export interface Customer {
     name: string;
-    email: string;
-    phone: string;
     address: Address;
+}
+
+export interface PaymentIntentData {
+    cart: CartItem[];
+    customer: Customer;
+    receipt_email: string;
 }

@@ -1,14 +1,28 @@
 import uuid
 import motor.motor_asyncio
-from bson import ObjectId
 
-from models import Product, UserDB, User
+from models import Product, UserDB, User, StaticContent
 from config import settings
 
 client = motor.motor_asyncio.AsyncIOMotorClient(settings["MONGO_URI"])
 database = client.PrimalFormulas
 products_collection = database.Products
 users_collection = database.Users
+content_collection = database.Content
+
+
+# Content CRUD
+async def create_content(content: StaticContent):
+    content_data = content.dict()
+    content_data["id"] = str(content_data["id"])
+    result = await content_collection.insert_one(content_data)
+    return result.inserted_id
+
+
+async def get_content(name: str) -> StaticContent:
+    content_data = await content_collection.find_one({"name": name})
+    if content_data:
+        return StaticContent(**content_data)
 
 
 # User CRUD

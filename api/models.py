@@ -3,6 +3,12 @@ from typing import Optional, List
 from uuid import uuid4
 
 
+class StaticContent(BaseModel):
+    id: Optional[str] = Field(default_factory=uuid4, example="null")
+    name: str
+    content: str = Field(default="http://localhost:8000/images/default.jpg")
+
+
 class Product(BaseModel):
     id: Optional[str] = Field(default=None, example="null")
     name: str = Field(default="Product")

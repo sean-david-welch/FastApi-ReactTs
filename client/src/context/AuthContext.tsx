@@ -1,7 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { AuthProviderProps } from '../Types/Types';
-import { AuthContextValue } from '../Types/Types';
+import { AuthProviderProps, AuthContextValue } from '../Types/AuthTypes';
 import fetchAuthData from '../utils/fetchAuthData';
 import Loading from '../components/Loading';
 

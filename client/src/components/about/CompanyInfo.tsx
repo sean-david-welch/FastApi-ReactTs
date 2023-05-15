@@ -18,7 +18,6 @@ const CompanyInfo = () => {
 
     return (
         <div className="company-info">
-            <h2>Lorem ipsum dolor sit amet.</h2>
             <ul className="info-list">
                 {infoItems.map((infoItem, index) => (
                     <InfoItem

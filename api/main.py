@@ -28,8 +28,11 @@ from models import (
     UserCreate,
     UserDB,
     UserEdit,
+    StaticContent,
 )
 from database import (
+    create_content,
+    get_content,
     fetch_all_products,
     fetch_product,
     post_product,
@@ -45,15 +48,6 @@ from database import (
 app = FastAPI(debug=True)
 
 
-@app.exception_handler(RequestValidationError)
-async def validation_exception_handler(request, exc):
-    print("Validation error:", exc.errors())
-    return JSONResponse(
-        {"detail": "Request validation failed", "errors": exc.errors()},
-        status_code=422,
-    )
-
-
 app.mount("/images", StaticFiles(directory="images"), name="images")
 origins = ["http://localhost:3000", "http://localhost:5000", "http://localhost:8000"]
 
@@ -65,9 +59,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 #######################
 #### API Endpoints ####
 #######################
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request, exc):
+    print("Validation error:", exc.errors())
+    return JSONResponse(
+        {"detail": "Request validation failed", "errors": exc.errors()},
+        status_code=422,
+    )
 
 
 ########################
@@ -76,6 +78,36 @@ app.add_middleware(
 @app.get("/")
 def root() -> RedirectResponse:
     return RedirectResponse(url="/docs")
+
+
+########################
+####### Content ########
+########################
+
+
+@app.post("/api/content")
+async def create_content(
+    content: StaticContent, current_user: User = Depends(get_current_user)
+):
+    if not current_user.is_superuser:
+        raise HTTPException(status_code=403, detail="Permission denied")
+
+    existing_content = await get_content(content.name)
+    if existing_content:
+        raise HTTPException(status_code=400, detail="Content already exists")
+
+    content_db = StaticContent(**content.dict())
+    await create_content(content_db)
+
+    return {"message": "Content created successfully"}
+
+
+@app.get("/api/content/{name}", response_model=StaticContent)
+async def get_content(name: str):
+    response = await get_content(name)
+    if response:
+        return response
+    raise HTTPException(status_code=404, detail=f"Content: {name} not found")
 
 
 ########################

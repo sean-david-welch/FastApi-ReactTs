@@ -1,38 +1,35 @@
-import { useState } from 'react';
 import { AddressElement } from '@stripe/react-stripe-js';
-import { Address } from '../../Types/CartTypes';
+import { useCustomer } from '../../hooks/cart/useCustomerContext';
+import { Customer } from '../../Types/CartTypes';
 import LogoHeading from '../navigation/LogoHeading';
 
 interface AddressFormProps {
-    email: string;
-    address: Address;
-    setEmail: React.Dispatch<React.SetStateAction<string>>;
-    setAddress: React.Dispatch<React.SetStateAction<any>>;
-    onSubmit: (data: { name: string; email: string; address: any }) => void;
+    onSubmit: (data: Customer) => void;
 }
 
 const AddressForm: React.FC<AddressFormProps> = ({ onSubmit }) => {
-    const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
-    const [address, setAddress] = useState<Address>({
-        line1: '',
-        line2: '',
-        city: '',
-        state: '',
-        postal_code: '',
-        country: '',
-    });
+    const { customer, setCustomer } = useCustomer();
 
     const handleAddressChange = (event: any) => {
         if (event.complete && !event.error) {
-            setName(event.value.name);
-            setAddress(event.value.address);
+            setCustomer({
+                ...customer,
+                name: event.value.name,
+                address: event.value.address,
+            });
         }
+    };
+
+    const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setCustomer({
+            ...customer,
+            email: event.target.value,
+        });
     };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        onSubmit({ name, email, address });
+        onSubmit(customer);
     };
 
     return (
@@ -41,8 +38,8 @@ const AddressForm: React.FC<AddressFormProps> = ({ onSubmit }) => {
 
             <input
                 type="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
+                value={customer.email}
+                onChange={handleEmailChange}
                 placeholder="Email address"
             />
             <AddressElement

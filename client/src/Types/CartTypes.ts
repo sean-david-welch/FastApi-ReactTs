@@ -28,14 +28,8 @@ export interface CartProviderProps {
 }
 
 export interface CheckoutFormProps {
-    email: string;
-    address: Address;
     totalAmount: number;
     clientSecret: string | null;
-    setEmail: React.Dispatch<React.SetStateAction<string>>;
-    setAddress: React.Dispatch<React.SetStateAction<Address>>;
-    addressFormSubmitted: boolean;
-    setAddressFormSubmitted: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface PaymentFormProps {
@@ -50,10 +44,6 @@ export interface UsePaymentProps {
     stripe: Stripe | null;
     elements: StripeElements | null;
     clientSecret: string | null;
-    email: string;
-    address: Address;
-    setEmail: (email: string) => void;
-    setAddress: (address: Address) => void;
 }
 
 export interface Address {
@@ -67,11 +57,12 @@ export interface Address {
 
 export interface Customer {
     name: string;
+    email: string;
     address: Address;
 }
 
 export interface PaymentIntentData {
     cart: CartItem[];
     customer: Customer;
-    receipt_email: string;
+    receipt_email: Customer['email'];
 }

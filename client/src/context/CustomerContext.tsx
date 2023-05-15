@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import { Customer } from '../Types/CartTypes';
 
 interface CustomerContextProps {
@@ -20,6 +20,7 @@ export const CustomerProvider: React.FC<CustomerProviderProps> = ({
 }) => {
     const [customer, setCustomer] = useState<Customer>({
         name: '',
+        email: '',
         address: {
             line1: '',
             line2: '',
@@ -30,6 +31,11 @@ export const CustomerProvider: React.FC<CustomerProviderProps> = ({
         },
     });
 
+    useEffect(() => {
+        if (!customer || typeof setCustomer !== 'function') {
+            throw new Error("CustomerContext wasn't set up correctly.");
+        }
+    }, [customer, setCustomer]);
     const value: CustomerContextProps = {
         customer,
         setCustomer,

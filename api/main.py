@@ -283,7 +283,23 @@ async def create_payment_intent(data: PaymentIntentData) -> JSONResponse:
         )
         print("Customer created:", customer)
     except stripe.error.StripeError as e:
-        print("Error creating customer:", e)
+        if isinstance(e, stripe.error.CardError):
+            print("A card error occurred:", e)
+        elif isinstance(e, stripe.error.RateLimitError):
+            print("Too many requests made to the API too quickly:", e)
+        elif isinstance(e, stripe.error.InvalidRequestError):
+            print("Invalid parameters were supplied to Stripe's API:", e)
+        elif isinstance(e, stripe.error.AuthenticationError):
+            print("Authentication with Stripe's API failed:", e)
+        elif isinstance(e, stripe.error.APIConnectionError):
+            print("Network communication with Stripe failed:", e)
+        elif isinstance(e, stripe.error.StripeError):
+            print(
+                "Display a very generic error to the user, and maybe send yourself an email:",
+                e,
+            )
+        else:
+            print("An unexpected error occurred:", e)
         return JSONResponse(
             content={"error": str(e)}, status_code=status.HTTP_400_BAD_REQUEST
         )

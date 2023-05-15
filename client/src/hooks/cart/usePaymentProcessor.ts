@@ -1,15 +1,16 @@
 import { PaymentIntent } from '@stripe/stripe-js';
 import { UsePaymentProps } from '../../Types/CartTypes';
 import { useState, useEffect } from 'react';
+import { useCustomer } from './useCustomerContext';
 
 const usePaymentProcessor = ({
-    email,
     stripe,
     elements,
     clientSecret,
 }: UsePaymentProps) => {
     const [message, setMessage] = useState<string | null>('');
     const [isLoading, setIsLoading] = useState(false);
+    const { customer } = useCustomer();
 
     useEffect(() => {
         const retrievePaymentIntentStatus = async () => {
@@ -44,7 +45,7 @@ const usePaymentProcessor = ({
     }, [stripe, clientSecret]);
 
     const handlePayment = async () => {
-        if (!stripe || !elements || !clientSecret || !email) {
+        if (!stripe || !elements || !clientSecret || !customer?.email) {
             console.log(
                 'Stripe, elements, clientSecret, or email is undefined'
             );
@@ -57,7 +58,7 @@ const usePaymentProcessor = ({
             const { error } = await stripe.confirmPayment({
                 confirmParams: {
                     return_url: 'http://localhost:3000/payment-success',
-                    receipt_email: email,
+                    receipt_email: customer.email,
                 },
                 elements,
             });
@@ -75,7 +76,10 @@ const usePaymentProcessor = ({
     };
 
     return {
-        email,
+        stripe,
+        elements,
+        clientSecret,
+        email: customer.email,
         message,
         isLoading,
         handlePayment,

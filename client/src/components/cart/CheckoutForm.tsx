@@ -4,15 +4,13 @@ import { useStripe, useElements } from '@stripe/react-stripe-js';
 import PaymentForm from './PaymentForm';
 import AddressForm from './AddressForm';
 import usePaymentProcessor from '../../hooks/cart/usePaymentProcessor';
+import { useCustomer } from '../../hooks/cart/useCustomerContext';
 
 const CheckoutForm: React.FC<CheckoutFormProps> = ({
-    email,
-    address,
     totalAmount,
     clientSecret,
-    setEmail,
-    setAddress,
 }) => {
+    const { setCustomer } = useCustomer();
     const stripe = useStripe();
     const elements = useElements();
     const [addressFormSubmitted, setAddressFormSubmitted] = useState(false);
@@ -21,10 +19,6 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
         stripe,
         elements,
         clientSecret,
-        email,
-        address,
-        setEmail,
-        setAddress,
     });
 
     const handleSubmit = (data: {
@@ -32,21 +26,18 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
         email: string;
         address: Address;
     }) => {
-        setEmail(data.email);
-        setAddress(data.address);
+        setCustomer(prev => ({
+            ...prev,
+            email: data.email,
+            address: data.address,
+        }));
         setAddressFormSubmitted(true);
     };
 
     return (
         <div className="stripe-form">
             {!addressFormSubmitted ? (
-                <AddressForm
-                    email={email}
-                    address={address}
-                    setEmail={setEmail}
-                    setAddress={setAddress}
-                    onSubmit={handleSubmit}
-                />
+                <AddressForm onSubmit={handleSubmit} />
             ) : (
                 <PaymentForm
                     handleSubmit={handlePayment}

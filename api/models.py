@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, EmailStr
+from pydantic import BaseModel, Field, EmailStr, PositiveFloat, PositiveInt
 from typing import Optional, List
 from uuid import uuid4
 
@@ -39,8 +39,8 @@ class Customer(BaseModel):
 
 
 class CartItem(BaseModel):
-    price: float
-    quantity: int
+    price: PositiveFloat
+    quantity: PositiveInt
 
 
 class PaymentIntentData(BaseModel):

@@ -1,25 +1,18 @@
 import { STRIPE_PUBLIC_KEY } from '../../utils/config';
 import { useCart } from './useCartContext';
+import { useCustomer } from './useCustomerContext';
 import { useQuery } from '@tanstack/react-query';
 import { loadStripe } from '@stripe/stripe-js';
-import { Address } from '../../Types/CartTypes';
 import fetchData from '../../utils/fetchData';
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 
-export const usePaymentIntent = ({
-    email,
-    name,
-    address,
-}: {
-    email: string;
-    name: string;
-    address: Address;
-}) => {
+export const usePaymentIntent = () => {
     const cartContext = useCart();
+    const { customer } = useCustomer();
 
     const fetchPaymentIntent = async () => {
-        if (cartContext.cart.length === 0) {
+        if (cartContext.cart.length === 0 || !customer.email) {
             return null;
         }
 
@@ -28,24 +21,24 @@ export const usePaymentIntent = ({
             quantity: item.quantity,
         }));
 
-        const dataToSend = {
+        const data = {
             cart: items,
             customer: {
-                name: name,
-                address: { ...address },
+                name: customer.name,
+                address: { ...customer.address },
             },
-            receipt_email: email,
+            receipt_email: customer.email,
         };
 
-        console.log('Data being sent to the backend:', dataToSend);
+        console.log('Data being sent to the backend:', data);
 
-        const data = await fetchData({
+        const postData = await fetchData({
             endpoint: 'create-payment-intent',
             method: 'POST',
-            data: JSON.stringify(dataToSend),
+            data: JSON.stringify(data),
         });
 
-        return data.client_secret;
+        return postData.client_secret;
     };
 
     const {

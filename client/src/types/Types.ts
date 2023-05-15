@@ -1,8 +1,8 @@
+import { Method } from 'axios';
 import { LinkProps } from 'react-router-dom';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { QueryFunctionContext } from '@tanstack/react-query';
-import { Method } from 'axios';
 import { UseMutationResult } from '@tanstack/react-query';
+import { QueryFunctionContext } from '@tanstack/react-query';
 import { Stripe, StripeElements } from '@stripe/stripe-js';
 
 // Product Types
@@ -184,18 +184,16 @@ export interface CheckoutFormProps {
     clientSecret: string | null;
     setEmail: React.Dispatch<React.SetStateAction<string>>;
     setAddress: React.Dispatch<React.SetStateAction<Address>>;
+    addressFormSubmitted: boolean;
+    setAddressFormSubmitted: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface PaymentFormProps {
-    address: Address;
-    email: string;
     isLoading: boolean;
     totalAmount: number;
     stripe: Stripe | null;
     elements: StripeElements | null;
-    setEmail: (email: string) => void;
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-    onAddressChange: (address: any) => void;
 }
 
 export interface UsePaymentProps {

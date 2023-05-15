@@ -9,9 +9,11 @@ const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 
 export const usePaymentIntent = ({
     email,
+    name,
     address,
 }: {
     email: string;
+    name: string;
     address: Address;
 }) => {
     const cartContext = useCart();
@@ -29,7 +31,7 @@ export const usePaymentIntent = ({
         const dataToSend = {
             cart: items,
             customer: {
-                name: 'Jane Doe',
+                name: name,
                 address: { ...address },
             },
             receipt_email: email,
@@ -50,9 +52,7 @@ export const usePaymentIntent = ({
         data: clientSecret,
         isLoading,
         error,
-    } = useQuery(['paymentIntent'], fetchPaymentIntent, {
-        enabled: cartContext.cart.length > 0,
-    });
+    } = useQuery(['paymentIntent'], fetchPaymentIntent, {});
 
     const options = clientSecret
         ? {
@@ -62,8 +62,6 @@ export const usePaymentIntent = ({
 
     return {
         error,
-        email,
-        address,
         options,
         isLoading,
         clientSecret,

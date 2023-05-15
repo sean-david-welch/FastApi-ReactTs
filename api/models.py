@@ -20,7 +20,7 @@ class ProductUpdate(BaseModel):
 
 class Address(BaseModel):
     line1: str
-    line2: str
+    line2: Optional[str] = None
     city: str
     state: str
     postal_code: str

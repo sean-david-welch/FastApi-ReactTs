@@ -1,4 +1,3 @@
-import { FRONTEND_BASE_URL } from '../../utils/config';
 import { PaymentIntent } from '@stripe/stripe-js';
 import { UsePaymentProps } from '../../types/Types';
 import { useState, useEffect } from 'react';
@@ -6,25 +5,16 @@ import { useState, useEffect } from 'react';
 const usePaymentProcessor = ({
     email,
     stripe,
-    address,
     elements,
     clientSecret,
-    setEmail,
-    setAddress,
 }: UsePaymentProps) => {
     const [message, setMessage] = useState<string | null>('');
     const [isLoading, setIsLoading] = useState(false);
-    const [paymentAttempted, setpaymentAttempted] = useState(false);
 
     useEffect(() => {
-        if (!stripe || !clientSecret) {
-            setEmail('');
-            setMessage(null);
-            return;
-        }
-
         const retrievePaymentIntentStatus = async () => {
-            setpaymentAttempted(false);
+            if (!stripe || !clientSecret) return;
+
             try {
                 const result = await stripe.retrievePaymentIntent(clientSecret);
                 const paymentIntent = result.paymentIntent as PaymentIntent;
@@ -37,11 +27,9 @@ const usePaymentProcessor = ({
                         setMessage('Your payment is processing.');
                         break;
                     case 'requires_payment_method':
-                        if (paymentAttempted) {
-                            setMessage(
-                                'Your payment was not successful, please try again.'
-                            );
-                        }
+                        setMessage(
+                            'Your payment was not successful, please try again.'
+                        );
                         break;
                     default:
                         setMessage('Something went wrong.');
@@ -55,37 +43,28 @@ const usePaymentProcessor = ({
         retrievePaymentIntentStatus();
     }, [stripe, clientSecret]);
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
+    const handlePayment = async () => {
         if (!stripe || !elements || !clientSecret || !email) {
+            console.log(
+                'Stripe, elements, clientSecret, or email is undefined'
+            );
             return;
         }
-
-        console.log('Email at the time of submitting: ', email);
 
         setIsLoading(true);
 
         try {
-            if (address) {
-                const { error: stripeError } = await stripe.confirmPayment({
-                    confirmParams: {
-                        return_url: `${FRONTEND_BASE_URL}payment-success`,
-                        receipt_email: email,
-                        shipping: {
-                            name: 'Jane Doe',
-                            address: address,
-                        },
-                    },
-                    elements,
-                });
-                if (stripeError?.message) {
-                    setMessage(stripeError.message);
-                } else {
-                    setMessage(
-                        'Payment successfully processed. Redirecting...'
-                    );
-                }
+            const { error } = await stripe.confirmPayment({
+                confirmParams: {
+                    return_url: 'http://localhost:3000/payment-success',
+                    receipt_email: email,
+                },
+                elements,
+            });
+            if (error) {
+                setMessage(error.message || 'Something went wrong.');
+            } else {
+                setMessage('Payment successfully processed. Redirecting...');
             }
         } catch (error) {
             console.error('Error processing payment:', error);
@@ -96,13 +75,9 @@ const usePaymentProcessor = ({
     };
 
     return {
-        email,
         message,
-        address,
         isLoading,
-        setEmail,
-        setAddress,
-        handleSubmit,
+        handlePayment,
     };
 };
 

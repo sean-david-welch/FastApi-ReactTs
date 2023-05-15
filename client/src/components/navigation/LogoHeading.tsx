@@ -1,6 +1,6 @@
 import logo from '../../assets/logo.png';
 import { Link } from 'react-router-dom';
-import { LogoHeadingProps } from '../../types/Types';
+import { LogoHeadingProps } from '../../Types/HomeTypes';
 
 const LogoHeading: React.FC<LogoHeadingProps> = ({ headingText }) => {
     return (

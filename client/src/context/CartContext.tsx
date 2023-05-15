@@ -1,5 +1,9 @@
 import { createContext, useState, useCallback, useEffect } from 'react';
-import { CartItem, CartContextData, CartProviderProps } from '../types/Types';
+import {
+    CartItem,
+    CartContextData,
+    CartProviderProps,
+} from '../Types/CartTypes';
 
 export const CartContext = createContext<CartContextData>(
     {} as CartContextData

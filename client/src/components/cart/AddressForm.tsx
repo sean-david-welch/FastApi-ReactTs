@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AddressElement } from '@stripe/react-stripe-js';
-import { Address } from '../../types/Types';
+import { Address } from '../../Types/CartTypes';
 import LogoHeading from '../navigation/LogoHeading';
 
 interface AddressFormProps {

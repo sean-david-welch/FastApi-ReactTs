@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { InfoItemProps } from '../../types/Types';
+import { InfoItemProps } ;
 import useIntersectionObserver from '../../hooks/navigation/useIntersectionObserver';
 
 const InfoItem: React.FC<InfoItemProps> = ({ image, title, description }) => {

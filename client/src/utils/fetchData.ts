@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API_BASE_URL } from './config';
-import { FetchDataOptions } from '../types/Types';
+import { FetchDataOptions } from '../Types/Types';
 
 axios.defaults.baseURL = API_BASE_URL;
 axios.defaults.headers.post['Content-Type'] = 'application/json';

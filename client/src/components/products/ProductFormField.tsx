@@ -1,4 +1,4 @@
-import { ProductFormFieldsProps } from '../../types/Types';
+import { ProductFormFieldsProps } from '../../Types/ProductTypes';
 
 const ProductFormField: React.FC<ProductFormFieldsProps> = ({
     name,

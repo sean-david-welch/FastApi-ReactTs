@@ -1,5 +1,5 @@
-import { Product } from '../../types/Types';
-import { ProductFormProps } from '../../types/Types';
+import { Product } from '../../Types/ProductTypes';
+import { ProductFormProps } from '../../Types/ProductTypes';
 import LogoHeading from '../navigation/LogoHeading';
 import ProductFormField from './ProductFormField';
 

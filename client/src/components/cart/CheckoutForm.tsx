@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CheckoutFormProps } from '../../types/Types';
+import { Address, CheckoutFormProps } from '../../Types/CartTypes';
 import { useStripe, useElements } from '@stripe/react-stripe-js';
 import PaymentForm from './PaymentForm';
 import AddressForm from './AddressForm';
@@ -30,7 +30,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
     const handleSubmit = (data: {
         name: string;
         email: string;
-        address: any;
+        address: Address;
     }) => {
         setEmail(data.email);
         setAddress(data.address);

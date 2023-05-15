@@ -3,7 +3,7 @@ import { useCart } from '../../hooks/cart/useCartContext';
 import { Elements } from '@stripe/react-stripe-js';
 import CheckoutForm from './CheckoutForm';
 import { usePaymentIntent } from '../../hooks/cart/useFetchIntent';
-import { CartItem } from '../../types/Types';
+import { CartItem } from '../../Types/CartTypes';
 
 const CheckoutPage: React.FC = () => {
     const cartContext = useCart();
@@ -32,10 +32,10 @@ const CheckoutPage: React.FC = () => {
                     <CheckoutForm
                         clientSecret={clientSecret}
                         totalAmount={totalAmount}
-                        // email={email}
-                        // setEmail={setEmail}
-                        // address={address}
-                        // setAddress={setAddress}
+                        email={email}
+                        setEmail={setEmail}
+                        address={address}
+                        setAddress={setAddress}
                         addressFormSubmitted={addressFormSubmitted}
                         setAddressFormSubmitted={setAddressFormSubmitted}
                     />

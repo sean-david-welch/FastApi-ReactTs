@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { ProductUpdate } from '../../types/Types';
-import { Product } from '../../types/Types';
+import { ProductUpdate } from '../../Types/ProductTypes';
+import { Product } from '../../Types/ProductTypes';
 import fetchAuthData from '../../utils/fetchAuthData';
 
 const useUpdateProduct = () => {

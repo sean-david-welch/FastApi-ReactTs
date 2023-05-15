@@ -1,6 +1,6 @@
-import { Product } from '../../types/Types';
+import { Product } from '../../Types/ProductTypes';
 import { useState, useEffect } from 'react';
-import { ProductUpdateFormProps } from '../../types/Types';
+import { ProductUpdateFormProps } from '../../Types/ProductTypes';
 import { useNavigate } from 'react-router-dom';
 import ProductForm from './ProductForm';
 import useUpdateProduct from '../../hooks/products/useUpdateProduct';

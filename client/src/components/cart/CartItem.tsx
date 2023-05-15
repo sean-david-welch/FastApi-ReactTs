@@ -1,5 +1,5 @@
 import React from 'react';
-import { CartItemProps } from '../../types/Types';
+import { CartItemProps } from '../../Types/CartTypes';
 
 const CartItem: React.FC<CartItemProps> = ({
     item,

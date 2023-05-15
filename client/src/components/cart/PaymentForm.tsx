@@ -1,4 +1,4 @@
-import { PaymentFormProps } from '../../types/Types';
+import { PaymentFormProps } from '../../Types/CartTypes';
 import { PaymentElement } from '@stripe/react-stripe-js';
 import LogoHeading from '../navigation/LogoHeading';
 

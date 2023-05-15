@@ -1,5 +1,5 @@
 import { PaymentIntent } from '@stripe/stripe-js';
-import { UsePaymentProps } from '../../types/Types';
+import { UsePaymentProps } from '../../Types/CartTypes';
 import { useState, useEffect } from 'react';
 
 const usePaymentProcessor = ({
@@ -75,6 +75,7 @@ const usePaymentProcessor = ({
     };
 
     return {
+        email,
         message,
         isLoading,
         handlePayment,

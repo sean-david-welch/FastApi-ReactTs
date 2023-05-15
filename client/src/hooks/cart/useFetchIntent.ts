@@ -2,7 +2,7 @@ import { STRIPE_PUBLIC_KEY } from '../../utils/config';
 import { useCart } from './useCartContext';
 import { useQuery } from '@tanstack/react-query';
 import { loadStripe } from '@stripe/stripe-js';
-import { Address } from '../../types/Types';
+import { Address } from '../../Types/CartTypes';
 import fetchData from '../../utils/fetchData';
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);

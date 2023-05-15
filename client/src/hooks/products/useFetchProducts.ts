@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { Product, FetchProductOptions } from '../../types/Types';
+import { Product } from '../../Types/ProductTypes';
 import fetchData from '../../utils/fetchData';
+import { FetchProductOptions } from '../../Types/FetchTypes';
 
 const useFetchProducts = (options: FetchProductOptions) => {
     const { endpoint, isSingleProduct = false } = options;

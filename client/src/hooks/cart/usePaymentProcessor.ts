@@ -1,6 +1,8 @@
+import { FRONTEND_BASE_URL } from '../../utils/config';
 import { useCustomer } from './useCustomerContext';
 import { PaymentIntent } from '@stripe/stripe-js';
 import { UsePaymentProps } from '../../Types/CartTypes';
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 const usePaymentProcessor = ({
@@ -11,6 +13,7 @@ const usePaymentProcessor = ({
     const [message, setMessage] = useState<string | null>('');
     const [isLoading, setIsLoading] = useState(false);
     const { customer } = useCustomer();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const retrievePaymentIntentStatus = async () => {
@@ -45,6 +48,8 @@ const usePaymentProcessor = ({
     }, [stripe, clientSecret]);
 
     const handlePayment = async () => {
+        console.log('handlePayment called');
+
         if (!stripe || !elements || !clientSecret || !customer?.email) {
             console.log(
                 'Stripe, elements, clientSecret, or email is undefined'
@@ -55,17 +60,23 @@ const usePaymentProcessor = ({
         setIsLoading(true);
 
         try {
-            const { error } = await stripe.confirmPayment({
+            console.log('Attempting to confirm payment...');
+            const response = await stripe.confirmPayment({
                 confirmParams: {
-                    return_url: 'http://localhost:3000/payment-success',
+                    return_url: 'http://localhost:3000/payment-success/',
                     receipt_email: customer.email,
                 },
                 elements,
             });
-            if (error) {
-                setMessage(error.message || 'Something went wrong.');
+
+            console.log('Payment confirmation response:', response);
+
+            if (response.error) {
+                setMessage(response.error.message || 'Something went wrong.');
+                console.error('Payment error:', response.error);
             } else {
                 setMessage('Payment successfully processed. Redirecting...');
+                navigate(`${FRONTEND_BASE_URL}payment-success/`);
             }
         } catch (error) {
             console.error('Error processing payment:', error);
@@ -79,7 +90,7 @@ const usePaymentProcessor = ({
         stripe,
         elements,
         clientSecret,
-        email: customer.email,
+        email: customer?.email,
         message,
         isLoading,
         handlePayment,

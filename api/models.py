@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, EmailStr, PositiveFloat, PositiveInt
+from pydantic import BaseModel, Field, EmailStr
 from typing import Optional, List
 from uuid import uuid4
 
@@ -33,28 +33,28 @@ class ProductUpdate(BaseModel):
 
 ##### Stripe #####
 class Address(BaseModel):
-    line1: str
-    line2: Optional[str] = None
-    city: str
-    state: str
-    postal_code: str
-    country: str
+    line1: str = Field(default="O'Connell Street")
+    line2: str = None
+    city: str = Field(default="Dublin")
+    state: str = Field(default="Dublin")
+    postal_code: str = Field(default="D01 F5P2")
+    country: str = Field(default="Ireland")
 
 
 class Customer(BaseModel):
-    name: str
-    address: Address
+    name: str = Field(default="John Doe")
+    address: Address = Address()
 
 
 class CartItem(BaseModel):
-    price: PositiveFloat
-    quantity: PositiveInt
+    price: float = Field(default=1.0)
+    quantity: int = Field(default=1)
 
 
 class PaymentIntentData(BaseModel):
     cart: List[CartItem]
-    customer: Customer
-    receipt_email: Optional[EmailStr] = None
+    customer: Customer = Customer()
+    receipt_email: Optional[EmailStr] or str = Field(default="guest@primalformulas.ie")
 
 
 ##### Users #####

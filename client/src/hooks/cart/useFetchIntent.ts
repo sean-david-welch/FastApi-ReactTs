@@ -7,23 +7,12 @@ import { STRIPE_PUBLIC_KEY } from '../../utils/config';
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 
-export const usePaymentIntent = () => {
-    console.log('fetchPaymentIntent called');
-
+const usePaymentIntent = (shouldFetch: boolean) => {
     const cartContext = useCart();
     const { customer } = useCustomer();
 
     const fetchPaymentIntent = async () => {
-        console.log('cart length:', cartContext.cart.length);
-        console.log('customer email:', customer.email);
-        if (
-            cartContext.cart.length === 0 ||
-            !customer.email ||
-            customer.email.trim() === null ||
-            undefined ||
-            ''
-        ) {
-            console.log('fetchPaymentIntent early exit condition met');
+        if (cartContext.cart.length === 0) {
             return null;
         }
 
@@ -54,11 +43,13 @@ export const usePaymentIntent = () => {
         return postData.client_secret;
     };
 
-    const {
-        data: clientSecret,
-        isLoading,
-        error,
-    } = useQuery(['paymentIntent'], fetchPaymentIntent, {});
+    const { data: clientSecret } = useQuery(
+        ['paymentIntent'],
+        fetchPaymentIntent,
+        {
+            enabled: shouldFetch,
+        }
+    );
 
     const options = clientSecret
         ? {
@@ -67,10 +58,10 @@ export const usePaymentIntent = () => {
         : {};
 
     return {
-        error,
         options,
-        isLoading,
         clientSecret,
         stripePromise,
     };
 };
+
+export default usePaymentIntent;

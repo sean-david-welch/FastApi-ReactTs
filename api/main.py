@@ -1,6 +1,6 @@
 from fastapi import FastAPI, status, Request, Response, Depends
 from fastapi.exceptions import RequestValidationError, HTTPException
-from fastapi.responses import RedirectResponse, JSONResponse
+from fastapi.responses import RedirectResponse, JSONResponse, PlainTextResponse
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -13,7 +13,7 @@ from utils import (
     verify_signature,
     create_customer,
     handle_stripe_error,
-    create_payment_intent,
+    process_payment_intent,
 )
 
 from security import (
@@ -75,6 +75,11 @@ async def validation_exception_handler(exc):
         {"detail": "Request validation failed", "errors": exc.errors()},
         status_code=422,
     )
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    return PlainTextResponse(str(exc), status_code=400)
 
 
 ########################
@@ -286,7 +291,7 @@ async def create_payment_intent(data: PaymentIntentData) -> JSONResponse:
     print("Calculated total amount:", calculated_total_amount)
 
     try:
-        payment_intent = create_payment_intent(customer, calculated_total_amount, data)
+        payment_intent = process_payment_intent(customer, calculated_total_amount, data)
         print("Payment intent created:", payment_intent)
         return JSONResponse({"client_secret": payment_intent.client_secret})
     except stripe.error.StripeError as e:

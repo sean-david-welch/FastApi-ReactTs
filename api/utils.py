@@ -19,10 +19,24 @@ def calculate_cart_total(cart: List[CartItem]):
     return total_price
 
 
-###### Stripe Utility Fucntion ######
+###### Stripe Payment Intent Functions ######
 def create_customer(data: PaymentIntentData):
     stripe.api_key = settings["STRIPE_SECRET_KEY"]
+
+    existing_customers = stripe.Customer.list(email=data.receipt_email).get("data")
+    if existing_customers:
+        return existing_customers[0]
+
     return stripe.Customer.create(
+        name=data.customer.name,
+        address={
+            "line1": data.customer.address.line1,
+            "line2": data.customer.address.line2,
+            "city": data.customer.address.city,
+            "state": data.customer.address.state,
+            "postal_code": data.customer.address.postal_code,
+            "country": data.customer.address.country,
+        },
         email=data.receipt_email,
         shipping={
             "name": data.customer.name,
@@ -54,7 +68,7 @@ def handle_stripe_error(e: stripe.error.StripeError):
     print(error_message, e)
 
 
-def create_payment_intent(customer, calculated_total_amount, data):
+def process_payment_intent(customer, calculated_total_amount, data):
     stripe.api_key = settings["STRIPE_SECRET_KEY"]
     return stripe.PaymentIntent.create(
         customer=customer["id"],
@@ -67,6 +81,7 @@ def create_payment_intent(customer, calculated_total_amount, data):
     )
 
 
+###### Stripe Utility Functions ######
 def charge_customer(customer_id, cart: List[CartItem]):
     payment_methods = stripe.PaymentMethod.list(customer=customer_id, type="card")
     calculated_total_amount = calculate_cart_total(cart)

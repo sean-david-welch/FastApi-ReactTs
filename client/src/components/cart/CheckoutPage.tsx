@@ -1,21 +1,36 @@
 import { useCart } from '../../hooks/cart/useCartContext';
-import { CartItem } from '../../Types/CartTypes';
+import { useState } from 'react';
 import { Elements } from '@stripe/react-stripe-js';
-import { useEffect } from 'react';
-import { usePaymentIntent } from '../../hooks/cart/useFetchIntent';
+import { Address } from '../../Types/CartTypes';
+import { CartItem } from '../../Types/CartTypes';
+import { useCustomer } from '../../hooks/cart/useCustomerContext';
+import usePaymentIntent from '../../hooks/cart/useFetchIntent';
+import AddressForm from './AddressForm';
+import PaymentForm from './PaymentForm';
 import Loading from '../Loading';
-import CheckoutForm from './CheckoutForm';
 
 const CheckoutPage: React.FC = () => {
     const cartContext = useCart();
-    const { clientSecret, stripePromise, options, error, isLoading } =
-        usePaymentIntent() as {
-            clientSecret: string | null;
-            stripePromise: any;
-            options: any;
-            error: { message: string } | null;
-            isLoading: boolean;
-        };
+    const { setCustomer } = useCustomer();
+    const [addressFormSubmitted, setAddressFormSubmitted] = useState(false);
+    const [fetchingClientSecret, setFetchingClientSecret] = useState(false);
+
+    const { clientSecret, stripePromise, options } =
+        usePaymentIntent(addressFormSubmitted);
+
+    const handleSubmit = (data: {
+        name: string;
+        email: string;
+        address: Address;
+    }) => {
+        setCustomer(prev => ({
+            ...prev,
+            email: data.email,
+            address: data.address,
+        }));
+        setFetchingClientSecret(true);
+        setAddressFormSubmitted(true);
+    };
 
     const calculateTotalAmount = (cart: CartItem[]) => {
         return cart.reduce(
@@ -26,32 +41,23 @@ const CheckoutPage: React.FC = () => {
 
     const totalAmount = calculateTotalAmount(cartContext.cart);
 
-    useEffect(() => {
-        console.log('CheckoutPage useEffect called');
-        console.log('clientSecret:', clientSecret);
-        console.log('stripePromise:', stripePromise);
-        console.log('options:', options);
-    }, [clientSecret, stripePromise, options]);
-
-    if (isLoading) {
-        return <Loading />;
-    }
-
-    if (error) {
-        return <p>An error occurred: {error.message}</p>;
-    }
-
-    if (!clientSecret) {
-        return <p>No payment data available</p>;
-    }
-
     return (
-        <Elements options={options} stripe={stripePromise}>
-            <CheckoutForm
-                clientSecret={clientSecret}
-                totalAmount={totalAmount}
-            />
-        </Elements>
+        <div className="stripe-form">
+            {addressFormSubmitted ? (
+                clientSecret ? (
+                    <Elements options={options} stripe={stripePromise}>
+                        <PaymentForm
+                            clientSecret={clientSecret}
+                            totalAmount={totalAmount}
+                        />
+                    </Elements>
+                ) : (
+                    fetchingClientSecret && <Loading />
+                )
+            ) : (
+                <AddressForm onSubmit={handleSubmit} />
+            )}
+        </div>
     );
 };
 

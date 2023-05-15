@@ -1,6 +1,5 @@
-import { Customer } from '../../Types/CartTypes';
+import { Customer, Address } from '../../Types/CartTypes';
 import { useCustomer } from '../../hooks/cart/useCustomerContext';
-import { AddressElement } from '@stripe/react-stripe-js';
 import LogoHeading from '../navigation/LogoHeading';
 
 interface AddressFormProps {
@@ -10,21 +9,23 @@ interface AddressFormProps {
 const AddressForm: React.FC<AddressFormProps> = ({ onSubmit }) => {
     const { customer, setCustomer } = useCustomer();
 
-    const handleAddressChange = (event: any) => {
-        if (event.complete && !event.error) {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+
+        if (name in customer) {
             setCustomer({
                 ...customer,
-                name: event.value.name,
-                address: event.value.address,
+                [name]: value,
+            });
+        } else {
+            setCustomer({
+                ...customer,
+                address: {
+                    ...customer.address,
+                    [name]: value,
+                },
             });
         }
-    };
-
-    const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setCustomer({
-            ...customer,
-            email: event.target.value,
-        });
     };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -37,16 +38,34 @@ const AddressForm: React.FC<AddressFormProps> = ({ onSubmit }) => {
             <LogoHeading headingText={'Primal Formulas Checkout'} />
 
             <input
+                type="text"
+                name="name"
+                value={customer.name}
+                onChange={handleInputChange}
+                placeholder="Full Name"
+            />
+
+            <input
                 type="email"
+                name="email"
                 value={customer.email}
-                onChange={handleEmailChange}
-                placeholder="Email address"
+                onChange={handleInputChange}
+                placeholder="Email Address"
             />
-            <AddressElement
-                id="address-element"
-                options={{ mode: 'shipping' }}
-                onChange={handleAddressChange}
-            />
+
+            {(
+                Object.keys(customer.address) as unknown as Array<keyof Address>
+            ).map(field => (
+                <input
+                    key={field}
+                    type="text"
+                    name={field}
+                    value={customer.address[field]}
+                    onChange={handleInputChange}
+                    placeholder={field}
+                />
+            ))}
+
             <button type="submit">Proceed to Payment</button>
         </form>
     );

@@ -28,16 +28,17 @@ export interface CartProviderProps {
 }
 
 export interface CheckoutFormProps {
-    totalAmount: number;
-    clientSecret: string | null;
+    totalAmount?: number;
+    clientSecret?: string | null;
+    options?: {};
+    stripePromise: Promise<Stripe | null>;
+    onAddressFormSubmit?: () => void;
 }
 
 export interface PaymentFormProps {
-    isLoading: boolean;
     totalAmount: number;
-    stripe: Stripe | null;
-    elements: StripeElements | null;
-    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+    clientSecret: string | null;
+    // handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
 export interface UsePaymentProps {

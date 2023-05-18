@@ -15,6 +15,10 @@
     margin-bottom: 1rem;
 }
 
+#about .info-list-item img {
+    max-width: 20rem;
+}
+
 #about .info-list-item:nth-child(odd) {
     display: flex;
     flex-direction: row;

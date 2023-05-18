@@ -9,10 +9,12 @@ class StaticContent(BaseModel):
     content: str = Field(default="http://localhost:8000/images/default.jpg")
 
 
-class BenefitItem(BaseModel):
-    icon: str
+##### About Content #####
+class AboutContent(BaseModel):
+    id: Optional[str] = Field(default_factory=uuid4, example="null")
     title: str
     description: str
+    image: str = Field(default="http://localhost:8000/images/default.jpg")
 
 
 ##### Products #####

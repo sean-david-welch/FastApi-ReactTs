@@ -35,10 +35,14 @@ from models import (
     UserDB,
     UserEdit,
     StaticContent,
+    AboutContent,
 )
 from database import (
     create_content_db,
     get_content_db,
+    create_about_db,
+    fetch_all_about,
+    get_about_db,
     fetch_all_products,
     fetch_product,
     post_product,
@@ -116,6 +120,40 @@ async def get_content(name: str):
     if response:
         return response
     raise HTTPException(status_code=404, detail=f"Content: {name} not found")
+
+
+########################
+####### About ##########
+########################
+@app.post("/api/about")
+async def create_about(
+    about: AboutContent, current_user: User = Depends(get_current_user)
+):
+    if not current_user.is_superuser:
+        raise HTTPException(status_code=403, detail="Permission denied")
+
+    existing_about = await get_about_db(about.id)
+    if existing_about:
+        raise HTTPException(status_code=400, detail="About already exists")
+
+    about_db = AboutContent(**about.dict())
+    await create_about_db(about_db)
+
+    return {"message": "About created successfully"}
+
+
+@app.get("/api/about")
+async def get_about():
+    reponse = await fetch_all_about()
+    return reponse
+
+
+@app.get("/api/about/{id}", response_model=AboutContent)
+async def get_about_id(id: str):
+    response = await get_about_db(id)
+    if response:
+        return response
+    raise HTTPException(status_code=404, detail=f"About: {id} not found")
 
 
 ########################

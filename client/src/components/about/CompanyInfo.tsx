@@ -1,25 +1,38 @@
+import { useQuery } from '@tanstack/react-query';
 import InfoItem from './InfoItem';
+import fetchAboutInfo from '../../hooks/about/useAboutInfo';
+
+interface AboutInfo {
+    image: string;
+    title: string;
+    description: string;
+}
 
 const CompanyInfo = () => {
-    const infoItems = [
-        {
-            image: 'https://via.placeholder.com/150',
-            title: 'Company Info 1',
-            description:
-                'Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, sapiente!',
-        },
-        {
-            image: 'https://via.placeholder.com/150',
-            title: 'Company Info 2',
-            description:
-                'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-        },
-    ];
+    const {
+        data: infoItems,
+        isLoading,
+        isError,
+        error,
+    } = useQuery(['infoItems'], fetchAboutInfo);
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (isError || error) {
+        return (
+            <div>
+                Error:{' '}
+                {error instanceof Error ? error.message : 'Unknown error'}
+            </div>
+        );
+    }
 
     return (
         <div className="company-info">
             <ul className="info-list">
-                {infoItems.map((infoItem, index) => (
+                {infoItems?.map((infoItem: AboutInfo, index: number) => (
                     <InfoItem
                         key={index}
                         image={infoItem.image}

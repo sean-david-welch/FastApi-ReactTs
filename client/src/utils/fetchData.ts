@@ -23,8 +23,12 @@ const fetchData = async (options: FetchDataOptions) => {
         const responseData = response.data;
 
         return responseData;
-    } catch (error: any) {
-        throw new Error(error.message);
+    } catch (error) {
+        if (error instanceof Error) {
+            throw new Error(error.message);
+        } else {
+            throw error; // or throw new Error("An unexpected error occurred.");
+        }
     }
 };
 

@@ -18,11 +18,11 @@ password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/login")
 
 
-def verify_password(user_password, hashed_password):
+def verify_password(user_password, hashed_password) -> bool:
     return password_context.verify(user_password, hashed_password)
 
 
-def get_password_hash(password):
+def get_password_hash(password) -> str:
     return password_context.hash(password)
 
 
@@ -45,7 +45,7 @@ async def authenticate_user(username: str, password: str) -> Optional[UserDB]:
     return None
 
 
-async def cookie_oauth2_scheme(request: Request):
+async def cookie_oauth2_scheme(request: Request) -> str:
     token = request.cookies.get("access_token")
     if token is None:
         raise HTTPException(
@@ -67,7 +67,7 @@ async def is_authenticated(token: str = Depends(cookie_oauth2_scheme)) -> bool:
         return False
 
 
-async def get_current_user(token: str = Depends(cookie_oauth2_scheme)):
+async def get_current_user(token: str = Depends(cookie_oauth2_scheme)) -> UserDB:
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",

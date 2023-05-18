@@ -37,8 +37,8 @@ from models import (
     StaticContent,
 )
 from database import (
-    create_content,
-    get_content,
+    create_content_db,
+    get_content_db,
     fetch_all_products,
     fetch_product,
     post_product,
@@ -100,19 +100,19 @@ async def create_content(
     if not current_user.is_superuser:
         raise HTTPException(status_code=403, detail="Permission denied")
 
-    existing_content = await get_content(content.name)
+    existing_content = await get_content_db(content.name)
     if existing_content:
         raise HTTPException(status_code=400, detail="Content already exists")
 
     content_db = StaticContent(**content.dict())
-    await create_content(content_db)
+    await create_content_db(content_db)
 
     return {"message": "Content created successfully"}
 
 
 @app.get("/api/content/{name}", response_model=StaticContent)
 async def get_content(name: str):
-    response = await get_content(name)
+    response = await get_content_db(name)
     if response:
         return response
     raise HTTPException(status_code=404, detail=f"Content: {name} not found")

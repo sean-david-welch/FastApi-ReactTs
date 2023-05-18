@@ -12,13 +12,13 @@ content_collection = database.Content
 
 
 #### Content CRUD ####
-async def create_content(content: dict):
+async def create_content_db(content: dict):
     content_data = content.dict()
     result = await content_collection.insert_one(content_data)
     return result.inserted_id
 
 
-async def get_content(name: str) -> StaticContent:
+async def get_content_db(name: str) -> StaticContent:
     content_data = await content_collection.find_one({"name": name})
     if content_data:
         return StaticContent(**content_data)

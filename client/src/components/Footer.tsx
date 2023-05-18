@@ -1,9 +1,5 @@
 import { Link } from 'react-router-dom';
-import logo from '../assets/logo.png';
-
-import NavItem from './navigation/NavItem';
-import ToTopButton from './navigation/ToTop';
-
+import { useQuery } from '@tanstack/react-query';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faFacebook,
@@ -12,7 +8,23 @@ import {
     faYoutube,
 } from '@fortawesome/free-brands-svg-icons';
 
+import NavItem from './navigation/NavItem';
+import Loading from './Loading';
+import ToTopButton from './navigation/ToTop';
+import fetchStaticContent from '../utils/fetchStaticContent';
+
 function Footer() {
+    const logoQuery = useQuery(['logo.png'], () => fetchStaticContent('logo'));
+
+    if (logoQuery.isLoading) {
+        return <Loading />;
+    }
+
+    if (logoQuery.isError && logoQuery.error instanceof Error) {
+        return <div>Error: {logoQuery.error.message}</div>;
+    }
+
+    const logo = logoQuery.data?.content;
     return (
         <footer>
             <div className="footer-navigation">

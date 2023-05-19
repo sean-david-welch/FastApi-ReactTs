@@ -21,8 +21,6 @@ def calculate_cart_total(cart: List[CartItem]):
 
 ###### Stripe Payment Intent Functions ######
 def create_customer(data: PaymentIntentData):
-    stripe.api_key = settings["STRIPE_SECRET_KEY"]
-
     existing_customers = stripe.Customer.list(email=data.receipt_email).get("data")
     if existing_customers:
         return existing_customers[0]
@@ -69,7 +67,6 @@ def handle_stripe_error(e: stripe.error.StripeError):
 
 
 def process_payment_intent(customer, calculated_total_amount, data):
-    stripe.api_key = settings["STRIPE_SECRET_KEY"]
     return stripe.PaymentIntent.create(
         customer=customer["id"],
         setup_future_usage="off_session",

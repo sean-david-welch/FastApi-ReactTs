@@ -5,6 +5,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from datetime import timedelta
+from config import settings
 import stripe
 
 
@@ -15,6 +16,7 @@ from utils import (
     handle_stripe_error,
     process_payment_intent,
 )
+
 
 from security import (
     ACCESS_TOKEN_EXPIRE_MINUTES,
@@ -311,6 +313,8 @@ async def remove_product(
 ##########################
 @app.post("/api/create-payment-intent")
 async def create_payment_intent(data: PaymentIntentData) -> JSONResponse:
+    stripe.api_key = settings["STRIPE_SECRET_KEY"]
+
     try:
         customer = create_customer(data)
         print("Customer created:", customer)

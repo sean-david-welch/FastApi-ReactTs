@@ -23,21 +23,23 @@
     margin: auto 1rem;
     justify-content: center;
     align-items: center;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
 }
 
 #form .input-box input {
     margin: 0.5rem auto;
     padding: 0.5rem 2rem;
+    font-size: 1.25rem;
     border-radius: 0.5rem;
     border: 0.2rem solid var(--grey-color);
     background-color: var(--dark-color);
     color: var(--white-color);
-    transition: all 500ms ease-in-out;
+    transition: all 600ms ease-in-out;
 }
 
 #login #form button {
     margin: 2rem auto;
+    font-size: 1.5rem;
 }
 
 #login .current-user {
@@ -63,4 +65,9 @@
 #login .current-user:hover {
     border: 2px solid var(--gold-color);
     transform: scale(1.01);
+}
+
+#login .current-user button {
+    margin: 1rem auto;
+    font-size: 1.5rem;
 }

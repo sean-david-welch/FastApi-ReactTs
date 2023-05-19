@@ -89,10 +89,10 @@
 }
 
 .side-nav__icon {
-    z-index: 10000;
+    z-index: 1000000;
     display: flex;
     font-size: 2rem;
-    position: absolute;
+    position: fixed;
     top: 3rem;
     left: 3rem;
     pointer-events: auto;

@@ -12,25 +12,25 @@ function BenefitsHome() {
             icon: faShieldVirus,
             title: 'Increased Immune Function',
             description:
-                'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta veniam molestias quia laborum! Soluta ad non dolore sit officiis nostrum!',
+                "Boost your immune system and defend against illnesses with our desiccated organ supplements. Strengthen your body's natural defense mechanism.",
         },
         {
             icon: faFire,
             title: 'Increased Energy Levels',
             description:
-                'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta veniam molestias quia laborum! Soluta ad non dolore sit officiis nostrum!',
+                'Experience a natural energy boost throughout the day. Our desiccated organ supplements provide essential nutrients to fuel your body and enhance vitality.',
         },
         {
             icon: faAtom,
-            title: 'Helps Autoimmune Conditions',
+            title: 'Helps Autoimmune Issues',
             description:
-                'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta veniam molestias quia laborum! Soluta ad non dolore sit officiis nostrum!',
+                'Find relief and support for autoimmune conditions. Our desiccated organ supplements aid in managing symptoms and promoting overall well-being.',
         },
         {
             icon: faHammer,
             title: 'Faster Recovery',
             description:
-                'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta veniam molestias quia laborum! Soluta ad non dolore sit officiis nostrum!',
+                "Enhance your body's recovery process after physical exertion. Our desiccated organ supplements assist in faster healing and rejuvenation.",
         },
     ];
 

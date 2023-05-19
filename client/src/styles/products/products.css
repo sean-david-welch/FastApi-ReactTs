@@ -146,6 +146,13 @@
     min-height: 100vh;
 }
 
+#product-form .logo-heading {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    white-space: nowrap;
+}
+
 #product-form .product-form {
     padding: 1rem;
     display: flex;
@@ -170,9 +177,11 @@
 #product-form .product-form .input-fields label {
     display: flex;
     margin: auto;
+    font-size: 1.5rem;
 }
 
 #product-form .product-form .input-fields input {
+    font-size: 1.25rem;
     margin: 0.5rem auto;
     padding: 0.5rem;
     border-radius: 0.5rem;
@@ -188,4 +197,5 @@
 
 #product-form .product-form button {
     margin: 1rem auto;
+    font-size: 1.5rem;
 }

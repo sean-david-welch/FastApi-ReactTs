@@ -29,7 +29,7 @@
 .benefits-home-title p {
     font-size: 1.25rem;
     margin: 0 10rem;
-    font-weight: 350;
+    font-weight: 400;
     color: var(--black-color);
     margin-bottom: 2rem;
 }
@@ -55,7 +55,7 @@
 }
 
 .benefits-list-item:hover {
-    transform: scale(1.05);
+    transform: scale(1.1);
     background-color: var(--dark-color);
     color: var(--light-color);
     border: 0.15rem solid var(--gold-color);
@@ -68,7 +68,7 @@
 
 .benefits-list-item h2 {
     font-size: 1.5rem;
-    font-weight: 300;
+    font-weight: 400;
     margin-top: 1rem;
     display: inline-block;
     color: var(--black-color);
@@ -86,7 +86,7 @@
 
 .benefits-list-item p {
     font-weight: 300;
-    letter-spacing: 1px;
+    font-size: 1.05rem;
     margin-top: 1rem;
     color: var(--black-color);
     transition: all 500ms ease-in-out;

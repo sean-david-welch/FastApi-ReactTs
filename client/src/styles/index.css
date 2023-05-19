@@ -199,26 +199,12 @@ p {
 }
 
 svg {
-    transition: all 600ms ease-in-out;
+    transition: all 800ms ease-in-out;
 }
 
-svg:not(.fa-arrow-right):not(.socials svg):not(.btn-primary svg):not(
-        .navigation
-    ):hover {
-    transform: rotateY(180deg);
-}
-
-svg.navigation:hover {
-    transform: scale(1.1);
-    cursor: pointer;
-}
-
-.socials svg {
-    transition: all 600ms ease-in-out;
-}
-
-.socials svg:hover {
+svg:hover {
     transform: scale(1.05);
+    cursor: pointer;
 }
 
 .socials svg path {

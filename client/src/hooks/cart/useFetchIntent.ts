@@ -7,9 +7,7 @@ import { STRIPE_PUBLIC_KEY } from '../../utils/config';
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 
-const usePaymentIntent = (shouldFetch: boolean, formSubmitted: boolean) => {
-    console.log('useFetchIntent called');
-
+const usePaymentIntent = (formSubmitted: boolean) => {
     const cartContext = useCart();
     const { customer } = useCustomer();
 
@@ -32,15 +30,11 @@ const usePaymentIntent = (shouldFetch: boolean, formSubmitted: boolean) => {
             receipt_email: customer.email,
         };
 
-        console.log('Data being sent to the backend:', data);
-
         const postData = await fetchData({
             endpoint: 'create-payment-intent',
             method: 'POST',
             data: JSON.stringify(data),
         });
-
-        console.log('Response from create-payment-intent endpoint:', postData);
 
         return postData.client_secret;
     };
@@ -49,7 +43,7 @@ const usePaymentIntent = (shouldFetch: boolean, formSubmitted: boolean) => {
         ['paymentIntent'],
         fetchPaymentIntent,
         {
-            enabled: shouldFetch && formSubmitted,
+            enabled: formSubmitted,
         }
     );
 

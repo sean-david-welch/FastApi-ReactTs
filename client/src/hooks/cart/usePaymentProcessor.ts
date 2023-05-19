@@ -16,13 +16,6 @@ const usePaymentProcessor = ({
     useEffect(() => {
         if (!stripe || !clientSecret) return;
 
-        console.log(
-            'useEffect called in usePaymentProcessor with stripe:',
-            stripe,
-            'and clientSecret:',
-            clientSecret
-        );
-
         const retrievePaymentIntentStatus = async () => {
             if (!stripe || !clientSecret) return;
 
@@ -55,28 +48,13 @@ const usePaymentProcessor = ({
     }, [stripe, clientSecret]);
 
     const handlePayment = async () => {
-        console.log('handlePayment called');
-
-        if (!stripe || !elements || !clientSecret || !customer?.email) {
-            console.log(
-                'Stripe, elements, clientSecret, or email is undefined'
-            );
+        if (!stripe || !elements || !clientSecret) {
             return;
         }
 
         setIsLoading(true);
 
         try {
-            console.log(
-                'Before confirmPayment with stripe:',
-                stripe,
-                'elements:',
-                elements,
-                'clientSecret:',
-                clientSecret,
-                'email:',
-                customer?.email
-            );
             const response = await stripe.confirmPayment({
                 confirmParams: {
                     return_url: `${FRONTEND_BASE_URL}payment-success/`,
@@ -85,19 +63,19 @@ const usePaymentProcessor = ({
                 elements,
             });
 
-            console.log('Payment confirmation response:', response);
-
             if (response.error) {
                 setMessage(response.error.message || 'Something went wrong.');
                 console.error('Payment error:', response.error);
             } else {
                 setMessage('Payment successfully processed. Redirecting...');
+                console.log('Payment succeeded:', response.error);
             }
         } catch (error) {
             console.error('Error processing payment:', error);
             setMessage('Something went wrong.');
         } finally {
             setIsLoading(false);
+            console.log('Payment complete.');
         }
     };
 

@@ -21,24 +21,16 @@ export interface CartContextData {
     removeFromCart: (id: string) => void;
     updateQuantity: (id: string, quantity: number) => void;
     clearCart: () => void;
+    calculateTotalAmount: (cart: CartItem[]) => number;
 }
 
 export interface CartProviderProps {
     children: React.ReactNode;
 }
 
-export interface CheckoutFormProps {
-    totalAmount?: number;
-    clientSecret?: string | null;
-    options?: {};
-    stripePromise: Promise<Stripe | null>;
-    onAddressFormSubmit?: () => void;
-}
-
 export interface PaymentFormProps {
     totalAmount: number;
     clientSecret: string | null;
-    // handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
 export interface UsePaymentProps {
@@ -46,6 +38,8 @@ export interface UsePaymentProps {
     elements: StripeElements | null;
     clientSecret: string | null;
 }
+
+// Customer Data Types
 
 export interface Address {
     line1: string;

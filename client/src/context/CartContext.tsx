@@ -60,12 +60,20 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         [cart]
     );
 
+    const calculateTotalAmount = (cart: CartItem[]) => {
+        return cart.reduce(
+            (acc: number, item: CartItem) => acc + item.price * item.quantity,
+            0
+        );
+    };
+
     const value = {
         cart,
         updateQuantity,
         addToCart,
         removeFromCart,
         clearCart,
+        calculateTotalAmount,
     };
 
     return (

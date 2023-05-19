@@ -17,6 +17,8 @@ export const Success = () => {
     const paymentIntentId = searchParams.get('payment_intent') || '';
     const { clearCart } = useCart();
 
+    console.log('success page', paymentIntentId);
+
     const {
         data: paymentDetails,
         isLoading,
@@ -28,7 +30,6 @@ export const Success = () => {
     }, [clearCart]);
 
     if (isLoading) {
-        console.log('Loading Success Page...');
         return (
             <div>
                 <Loading />

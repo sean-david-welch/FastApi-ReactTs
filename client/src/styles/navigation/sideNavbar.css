@@ -2,7 +2,7 @@
     z-index: 10000;
     position: fixed;
     width: 30rem;
-    height: 100vh;
+    min-height: 100vh;
     background-color: var(--dark-color);
     transition: all 700ms;
     pointer-events: none;
@@ -26,10 +26,9 @@
 
 .side-nav__menu {
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
     flex-direction: column;
     align-items: flex-start;
-    height: 100%;
     margin: 12.5rem 3rem;
 }
 

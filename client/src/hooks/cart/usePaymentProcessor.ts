@@ -2,7 +2,6 @@ import { FRONTEND_BASE_URL } from '../../utils/config';
 import { useCustomer } from './useCustomerContext';
 import { PaymentIntent } from '@stripe/stripe-js';
 import { UsePaymentProps } from '../../Types/CartTypes';
-import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 const usePaymentProcessor = ({
@@ -13,9 +12,17 @@ const usePaymentProcessor = ({
     const [message, setMessage] = useState<string | null>('');
     const [isLoading, setIsLoading] = useState(false);
     const { customer } = useCustomer();
-    const navigate = useNavigate();
 
     useEffect(() => {
+        if (!stripe || !clientSecret) return;
+
+        console.log(
+            'useEffect called in usePaymentProcessor with stripe:',
+            stripe,
+            'and clientSecret:',
+            clientSecret
+        );
+
         const retrievePaymentIntentStatus = async () => {
             if (!stripe || !clientSecret) return;
 
@@ -60,10 +67,19 @@ const usePaymentProcessor = ({
         setIsLoading(true);
 
         try {
-            console.log('Attempting to confirm payment...');
+            console.log(
+                'Before confirmPayment with stripe:',
+                stripe,
+                'elements:',
+                elements,
+                'clientSecret:',
+                clientSecret,
+                'email:',
+                customer?.email
+            );
             const response = await stripe.confirmPayment({
                 confirmParams: {
-                    return_url: 'http://localhost:3000/payment-success/',
+                    return_url: `${FRONTEND_BASE_URL}payment-success/`,
                     receipt_email: customer.email,
                 },
                 elements,
@@ -76,7 +92,6 @@ const usePaymentProcessor = ({
                 console.error('Payment error:', response.error);
             } else {
                 setMessage('Payment successfully processed. Redirecting...');
-                navigate(`${FRONTEND_BASE_URL}payment-success/`);
             }
         } catch (error) {
             console.error('Error processing payment:', error);
@@ -91,7 +106,6 @@ const usePaymentProcessor = ({
         elements,
         clientSecret,
         email: customer?.email,
-        return_url: 'http://localhost:3000/payment-success/',
         message,
         isLoading,
         handlePayment,

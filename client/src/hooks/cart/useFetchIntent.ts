@@ -7,7 +7,9 @@ import { STRIPE_PUBLIC_KEY } from '../../utils/config';
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 
-const usePaymentIntent = (shouldFetch: boolean) => {
+const usePaymentIntent = (shouldFetch: boolean, formSubmitted: boolean) => {
+    console.log('useFetchIntent called');
+
     const cartContext = useCart();
     const { customer } = useCustomer();
 
@@ -43,11 +45,11 @@ const usePaymentIntent = (shouldFetch: boolean) => {
         return postData.client_secret;
     };
 
-    const { data: clientSecret } = useQuery(
+    const { data: clientSecret, isLoading: isFetchingClientSecret } = useQuery(
         ['paymentIntent'],
         fetchPaymentIntent,
         {
-            enabled: shouldFetch,
+            enabled: shouldFetch && formSubmitted,
         }
     );
 
@@ -70,6 +72,7 @@ const usePaymentIntent = (shouldFetch: boolean) => {
         options,
         clientSecret,
         stripePromise,
+        isFetchingClientSecret,
     };
 };
 

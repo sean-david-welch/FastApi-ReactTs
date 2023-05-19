@@ -13,23 +13,20 @@ const CheckoutPage: React.FC = () => {
     const cartContext = useCart();
     const { setCustomer } = useCustomer();
     const [addressFormSubmitted, setAddressFormSubmitted] = useState(false);
-    const [fetchingClientSecret, setFetchingClientSecret] = useState(false);
+    const [formSubmitted, setFormSubmitted] = useState(false);
 
-    const { clientSecret, stripePromise, options } =
-        usePaymentIntent(addressFormSubmitted);
+    const { options, clientSecret, stripePromise, isFetchingClientSecret } =
+        usePaymentIntent(addressFormSubmitted, formSubmitted);
 
     const handleSubmit = (data: {
         name: string;
         email: string;
         address: Address;
     }) => {
-        setCustomer(prev => ({
-            ...prev,
-            email: data.email,
-            address: data.address,
-        }));
-        setFetchingClientSecret(true);
+        console.log('handleSubmit called with data:', data);
+        setCustomer(data);
         setAddressFormSubmitted(true);
+        setFormSubmitted(true);
     };
 
     const calculateTotalAmount = (cart: CartItem[]) => {
@@ -53,7 +50,7 @@ const CheckoutPage: React.FC = () => {
                         />
                     </Elements>
                 ) : (
-                    fetchingClientSecret && <Loading />
+                    isFetchingClientSecret && <Loading />
                 )
             ) : (
                 <AddressForm onSubmit={handleSubmit} />

@@ -28,6 +28,7 @@ export const Success = () => {
     }, [clearCart]);
 
     if (isLoading) {
+        console.log('Loading Success Page...');
         return (
             <div>
                 <Loading />

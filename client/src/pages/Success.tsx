@@ -1,14 +1,13 @@
 import Layout from '../components/Layout';
-import logo from '../assets/logo.png';
+import Loading from '../components/Loading';
+import LogoHeading from '../components/navigation/LogoHeading';
+import SectionHeading from '../components/navigation/SectionHeading';
 
+import { useCart } from '../hooks/cart/useCartContext';
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useCart } from '../hooks/cart/useCartContext';
-import { Link } from 'react-router-dom';
 import { useGetPaymentIntent } from '../hooks/cart/useGetIntent';
-import Loading from '../components/Loading';
 
-import SectionHeading from '../components/navigation/SectionHeading';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
@@ -52,10 +51,7 @@ export const Success = () => {
                     }
                 />
                 <div className="success-message">
-                    <Link to="/">
-                        <img src={logo} id="logo" alt="Logo" />
-                    </Link>
-                    <h1 className="section-heading">Payment Details:</h1>
+                    <LogoHeading headingText="Thank you for your order!" />
                     <p>Payment Intent ID: {paymentIntentId}</p>
                     <p>
                         Amount: €

@@ -1,6 +1,10 @@
-import { PaymentElement } from '@stripe/react-stripe-js';
 import { PaymentFormProps } from '../../Types/CartTypes';
-import { useElements, useStripe } from '@stripe/react-stripe-js';
+import {
+    useElements,
+    useStripe,
+    PaymentElement,
+    LinkAuthenticationElement,
+} from '@stripe/react-stripe-js';
 
 import usePaymentProcessor from '../../hooks/cart/usePaymentProcessor';
 import LogoHeading from '../navigation/LogoHeading';
@@ -20,6 +24,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
     return (
         <form id="payment-form" className="stripe" onSubmit={handlePayment}>
             <LogoHeading headingText={'Primal Formulas Checkout'} />
+            <LinkAuthenticationElement id="link-element" />
             <PaymentElement id="payment-element" />
             <button
                 disabled={paymentLoading || !stripe || !elements}

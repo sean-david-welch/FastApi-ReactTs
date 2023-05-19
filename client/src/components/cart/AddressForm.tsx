@@ -34,39 +34,43 @@ const AddressForm: React.FC<AddressFormProps> = ({ onSubmit }) => {
     };
 
     return (
-        <form className="stripe" onSubmit={handleSubmit}>
-            <LogoHeading headingText={'Primal Formulas Checkout'} />
+        <form id="form" onSubmit={handleSubmit}>
+            <LogoHeading headingText={'Enter Shipping/Billing Details Below'} />
 
-            <input
-                type="text"
-                name="name"
-                value={customer.name}
-                onChange={handleInputChange}
-                placeholder="Full Name"
-            />
-
-            <input
-                type="email"
-                name="email"
-                value={customer.email}
-                onChange={handleInputChange}
-                placeholder="Email Address"
-            />
-
-            {(
-                Object.keys(customer.address) as unknown as Array<keyof Address>
-            ).map(field => (
+            <div className="address-form-details">
                 <input
-                    key={field}
                     type="text"
-                    name={field}
-                    value={customer.address[field]}
+                    name="name"
+                    value={customer.name}
                     onChange={handleInputChange}
-                    placeholder={field}
+                    placeholder="Full Name"
                 />
-            ))}
+                <input
+                    type="email"
+                    name="email"
+                    value={customer.email}
+                    onChange={handleInputChange}
+                    placeholder="Email Address"
+                />
+                {(
+                    Object.keys(customer.address) as unknown as Array<
+                        keyof Address
+                    >
+                ).map(field => (
+                    <input
+                        key={field}
+                        type="text"
+                        name={field}
+                        value={customer.address[field]}
+                        onChange={handleInputChange}
+                        placeholder={field}
+                    />
+                ))}
+            </div>
 
-            <button type="submit">Proceed to Payment</button>
+            <button className="btn btn-nav btn-primary" type="submit">
+                Proceed to Payment
+            </button>
         </form>
     );
 };

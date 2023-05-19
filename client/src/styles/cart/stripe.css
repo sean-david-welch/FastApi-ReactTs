@@ -1,10 +1,9 @@
 #checkout {
     min-height: 100vh;
-    margin: 10rem 0;
 }
 
 #checkout .stripe-form {
-    margin: 10rem auto;
+    margin: 5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -15,7 +14,7 @@
 #checkout .stripe-form img {
     display: flex;
     margin: 0 10rem;
-    max-width: 7rem;
+    max-width: 10rem;
     transition: all 600ms ease-in-out;
 }
 
@@ -30,7 +29,6 @@
 
 #checkout form {
     display: grid;
-    margin: auto;
     padding: 2rem;
     border-radius: 0.5rem;
     border: 2px solid var(--grey-color);
@@ -62,6 +60,38 @@
 
 #payment-element {
     color: var(--light-color);
+}
+
+#checkout #form,
+#checkout #payment-form {
+    min-width: 45rem;
+}
+
+#checkout #payment-form > label {
+    color: var(--light-color);
+}
+
+#checkout .address-form-details {
+    display: flex;
+    flex-direction: column;
+    margin: 0 2rem;
+}
+
+#checkout .address-form-details input {
+    margin: 0.5rem;
+    padding: 0.5rem 2rem;
+    font-size: 1.25rem;
+    font-weight: 400;
+    border-radius: 0.5rem;
+    border: 0.2rem solid var(--grey-color);
+    background-color: var(--dark-color);
+    color: var(--white-color);
+    transition: all 600ms ease-in-out;
+}
+
+#checkout .address-form-details input:hover,
+#checkout .address-form-details input:focus {
+    border: 0.2rem solid var(--gold-color);
 }
 
 /* Buttons and links */

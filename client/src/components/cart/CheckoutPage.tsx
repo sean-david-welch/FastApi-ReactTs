@@ -47,6 +47,7 @@ const CheckoutPage: React.FC = () => {
                 clientSecret ? (
                     <Elements options={options} stripe={stripePromise}>
                         <PaymentForm
+                            key={clientSecret}
                             clientSecret={clientSecret}
                             totalAmount={totalAmount}
                         />

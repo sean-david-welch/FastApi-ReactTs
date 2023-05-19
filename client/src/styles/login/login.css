@@ -2,8 +2,11 @@
     min-height: 100vh;
 }
 
-#login .logo-heading {
+#login .logo-heading,
+#form .logo-heading,
+#payment-form .logo-heading {
     display: grid;
+    margin: 0 auto;
     grid-template-columns: 1fr;
     justify-content: center;
     white-space: nowrap;
@@ -12,7 +15,7 @@
 #form {
     display: flex;
     flex-direction: column;
-    margin: 2rem 15rem;
+    margin: 2rem 10rem;
     padding: 1rem;
     border: 2px solid var(--grey-color);
     border-radius: 0.5rem;

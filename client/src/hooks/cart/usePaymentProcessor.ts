@@ -91,6 +91,7 @@ const usePaymentProcessor = ({
         elements,
         clientSecret,
         email: customer?.email,
+        return_url: 'http://localhost:3000/payment-success/',
         message,
         isLoading,
         handlePayment,

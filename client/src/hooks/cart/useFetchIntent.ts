@@ -51,9 +51,18 @@ const usePaymentIntent = (shouldFetch: boolean) => {
         }
     );
 
+    const appearance: any = {
+        theme: 'night',
+        variables: {
+            colorPrimary: '#b59410',
+            colorBackground: '#2f2f2f',
+        },
+    };
+
     const options = clientSecret
         ? {
               clientSecret,
+              appearance,
           }
         : {};
 

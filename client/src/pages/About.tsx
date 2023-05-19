@@ -9,7 +9,7 @@ export const About = () => {
         <Layout>
             <section id="about">
                 <SectionHeading
-                    headingText="Our Story:"
+                    headingText="Our Story & Why We Exist:"
                     buttonLabel="View our Products"
                     buttonUrl="/shop"
                     buttonIcon={

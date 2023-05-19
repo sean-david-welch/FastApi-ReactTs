@@ -9,38 +9,65 @@
     align-items: center;
     margin: 0 auto;
     padding: 2rem 0;
+    transition: all 800ms ease-in-out;
 }
 
 #about .info-list > * {
     margin-bottom: 1rem;
 }
 
-#about .info-list-item img {
-    max-width: 20rem;
+#about .info-list-item {
+    margin: 1rem 4rem;
+    background-color: var(--dark-color);
+    border-radius: 1rem;
+    border: solid 4px var(--grey-color);
+    transition: all 800ms ease-in-out;
 }
 
-#about .info-list-item:nth-child(odd) {
+#about .info-list-item:hover {
+    transform: scale(1.01);
+    border: solid 4px var(--gold-color);
+}
+
+#about .info-list-item img {
+    max-width: 40rem;
+    border-radius: 0.75rem;
+    transition: all 800ms ease-in-out;
+}
+
+#about .info-list-item:nth-child(even) {
     display: flex;
     flex-direction: row;
     margin-bottom: 1rem;
 }
 
-#about .info-list-item:nth-child(even) {
+#about .info-list-item:nth-child(odd) {
     display: flex;
     flex-direction: row-reverse;
     margin-bottom: 1rem;
 }
 
 #about .info-list-item .info-description {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 0 1rem;
+    padding: 1rem;
+}
+
+#about .info-list-item .info-description > * {
+    color: var(--light-color);
+    margin: 3rem auto;
+    text-align: center;
+}
+
+#about .info-list-item .info-description .section-heading {
+    margin: 0 auto;
+    font-size: 2rem;
+    font-weight: 300;
 }
 
 #about .info-list-item .info-description p {
-    font-weight: 400;
     font-size: 1.25rem;
-    color: var(--dark-color);
+    font-weight: 200;
 }

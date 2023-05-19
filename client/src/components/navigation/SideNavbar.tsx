@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faBars,
@@ -6,9 +5,10 @@ import {
     faCartShopping,
     faCircleUser,
 } from '@fortawesome/free-solid-svg-icons';
-import useSideNavbar from '../../hooks/navigation/useSideNavbar';
 
 import NavItem from './NavItem';
+import LogoHeading from './LogoHeading';
+import useSideNavbar from '../../hooks/navigation/useSideNavbar';
 
 function SideNavbar() {
     const { isOpen, toggleSideNavbar } = useSideNavbar();
@@ -18,9 +18,8 @@ function SideNavbar() {
             <div className={`side-nav ${isOpen ? 'open' : 'closed'}`}>
                 <nav className="side-nav__menu">
                     <ul className="nav-list">
-                        <NavItem to="/about">About</NavItem>
+                        <NavItem to="/about">Our Story</NavItem>
                         <NavItem to="/shop">Products</NavItem>
-                        <NavItem to="/cart">Cart</NavItem>
                         <NavItem to="/login">Account</NavItem>
                     </ul>
                     <ul className="icon-nav">
@@ -34,16 +33,14 @@ function SideNavbar() {
                 </nav>
                 {isOpen && (
                     <div className="side-nav__icon" onClick={toggleSideNavbar}>
-                        <FontAwesomeIcon icon={faX} />
-                        <Link to="/">
-                            <p>Primal Formulas</p>
-                        </Link>
+                        <FontAwesomeIcon icon={faX} className="navigation" />
+                        <LogoHeading headingText="Primal Formulas" />
                     </div>
                 )}
             </div>
             {!isOpen && (
                 <div className="side-nav__icon" onClick={toggleSideNavbar}>
-                    <FontAwesomeIcon icon={faBars} className="fadeInOut" />
+                    <FontAwesomeIcon icon={faBars} className=" navigation" />
                 </div>
             )}
         </>

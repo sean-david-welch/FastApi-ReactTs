@@ -2,10 +2,17 @@
     min-height: 100vh;
 }
 
+#login .logo-heading {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    white-space: nowrap;
+}
+
 #form {
     display: flex;
     flex-direction: column;
-    margin: 2rem 20rem;
+    margin: 2rem 15rem;
     padding: 1rem;
     border: 2px solid var(--grey-color);
     border-radius: 0.5rem;
@@ -13,7 +20,9 @@
 }
 
 #form .input-box label {
-    margin: auto 2rem;
+    margin: auto 1rem;
+    justify-content: center;
+    align-items: center;
     font-size: 1.25rem;
 }
 
@@ -28,22 +37,18 @@
 }
 
 #login #form button {
-    margin: 1rem auto;
+    margin: 2rem auto;
 }
 
 #login .current-user {
     display: flex;
     flex-direction: column;
-    margin: 2rem 20rem 1rem 20rem;
+    margin: 2rem 15rem;
     padding: 2rem;
     border: 2px solid var(--grey-color);
     border-radius: 0.5rem;
     background-color: var(--dark-color);
     transition: all 600ms ease-in-out;
-}
-
-#login .current-user .section-heading {
-    display: inline;
 }
 
 #login .current-user > * {

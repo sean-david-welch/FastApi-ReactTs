@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import InfoItem from './InfoItem';
 import fetchAboutInfo from '../../hooks/about/useAboutInfo';
+import Loading from '../Loading';
 
 interface AboutInfo {
     image: string;
@@ -17,7 +18,11 @@ const CompanyInfo = () => {
     } = useQuery(['infoItems'], fetchAboutInfo);
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return (
+            <section id="about">
+                <Loading />
+            </section>
+        );
     }
 
     if (isError || error) {

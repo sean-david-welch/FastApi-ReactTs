@@ -8,10 +8,10 @@ const InfoItem: React.FC<InfoItemProps> = ({ image, title, description }) => {
     useIntersectionObserver(infoItemRef);
 
     return (
-        <li className="info-list-item" ref={infoItemRef}>
+        <li className="info-list-item hidden" ref={infoItemRef}>
             <img src={image} alt="Info-Item" />
             <div className="info-description">
-                <h2 className="section-heading">{title}</h2>
+                <h2 className="section-heading">{title}:</h2>
                 <p>{description}</p>
             </div>
         </li>

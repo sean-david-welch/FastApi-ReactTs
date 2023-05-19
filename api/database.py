@@ -38,7 +38,7 @@ async def fetch_all_about():
     about = []
     cursor = about_collection.find({})
     async for document in cursor:
-        about.append(Product(**document))
+        about.append(AboutContent(**document))
     return about
 
 

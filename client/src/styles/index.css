@@ -40,6 +40,7 @@ html::-webkit-scrollbar-track {
 
 body {
     line-height: 1.75;
+    letter-spacing: 0.5px;
     overflow-x: hidden;
     min-height: 100vh;
     background: var(--gradient-light);
@@ -197,12 +198,19 @@ p {
     justify-content: center;
 }
 
-svg:not(.fa-arrow-right):not(.socials svg) {
+svg {
     transition: all 600ms ease-in-out;
 }
 
-svg:not(.fa-arrow-right):not(.socials svg):not(.btn-primary svg):hover {
+svg:not(.fa-arrow-right):not(.socials svg):not(.btn-primary svg):not(
+        .navigation
+    ):hover {
     transform: rotateY(180deg);
+}
+
+svg.navigation:hover {
+    transform: scale(1.1);
+    cursor: pointer;
 }
 
 .socials svg {

@@ -18,10 +18,17 @@ const LogoHeading: React.FC<LogoHeadingProps> = ({ headingText }) => {
 
     return (
         <>
-            <Link to="/">
-                <img src={logo} id="logo" alt="Logo" className="logo-heading" />
-            </Link>
-            <h2 className="section-heading">{headingText}</h2>
+            <div className="logo-heading">
+                <Link to="/" className="logo-link">
+                    <img
+                        src={logo}
+                        id="logo"
+                        alt="Logo"
+                        className="logo-heading"
+                    />
+                </Link>
+                <h2 className="section-heading">{headingText}</h2>
+            </div>
         </>
     );
 };

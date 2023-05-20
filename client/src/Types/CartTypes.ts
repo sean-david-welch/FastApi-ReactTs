@@ -30,13 +30,16 @@ export interface CartProviderProps {
 
 export interface PaymentFormProps {
     totalAmount: number;
-    clientSecret: string | null;
+    clientSecret?: string | null;
+}
+
+export interface AddressFormProps {
+    onSubmit: (data: PaymentIntentData['customer']) => void;
 }
 
 export interface UsePaymentProps {
     stripe: Stripe | null;
     elements: StripeElements | null;
-    clientSecret: string | null;
 }
 
 // Customer Data Types

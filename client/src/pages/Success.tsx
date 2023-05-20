@@ -6,7 +6,7 @@ import SectionHeading from '../components/navigation/SectionHeading';
 import { useCart } from '../hooks/cart/useCartContext';
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useGetPaymentIntent } from '../hooks/cart/useGetIntent';
+import { useFetchIntent } from '../hooks/cart/useFetchIntent';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -22,7 +22,7 @@ export const Success = () => {
         data: paymentDetails,
         isLoading,
         error,
-    } = useGetPaymentIntent(paymentIntentId);
+    } = useFetchIntent(paymentIntentId);
 
     useEffect(() => {
         clearCart();

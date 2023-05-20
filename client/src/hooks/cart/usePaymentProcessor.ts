@@ -3,15 +3,14 @@ import { useCustomer } from './useCustomerContext';
 import { PaymentIntent } from '@stripe/stripe-js';
 import { UsePaymentProps } from '../../Types/CartTypes';
 import { useState, useEffect } from 'react';
+import usePaymentIntent from './usePaymentIntent';
 
-const usePaymentProcessor = ({
-    stripe,
-    elements,
-    clientSecret,
-}: UsePaymentProps) => {
+const usePaymentProcessor = ({ stripe, elements }: UsePaymentProps) => {
+    const [clientSecret, setClientSecret] = useState<string | null>(null);
     const [message, setMessage] = useState<string | null>('');
     const [isLoading, setIsLoading] = useState(false);
     const { customer } = useCustomer();
+    const { fetchClientSecret } = usePaymentIntent();
 
     useEffect(() => {
         if (!stripe || !clientSecret) return;
@@ -47,12 +46,23 @@ const usePaymentProcessor = ({
         retrievePaymentIntentStatus();
     }, [stripe, clientSecret]);
 
-    const handlePayment = async () => {
-        if (!stripe || !elements || !clientSecret) {
-            return;
-        }
+    const handlePayment = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
 
         setIsLoading(true);
+
+        const clientSecret = await fetchClientSecret();
+        if (!clientSecret) {
+            setMessage('Failed to fetch client secret.');
+            setIsLoading(false);
+            return;
+        }
+        setClientSecret(clientSecret);
+
+        if (!stripe || !elements) {
+            setIsLoading(false);
+            return;
+        }
 
         try {
             const response = await stripe.confirmPayment({
@@ -61,6 +71,7 @@ const usePaymentProcessor = ({
                     receipt_email: customer.email,
                 },
                 elements,
+                clientSecret,
             });
 
             if (response.error) {
@@ -79,6 +90,16 @@ const usePaymentProcessor = ({
         }
     };
 
+    const appearance: any = {
+        theme: 'night',
+        variables: {
+            colorPrimary: '#b59410',
+            colorBackground: '#2f2f2f',
+        },
+    };
+
+    const options = { appearance };
+
     return {
         stripe,
         elements,
@@ -86,6 +107,7 @@ const usePaymentProcessor = ({
         email: customer?.email,
         message,
         isLoading,
+        options,
         handlePayment,
     };
 };

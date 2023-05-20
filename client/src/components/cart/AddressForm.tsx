@@ -1,11 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Customer, Address, PaymentIntentData } from '../../Types/CartTypes';
+import { Customer, Address, AddressFormProps } from '../../Types/CartTypes';
 import { useCustomer } from '../../hooks/cart/useCustomerContext';
 import LogoHeading from '../navigation/LogoHeading';
-
-interface AddressFormProps {
-    onSubmit: (data: PaymentIntentData['customer']) => void;
-}
 
 const AddressForm: React.FC<AddressFormProps> = ({ onSubmit }) => {
     const { customer, setCustomer } = useCustomer();
@@ -38,7 +34,9 @@ const AddressForm: React.FC<AddressFormProps> = ({ onSubmit }) => {
         e.preventDefault();
         setCustomer(formData);
         onSubmit(formData);
+        console.log(formData);
     };
+
     return (
         <form id="form" onSubmit={handleSubmit}>
             <LogoHeading headingText={'Enter Shipping/Billing Details Below'} />

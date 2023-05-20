@@ -1,11 +1,11 @@
 import Layout from '../components/Layout';
-import CheckoutPage from '../components/cart/CheckoutForm';
+import CheckoutForm from '../components/cart/CheckoutForm';
 
 export const Checkout = () => {
     return (
         <Layout>
             <section id="checkout">
-                <CheckoutPage />
+                <CheckoutForm />
             </section>
         </Layout>
     );

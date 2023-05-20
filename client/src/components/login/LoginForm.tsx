@@ -30,7 +30,7 @@ const LoginForm: React.FC = () => {
             <LogoHeading headingText={`Fill out the form to login:`} />
 
             <div className="input-box">
-                <label htmlFor="username">Username:</label>
+                <label htmlFor="username">Username/Email:</label>
                 <input
                     type="text"
                     id="username"

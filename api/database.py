@@ -57,7 +57,9 @@ async def create_user(user: UserDB):
 
 
 async def get_user(username: str) -> User:
-    user_data = await users_collection.find_one({"username": username})
+    user_data = await users_collection.find_one(
+        {"username": username}
+    ) or await users_collection.find_one({"email": username})
     if user_data:
         return UserDB(**user_data)
 

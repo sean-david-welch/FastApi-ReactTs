@@ -25,7 +25,7 @@
 #products .product-card {
     display: flex;
     flex-direction: column;
-    padding: 1rem 1rem;
+    padding: 1rem;
     border: solid var(--medium-color) 0.2rem;
     background: var(--dark-color);
     border-radius: 1rem;

@@ -24,3 +24,30 @@
     margin: 0 auto;
     text-align: center;
 }
+
+@media (max-width: 968px) {
+    .benefits-list {
+        grid-template-columns: 1fr !important;
+        grid-template-rows: repeat(4, 1fr) !important;
+        margin: 0 auto !important;
+    }
+
+    #products .products {
+        padding: 0 !important;
+    }
+
+    #products .products ul {
+        grid-template-columns: 1fr !important;
+        grid-template-rows: repeat(4, 1fr) !important;
+        margin: 0 auto !important;
+    }
+
+    #products .product-card {
+        padding: 1rem 0.25rem !important;
+        margin: 1rem 2rem !important;
+    }
+
+    #products .products img {
+        max-width: 20rem !important;
+    }
+}

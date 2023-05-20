@@ -31,6 +31,7 @@ const usePaymentIntent = () => {
             data: JSON.stringify(data),
         });
 
+        console.log(postData.client_secret);
         return postData.client_secret;
     };
 

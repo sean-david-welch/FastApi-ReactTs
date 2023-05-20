@@ -98,7 +98,7 @@ const usePaymentProcessor = ({ stripe, elements }: UsePaymentProps) => {
         },
     };
 
-    const options = { appearance };
+    const options = { appearance, clientSecret };
 
     return {
         stripe,

@@ -1,9 +1,12 @@
+import NavButton from '../navigation/NavButton';
+import LogoHeading from '../navigation/LogoHeading';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { useState, useEffect } from 'react';
 import { Customer, Address, AddressFormProps } from '../../Types/CartTypes';
 import { useCustomer } from '../../hooks/cart/useCustomerContext';
-import LogoHeading from '../navigation/LogoHeading';
 
-const AddressForm: React.FC<AddressFormProps> = ({ onSubmit }) => {
+const AddressForm: React.FC<AddressFormProps> = () => {
     const { customer, setCustomer } = useCustomer();
     const [formData, setFormData] = useState(customer);
 
@@ -33,7 +36,6 @@ const AddressForm: React.FC<AddressFormProps> = ({ onSubmit }) => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setCustomer(formData);
-        onSubmit(formData);
         console.log(formData);
     };
 
@@ -75,9 +77,15 @@ const AddressForm: React.FC<AddressFormProps> = ({ onSubmit }) => {
                 })}
             </div>
 
-            <button className="btn btn-nav btn-primary" type="submit">
-                Proceed to Payment
-            </button>
+            <ul className="product-nav">
+                <NavButton
+                    to={{
+                        pathname: '/checkout/payment-details',
+                    }}
+                    icon={<FontAwesomeIcon icon={faArrowRight} />}
+                    label="Payment Details"
+                />
+            </ul>
         </form>
     );
 };

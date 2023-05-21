@@ -1,6 +1,8 @@
 import fetchData from '../../utils/fetchData';
 import { useCart } from './useCartContext';
 import { useCustomer } from './useCustomerContext';
+import { useQuery } from '@tanstack/react-query';
+import { Appearance } from '@stripe/stripe-js';
 
 const usePaymentIntent = () => {
     const cartContext = useCart();
@@ -31,12 +33,35 @@ const usePaymentIntent = () => {
             data: JSON.stringify(data),
         });
 
-        console.log(postData.client_secret);
         return postData.client_secret;
     };
 
+    const {
+        data: clientSecret,
+        isLoading: isFetchingClientSecret,
+        error,
+    } = useQuery(['paymentIntent'], fetchClientSecret);
+
+    const appearance: Appearance = {
+        theme: 'night',
+        variables: {
+            colorPrimary: '#b59410',
+            colorBackground: '#2f2f2f',
+        },
+    };
+
+    const options = clientSecret
+        ? {
+              clientSecret,
+              appearance,
+          }
+        : {};
+
     return {
-        fetchClientSecret,
+        options,
+        clientSecret,
+        isFetchingClientSecret,
+        error,
     };
 };
 

@@ -63,7 +63,7 @@ const CartView: React.FC<CartViewProps> = ({ renderSectionHeading }) => {
                     <ul className="product-nav">
                         <NavButton
                             to={{
-                                pathname: '/checkout',
+                                pathname: '/checkout/shipping-details',
                                 state: { total },
                             }}
                             icon={<FontAwesomeIcon icon={faArrowRight} />}

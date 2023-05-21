@@ -8,6 +8,7 @@ export default function AppRoutes() {
     const About = lazy(() => import('./pages/About'));
     const Shop = lazy(() => import('./pages/Shop'));
     const Cart = lazy(() => import('./pages/Cart'));
+    const Shipping = lazy(() => import('./pages/Shipping'));
     const Checkout = lazy(() => import('./pages/Checkout'));
     const Login = lazy(() => import('./pages/LoginPage'));
     const Success = lazy(() => import('./pages/Success'));
@@ -22,7 +23,14 @@ export default function AppRoutes() {
                     <Route path="/about" element={<About />} />
                     <Route path="/shop" element={<Shop />} />
                     <Route path="/cart" element={<Cart />} />
-                    <Route path="/checkout" element={<Checkout />} />
+                    <Route
+                        path="/checkout/shipping-details"
+                        element={<Shipping />}
+                    />
+                    <Route
+                        path="/checkout/payment-details"
+                        element={<Checkout />}
+                    />
                     <Route path="/payment-success" element={<Success />} />
                     <Route path="/login" element={<Login />} />
                     <Route

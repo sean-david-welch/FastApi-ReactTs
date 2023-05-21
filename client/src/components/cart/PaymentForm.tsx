@@ -1,3 +1,4 @@
+import LogoHeading from '../navigation/LogoHeading';
 import { PaymentFormProps } from '../../Types/CartTypes';
 import {
     useStripe,
@@ -7,19 +8,25 @@ import {
 } from '@stripe/react-stripe-js';
 import usePaymentProcessor from '../../hooks/cart/usePaymentProcessor';
 
-import LogoHeading from '../navigation/LogoHeading';
-
-const PaymentForm: React.FC<PaymentFormProps> = ({ totalAmount }) => {
+const PaymentForm: React.FC<PaymentFormProps> = ({
+    totalAmount,
+    clientSecret,
+}) => {
     const stripe = useStripe();
     const elements = useElements();
 
     const { handlePayment, isLoading: paymentLoading } = usePaymentProcessor({
         stripe,
         elements,
+        clientSecret,
     });
 
     return (
-        <form id="payment-form" className="stripe" onSubmit={handlePayment}>
+        <form
+            id="payment-form"
+            className="stripe"
+            onSubmit={event => handlePayment(event)}
+        >
             <LogoHeading headingText={'Primal Formulas Checkout'} />
             <LinkAuthenticationElement id="link-element" />
             <PaymentElement id="payment-element" />

@@ -3,20 +3,21 @@ import { useCustomer } from './useCustomerContext';
 import { PaymentIntent } from '@stripe/stripe-js';
 import { UsePaymentProps } from '../../Types/CartTypes';
 import { useState, useEffect } from 'react';
-import usePaymentIntent from './usePaymentIntent';
 
-const usePaymentProcessor = ({ stripe, elements }: UsePaymentProps) => {
-    const [clientSecret, setClientSecret] = useState<string | null>(null);
+const usePaymentProcessor = ({
+    stripe,
+    elements,
+    clientSecret,
+}: UsePaymentProps) => {
     const [message, setMessage] = useState<string | null>('');
     const [isLoading, setIsLoading] = useState(false);
     const { customer } = useCustomer();
-    const { fetchClientSecret } = usePaymentIntent();
 
     useEffect(() => {
         if (!stripe || !clientSecret) return;
 
         const retrievePaymentIntentStatus = async () => {
-            if (!stripe || !clientSecret) return;
+            setIsLoading(true);
 
             try {
                 const result = await stripe.retrievePaymentIntent(clientSecret);
@@ -40,29 +41,22 @@ const usePaymentProcessor = ({ stripe, elements }: UsePaymentProps) => {
                 }
             } catch (error) {
                 console.error('Error retrieving payment intent:', error);
+            } finally {
+                setIsLoading(false);
             }
         };
 
         retrievePaymentIntentStatus();
     }, [stripe, clientSecret]);
 
-    const handlePayment = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const handlePayment = async (event?: React.FormEvent<HTMLFormElement>) => {
+        event?.preventDefault();
+
+        if (!stripe || !elements || !clientSecret) {
+            return;
+        }
 
         setIsLoading(true);
-
-        const clientSecret = await fetchClientSecret();
-        if (!clientSecret) {
-            setMessage('Failed to fetch client secret.');
-            setIsLoading(false);
-            return;
-        }
-        setClientSecret(clientSecret);
-
-        if (!stripe || !elements) {
-            setIsLoading(false);
-            return;
-        }
 
         try {
             const response = await stripe.confirmPayment({
@@ -71,7 +65,6 @@ const usePaymentProcessor = ({ stripe, elements }: UsePaymentProps) => {
                     receipt_email: customer.email,
                 },
                 elements,
-                clientSecret,
             });
 
             if (response.error) {
@@ -79,7 +72,7 @@ const usePaymentProcessor = ({ stripe, elements }: UsePaymentProps) => {
                 console.error('Payment error:', response.error);
             } else {
                 setMessage('Payment successfully processed. Redirecting...');
-                console.log('Payment succeeded:', response.error);
+                console.log('Payment succeeded:', response);
             }
         } catch (error) {
             console.error('Error processing payment:', error);
@@ -90,16 +83,6 @@ const usePaymentProcessor = ({ stripe, elements }: UsePaymentProps) => {
         }
     };
 
-    const appearance: any = {
-        theme: 'night',
-        variables: {
-            colorPrimary: '#b59410',
-            colorBackground: '#2f2f2f',
-        },
-    };
-
-    const options = { appearance, clientSecret };
-
     return {
         stripe,
         elements,
@@ -107,7 +90,6 @@ const usePaymentProcessor = ({ stripe, elements }: UsePaymentProps) => {
         email: customer?.email,
         message,
         isLoading,
-        options,
         handlePayment,
     };
 };

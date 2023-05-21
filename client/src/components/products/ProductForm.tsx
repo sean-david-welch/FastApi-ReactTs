@@ -18,17 +18,21 @@ const ProductForm: React.FC<ProductFormProps> = ({
             <LogoHeading
                 headingText={`${operation} Product: ${product.name}`}
             />
-            {Object.keys(product).map(
-                key =>
-                    ['name', 'description', 'price', 'image'].includes(key) && (
-                        <ProductFormField
-                            key={key}
-                            name={key}
-                            value={product[key as keyof Product]}
-                            handleChange={handleChange}
-                        />
-                    )
-            )}
+            <div className="product-input-fields">
+                {Object.keys(product).map(
+                    key =>
+                        ['name', 'description', 'price', 'image'].includes(
+                            key
+                        ) && (
+                            <ProductFormField
+                                key={key}
+                                name={key}
+                                value={product[key as keyof Product]}
+                                handleChange={handleChange}
+                            />
+                        )
+                )}
+            </div>
             <button
                 className="btn btn-nav btn-primary"
                 type="submit"

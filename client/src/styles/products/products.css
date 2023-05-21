@@ -168,6 +168,12 @@
     border: 2px solid var(--gold-color);
 }
 
+#product-form .product-form .product-input-fields {
+    display: grid;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
 #product-form .product-form .input-fields {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -176,13 +182,13 @@
 
 #product-form .product-form .input-fields label {
     display: flex;
-    margin: auto;
+    margin: auto 0;
     font-size: 1.5rem;
 }
 
 #product-form .product-form .input-fields input {
     font-size: 1.25rem;
-    margin: 0.5rem auto;
+    margin: auto;
     padding: 0.5rem;
     border-radius: 0.5rem;
     border: 0.2rem solid var(--grey-color);

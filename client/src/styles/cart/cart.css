@@ -36,11 +36,13 @@
 
 #cart .cart-list-grid {
     display: grid;
+    grid-template-columns: 1fr;
     margin: 0;
 }
 
 #cart .cart-list-item {
     display: flex;
+    flex-direction: row;
     background-color: var(--dark-color);
     margin: 0 1rem;
     padding: 1rem;
@@ -49,6 +51,7 @@
 #cart .cart-list-item img {
     max-width: 20rem;
     border: 2px solid var(--dark-color);
+    margin: 0 auto;
     border-radius: 1rem;
     transition: all 600ms ease-in-out;
 }
@@ -59,7 +62,9 @@
 }
 
 #cart .cart-description {
+    width: 100%;
     display: grid;
+    grid-template-columns: 1fr;
     margin: 0.25rem 1rem;
 }
 

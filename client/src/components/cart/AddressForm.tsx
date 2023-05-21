@@ -17,19 +17,19 @@ const AddressForm: React.FC<AddressFormProps> = () => {
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
 
-        if (name in formData) {
-            setFormData(prevFormData => ({
-                ...prevFormData,
+        if (name in customer) {
+            setCustomer({
+                ...customer,
                 [name]: value,
-            }));
+            });
         } else {
-            setFormData(prevFormData => ({
-                ...prevFormData,
+            setCustomer({
+                ...customer,
                 address: {
-                    ...prevFormData.address,
+                    ...customer.address,
                     [name]: value,
                 },
-            }));
+            });
         }
     };
 

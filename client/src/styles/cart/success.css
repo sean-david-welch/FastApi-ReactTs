@@ -1,3 +1,11 @@
+#success .logo-heading {
+    display: grid;
+    margin: 0 auto;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    white-space: nowrap;
+}
+
 #success .success-message {
     background-color: var(--dark-color);
     margin: 2.5rem 15rem;

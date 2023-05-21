@@ -12,15 +12,27 @@ const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 
 const CheckoutPage: React.FC = () => {
     const { cart, calculateTotalAmount } = useCart();
-
-    const { options, clientSecret, isFetchingClientSecret, error } =
+    const totalAmount = calculateTotalAmount(cart as PaymentIntentData['cart']);
+    const { options, clientSecret, error, isFetchingClientSecret } =
         usePaymentIntent();
 
-    const totalAmount = calculateTotalAmount(cart as PaymentIntentData['cart']);
+    if (isFetchingClientSecret) {
+        return (
+            <div className="stripe-form">
+                <Loading />
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="stripe-form">Error: {(error as Error).message}</div>
+        );
+    }
 
     return (
         <div className="stripe-form">
-            {clientSecret ? (
+            {clientSecret && (
                 <Elements options={options} stripe={stripePromise}>
                     <PaymentForm
                         key={clientSecret}
@@ -28,11 +40,7 @@ const CheckoutPage: React.FC = () => {
                         totalAmount={totalAmount}
                     />
                 </Elements>
-            ) : isFetchingClientSecret ? (
-                <Loading />
-            ) : error ? (
-                <div>Error: {(error as any).message}</div>
-            ) : null}
+            )}
         </div>
     );
 };

@@ -16,8 +16,6 @@ export const Success = () => {
     const paymentIntentId = searchParams.get('payment_intent') || '';
     const { clearCart } = useCart();
 
-    console.log('success page', paymentIntentId);
-
     const {
         data: paymentDetails,
         isLoading,
@@ -25,8 +23,10 @@ export const Success = () => {
     } = useFetchIntent(paymentIntentId);
 
     useEffect(() => {
-        clearCart();
-    }, [clearCart]);
+        if (isLoading) {
+            clearCart();
+        }
+    }, [isLoading, clearCart]);
 
     if (isLoading) {
         return (
@@ -39,6 +39,7 @@ export const Success = () => {
     if (error) {
         return <div>Error: {(error as Error).message}</div>;
     }
+
     return (
         <Layout>
             <section id="success">
@@ -52,18 +53,28 @@ export const Success = () => {
                 />
                 <div className="success-message">
                     <LogoHeading headingText="Thank you for your order!" />
-                    <p>Payment Intent ID: {paymentIntentId}</p>
+                    <p>
+                        Customer Details:{' '}
+                        {paymentDetails?.payment_intent.shipping.name}
+                    </p>
+                    <p>
+                        Customer Address:{''}
+                        {paymentDetails?.payment_intent.shipping.address.city}
+                    </p>
                     <p>
                         Amount: €
                         {paymentDetails?.payment_intent.amount.toFixed(2) / 100}
+                    </p>
+                    <p>
+                        Email Address:{' '}
+                        {paymentDetails?.payment_intent.receipt_email}
                     </p>
                     <p>
                         Currency:{' '}
                         {paymentDetails?.payment_intent.currency.toUpperCase()}
                     </p>
                     <p>
-                        Redirect Status:{' '}
-                        {paymentDetails?.payment_intent.status.toUpperCase()}
+                        Payment Status: {paymentDetails?.payment_intent.status}
                     </p>
                 </div>
             </section>

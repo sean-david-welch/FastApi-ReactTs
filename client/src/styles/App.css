@@ -265,9 +265,18 @@
         padding: 0 !important;
     }
 
+    #checkout .logo-heading {
+        margin: 0 auto !important;
+    }
+
     #checkout form {
         margin: 1rem auto !important;
         padding: 1rem 1rem !important;
         min-width: 20rem !important;
+    }
+
+    #success .success-message {
+        margin: 2.5rem 1rem !important;
+        padding: 2rem !important;
     }
 }

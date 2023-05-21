@@ -1,12 +1,14 @@
 import fetchData from '../../utils/fetchData';
 import { useCart } from './useCartContext';
 import { useCustomer } from './useCustomerContext';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { Appearance } from '@stripe/stripe-js';
+import { useEffect, useState } from 'react';
 
 const usePaymentIntent = () => {
     const cartContext = useCart();
     const { customer } = useCustomer();
+    const [hasFetchedClientSecret, setHasFetchedClientSecret] = useState(false);
 
     const fetchClientSecret = async () => {
         if (cartContext.cart.length === 0) {
@@ -36,11 +38,22 @@ const usePaymentIntent = () => {
         return postData.client_secret;
     };
 
-    const {
-        data: clientSecret,
-        isLoading: isFetchingClientSecret,
-        error,
-    } = useQuery(['paymentIntent'], fetchClientSecret);
+    const createPaymentIntentMutation = useMutation(fetchClientSecret, {
+        onSuccess: () => {
+            setHasFetchedClientSecret(true);
+        },
+    });
+
+    useEffect(() => {
+        if (
+            !hasFetchedClientSecret &&
+            cartContext.cart.length > 0 &&
+            customer !== null &&
+            !createPaymentIntentMutation.isLoading
+        ) {
+            createPaymentIntentMutation.mutate();
+        }
+    }, [hasFetchedClientSecret, cartContext.cart, customer]);
 
     const appearance: Appearance = {
         theme: 'night',
@@ -50,18 +63,18 @@ const usePaymentIntent = () => {
         },
     };
 
-    const options = clientSecret
+    const options = createPaymentIntentMutation.data
         ? {
-              clientSecret,
+              clientSecret: createPaymentIntentMutation.data,
               appearance,
           }
         : {};
 
     return {
         options,
-        clientSecret,
-        isFetchingClientSecret,
-        error,
+        clientSecret: createPaymentIntentMutation.data,
+        isFetchingClientSecret: createPaymentIntentMutation.isLoading,
+        error: createPaymentIntentMutation.error,
     };
 };
 

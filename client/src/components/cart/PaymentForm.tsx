@@ -6,7 +6,6 @@ import {
     PaymentElement,
 } from '@stripe/react-stripe-js';
 import usePaymentProcessor from '../../hooks/cart/usePaymentProcessor';
-// import Loading from '../Loading';
 
 const PaymentForm: React.FC<PaymentFormProps> = ({
     totalAmount,

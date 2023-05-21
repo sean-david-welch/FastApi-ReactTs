@@ -9,15 +9,15 @@ const usePaymentProcessor = ({
     elements,
     clientSecret,
 }: UsePaymentProps) => {
-    const [message, setMessage] = useState<string | null>('');
-    const [isLoading, setIsLoading] = useState(false);
+    const [message, setMessage] = useState<string | null>(null);
+    const [paymentLoading, setPaymentLoading] = useState(false);
     const { customer } = useCustomer();
 
     useEffect(() => {
         if (!stripe || !clientSecret) return;
 
         const retrievePaymentIntentStatus = async () => {
-            setIsLoading(true);
+            setPaymentLoading(true);
 
             try {
                 const result = await stripe.retrievePaymentIntent(clientSecret);
@@ -41,8 +41,10 @@ const usePaymentProcessor = ({
                 }
             } catch (error) {
                 console.error('Error retrieving payment intent:', error);
+                setMessage('Something went wrong.');
             } finally {
-                setIsLoading(false);
+                setPaymentLoading(false);
+                return message;
             }
         };
 
@@ -56,7 +58,7 @@ const usePaymentProcessor = ({
             return;
         }
 
-        setIsLoading(true);
+        setPaymentLoading(true);
 
         try {
             const response = await stripe.confirmPayment({
@@ -78,18 +80,13 @@ const usePaymentProcessor = ({
             console.error('Error processing payment:', error);
             setMessage('Something went wrong.');
         } finally {
-            setIsLoading(false);
+            setPaymentLoading(false);
             console.log('Payment complete.');
         }
     };
 
     return {
-        stripe,
-        elements,
-        clientSecret,
-        email: customer?.email,
-        message,
-        isLoading,
+        paymentLoading,
         handlePayment,
     };
 };

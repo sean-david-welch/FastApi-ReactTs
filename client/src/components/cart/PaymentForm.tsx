@@ -6,6 +6,7 @@ import {
     PaymentElement,
 } from '@stripe/react-stripe-js';
 import usePaymentProcessor from '../../hooks/cart/usePaymentProcessor';
+// import Loading from '../Loading';
 
 const PaymentForm: React.FC<PaymentFormProps> = ({
     totalAmount,
@@ -14,7 +15,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
     const stripe = useStripe();
     const elements = useElements();
 
-    const { handlePayment, isLoading: paymentLoading } = usePaymentProcessor({
+    const { handlePayment, paymentLoading } = usePaymentProcessor({
         stripe,
         elements,
         clientSecret,
@@ -29,17 +30,14 @@ const PaymentForm: React.FC<PaymentFormProps> = ({
             <LogoHeading headingText={'Primal Formulas Checkout'} />
 
             <PaymentElement id="payment-element" />
-            <button
-                disabled={paymentLoading || !stripe || !elements}
-                id="submit"
-            >
-                <span id="button-text">
-                    {paymentLoading ? (
-                        <div className="spinner" id="spinner"></div>
-                    ) : (
-                        `Pay now - €${totalAmount.toFixed(2)}`
-                    )}
-                </span>
+            <button disabled={!stripe || !elements} id="submit">
+                {paymentLoading ? (
+                    <div className="spinner" id="spinner"></div>
+                ) : (
+                    <span id="button-text">
+                        Pay now - €{totalAmount.toFixed(2)}
+                    </span>
+                )}
             </button>
         </form>
     );

@@ -58,8 +58,19 @@ export const Success = () => {
                         {paymentDetails?.payment_intent.shipping.name}
                     </p>
                     <p>
-                        Customer Address:{''}
-                        {paymentDetails?.payment_intent.shipping.address.city}
+                        Customer Address:{' '}
+                        {paymentDetails?.payment_intent.shipping.address.line1}{' '}
+                        {paymentDetails?.payment_intent.shipping.address.line2}{' '}
+                        {paymentDetails?.payment_intent.shipping.address.city}{' '}
+                        {paymentDetails?.payment_intent.shipping.address.state}{' '}
+                        {
+                            paymentDetails?.payment_intent.shipping.address
+                                .postal_code
+                        }{' '}
+                        {
+                            paymentDetails?.payment_intent.shipping.address
+                                .country
+                        }
                     </p>
                     <p>
                         Amount: €
@@ -74,7 +85,11 @@ export const Success = () => {
                         {paymentDetails?.payment_intent.currency.toUpperCase()}
                     </p>
                     <p>
-                        Payment Status: {paymentDetails?.payment_intent.status}
+                        Payment Status:{' '}
+                        {paymentDetails?.payment_intent.status
+                            .charAt(0)
+                            .toUpperCase() +
+                            paymentDetails?.payment_intent.status.slice(1)}
                     </p>
                 </div>
             </section>

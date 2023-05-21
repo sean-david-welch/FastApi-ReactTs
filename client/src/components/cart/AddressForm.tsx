@@ -2,17 +2,11 @@ import NavButton from '../navigation/NavButton';
 import LogoHeading from '../navigation/LogoHeading';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { useState, useEffect } from 'react';
 import { Customer, Address, AddressFormProps } from '../../Types/CartTypes';
 import { useCustomer } from '../../hooks/cart/useCustomerContext';
 
 const AddressForm: React.FC<AddressFormProps> = () => {
     const { customer, setCustomer } = useCustomer();
-    const [formData, setFormData] = useState(customer);
-
-    useEffect(() => {
-        setFormData(customer);
-    }, [customer]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -35,8 +29,7 @@ const AddressForm: React.FC<AddressFormProps> = () => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setCustomer(formData);
-        console.log(formData);
+        setCustomer(customer);
     };
 
     return (
@@ -45,11 +38,11 @@ const AddressForm: React.FC<AddressFormProps> = () => {
 
             <div className="address-form-details">
                 {(
-                    Object.keys(formData) as unknown as Array<keyof Customer>
+                    Object.keys(customer) as unknown as Array<keyof Customer>
                 ).map(field => {
                     if (field === 'address') {
                         return (
-                            Object.keys(formData.address) as unknown as Array<
+                            Object.keys(customer.address) as unknown as Array<
                                 keyof Address
                             >
                         ).map(subField => (
@@ -57,7 +50,7 @@ const AddressForm: React.FC<AddressFormProps> = () => {
                                 key={subField}
                                 type="text"
                                 name={subField}
-                                value={formData.address[subField]}
+                                value={customer.address[subField]}
                                 onChange={handleInputChange}
                                 placeholder={subField}
                             />
@@ -68,7 +61,7 @@ const AddressForm: React.FC<AddressFormProps> = () => {
                                 key={field}
                                 type="text"
                                 name={field}
-                                value={formData[field]}
+                                value={customer[field]}
                                 onChange={handleInputChange}
                                 placeholder={field}
                             />

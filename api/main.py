@@ -317,7 +317,6 @@ async def create_payment_intent(data: PaymentIntentData) -> JSONResponse:
 
     try:
         customer = create_customer(data)
-        print("Customer created:", customer)
     except stripe.error.StripeError as e:
         handle_stripe_error(e)
         return JSONResponse(
@@ -334,7 +333,7 @@ async def create_payment_intent(data: PaymentIntentData) -> JSONResponse:
 
     try:
         payment_intent = process_payment_intent(customer, calculated_total_amount, data)
-        print("Payment intent created:", payment_intent)
+        print("Payment intent created:")
         return JSONResponse({"client_secret": payment_intent.client_secret})
     except stripe.error.StripeError as e:
         handle_stripe_error(e)

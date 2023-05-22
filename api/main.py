@@ -342,6 +342,40 @@ async def create_payment_intent(data: PaymentIntentData) -> JSONResponse:
         )
 
 
+@app.post("/api/create-checkout-session/{product_id}")
+def create_checkout_session(
+    product_id: str,
+):
+    stripe.api_key = settings["STRIPE_SECRET_KEY"]
+    frontend_url = "http://localhost:3000/"
+    product = fetch_product(product_id)
+
+    try:
+        checkout_session = stripe.checkout.Session.create(
+            payment_method_types=["card"],
+            line_items=[
+                {
+                    "name": product.name,
+                    "description": product.description,
+                    "amount": int(product.price * 100),
+                    "currency": "eur",
+                    "quantity": 1,
+                }
+            ],
+            mode="payment",
+            success_url=frontend_url + "payment/success",
+            cancel_url=frontend_url + "payment/canceled",
+            automatic_tax={"enabled": True},
+        )
+    except stripe.error.StripeError as e:
+        handle_stripe_error(e)
+        return JSONResponse(
+            content={"error": str(e)}, status_code=status.HTTP_400_BAD_REQUEST
+        )
+
+    return JSONResponse({"id": checkout_session.id})
+
+
 @app.get("/api/get-payment-intent/{payment_intent_id}")
 async def get_payment_intent(payment_intent_id: str) -> JSONResponse:
     try:

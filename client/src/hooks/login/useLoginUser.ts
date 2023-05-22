@@ -29,9 +29,6 @@ export default function useLoginUser() {
                 console.error('Login failed:', error);
                 throw new Error('Invalid username or password');
             },
-            onSuccess: data => {
-                console.log('Login success:', data);
-            },
         }
     );
 }

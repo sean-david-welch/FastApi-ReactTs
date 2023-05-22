@@ -83,20 +83,19 @@ def charge_customer(customer_id, cart: List[CartItem]):
     payment_methods = stripe.PaymentMethod.list(customer=customer_id, type="card")
     calculated_total_amount = calculate_cart_total(cart)
 
+    if not payment_methods.data:
+        print(f"No payment methods found for customer with ID {customer_id}")
+        return None
+
     try:
-        stripe.PaymentIntent.create(
-            amount=calculated_total_amount,
-            currency="eur",
-            customer=customer_id,
-            payment_method=payment_methods.data[0].id,
-            off_session=True,
-            confirm=True,
+        payment_intent = process_payment_intent(
+            customer_id, calculated_total_amount, payment_methods.data[0].id
         )
-    except stripe.error.CardError as e:
-        err = e.error
-        print("Code is: %s" % err.code)
-        payment_intent_id = err.payment_intent["id"]
-        payment_intent = stripe.PaymentIntent.retrieve(payment_intent_id)
+        print("Payment intent created")
+        return payment_intent
+    except stripe.error.StripeError as e:
+        handle_stripe_error(e)
+        return None
 
 
 async def verify_signature(request: Request, api_key_header: str):

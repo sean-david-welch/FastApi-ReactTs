@@ -1,22 +1,25 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { NavButtonProps } from '../../types/LayoutTypes';
 
 function NavButton({ to, label, icon, onClick }: NavButtonProps) {
+    const navigate = useNavigate();
+
+    const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
+        if (onClick) {
+            onClick(event);
+        }
+        navigate(to);
+    };
+
     return (
         <>
             <li className="nav-button">
-                {onClick ? (
-                    <button
-                        className="btn btn-nav btn-primary"
-                        onClick={onClick}
-                    >
-                        {label} <i className="icon">{icon}</i>
-                    </button>
-                ) : (
-                    <Link to={to} className="btn btn-nav btn-primary">
-                        {label} <i className="icon">{icon}</i>
-                    </Link>
-                )}
+                <button
+                    className="btn btn-nav btn-primary"
+                    onClick={handleClick}
+                >
+                    {label} <i className="icon">{icon}</i>
+                </button>
             </li>
         </>
     );

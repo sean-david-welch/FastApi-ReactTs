@@ -1,5 +1,6 @@
 import React from 'react';
 import { CartItemProps } from '../../types/CartTypes';
+import { Link } from 'react-router-dom';
 
 const CartItem: React.FC<CartItemProps> = ({
     item,
@@ -7,7 +8,9 @@ const CartItem: React.FC<CartItemProps> = ({
     handleRemove,
 }) => (
     <li className="cart-list-item" key={item.id}>
-        <img src={item.image} alt={item.name} />
+        <Link to={`/product/${item.id}`} className="cart-link">
+            <img src={item.image} alt={item.name} />
+        </Link>
         <div className="cart-description">
             <h2 className="section-heading">
                 {item.name}: €{Number(item.price).toFixed(2)}

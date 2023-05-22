@@ -1,5 +1,6 @@
 import uuid
 import motor.motor_asyncio
+from fastapi import HTTPException
 
 from models import Product, UserDB, User, StaticContent, AboutContent
 from config import settings
@@ -89,6 +90,8 @@ async def fetch_all_products():
 
 async def fetch_product(id: str):
     document = await products_collection.find_one({"id": id})
+    if document is None:
+        raise HTTPException(status_code=404, detail="Product not found")
     return document
 
 

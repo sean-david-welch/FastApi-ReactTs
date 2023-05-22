@@ -41,7 +41,7 @@ const ProductItem: React.FC<{ product: Product }> = ({ product }) => {
                     />
 
                     <NavButton
-                        to="/cart"
+                        to={'/cart'}
                         icon={<FontAwesomeIcon icon={faCartPlus} />}
                         label="Add to Cart"
                         onClick={handleAddToCart}

@@ -58,6 +58,11 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
                             onClick={handleAddToCart}
                             label={`Add to Cart - €${product?.price ?? 'N/A'}`}
                         />
+                        <NavButton
+                            to="/"
+                            icon={<FontAwesomeIcon icon={faArrowRight} />}
+                            label="Buy Now"
+                        />
                     </ul>
                 </div>
             </div>

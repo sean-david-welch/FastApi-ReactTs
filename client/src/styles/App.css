@@ -137,6 +137,15 @@
         padding: 0 2rem !important;
     }
 
+    #product-detail .product-detail .product-nav {
+        flex-direction: column !important;
+        margin: 1rem auto !important;
+    }
+
+    #product-detail .product-detail .product-nav > * {
+        margin: 1rem auto !important;
+    }
+
     #product-form {
         margin: 0 auto !important;
         padding: 0 auto !important;

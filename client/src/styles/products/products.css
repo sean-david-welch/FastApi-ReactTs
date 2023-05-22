@@ -80,12 +80,13 @@
     margin: 1rem 5rem;
     padding: 1rem auto;
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
 }
 
 #product-detail .product-detail img {
-    max-width: 40rem;
+    width: 100%;
+    object-fit: cover;
     border-radius: 1rem;
     border: 0.2rem solid var(--dark-color);
     transition: all 600ms ease-in-out;
@@ -97,7 +98,7 @@
 }
 
 #product-detail .product-detail .product-info {
-    margin: 1rem 0;
+    margin: 1rem 2rem;
 }
 
 #product-detail .product-detail .product-info > * {
@@ -138,6 +139,18 @@
     height: 2.5px;
     border-radius: 1rem;
     background-color: var(--gold-color);
+}
+
+#product-detail .product-detail .product-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 1rem auto;
+}
+
+#product-detail .product-detail .product-nav > * {
+    margin: 0 1rem;
 }
 
 /* Product Form */

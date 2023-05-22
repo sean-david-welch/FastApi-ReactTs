@@ -47,10 +47,18 @@
         position: absolute !important;
         top: 0 !important;
         left: 0 !important;
-        height: 50vh !important;
+        height: 100 !important;
         margin: 0 auto !important;
         width: 100vw !important;
-        border-bottom: 2px solid var(--gold-color);
+        border-right: none !important;
+        border-bottom: 2px solid var(--gold-color) !important;
+    }
+
+    .side-nav__menu {
+        display: flex !important;
+        flex-direction: column !important;
+        margin: 3rem auto !important;
+        padding: 0 !important;
     }
 
     .side-nav__icon {
@@ -64,8 +72,23 @@
         margin: 0 4.5rem !important;
     }
 
+    .side-nav__menu .nav-list {
+        display: flex !important;
+        flex-direction: column !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+    }
+
+    .side-nav__menu .nav-item {
+        display: flex;
+        margin: 3rem 2rem !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
     .side-nav__menu .nav-item::after {
         width: 400% !important;
+        left: -7.5rem !important;
     }
 
     .benefits-home {

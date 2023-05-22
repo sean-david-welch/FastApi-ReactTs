@@ -4,6 +4,7 @@ export interface FetchDataOptions {
     endpoint: string;
     method: Method;
     data?: any;
+    params?: any;
 }
 
 export interface FetchAuthDataOptions extends FetchDataOptions {

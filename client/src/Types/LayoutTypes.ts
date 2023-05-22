@@ -10,7 +10,7 @@ export interface NavItemProps extends LinkProps {
 }
 
 export interface NavButtonProps {
-    to: string | { pathname: string; state?: Record<string, any> };
+    to?: string | { pathname: string; state?: Record<string, any> };
     type?: 'button' | 'submit' | 'reset';
     disabled?: UseMutationResult;
     label: string;

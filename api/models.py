@@ -59,6 +59,14 @@ class PaymentIntentData(BaseModel):
     receipt_email: Optional[EmailStr] or str = Field(default="guest@primalformulas.ie")
 
 
+class CheckoutSession(BaseModel):
+    id: str
+
+
+class CheckoutSessionInput(BaseModel):
+    quantity: int = Field(default=1)
+
+
 ##### Users #####
 class User(BaseModel):
     id: Optional[str] = Field(default_factory=uuid4, example="null")

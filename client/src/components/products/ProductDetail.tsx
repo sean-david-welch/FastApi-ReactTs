@@ -1,10 +1,12 @@
 import NavButton from '../navigation/NavButton';
 import SectionHeading from '../navigation/SectionHeading';
 import Loading from '../Loading';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { faCartPlus, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ProductDetailProps } from '../../types/ProductTypes';
+import { useCheckoutSession } from '../../hooks/products/useCheckoutSession';
 
 const ProductDetail: React.FC<ProductDetailProps> = ({
     product,
@@ -14,9 +16,22 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
     isSuperUser,
 }) => {
     const navigate = useNavigate();
+    const [quantity, setQuantity] = useState(1);
+    const { mutateAsync, isLoading } = useCheckoutSession(
+        product?.id,
+        quantity
+    );
 
     const handleUpdateClick = () => {
         navigate('/product-form', { state: { action: 'update', product } });
+    };
+
+    const handleBuyNowClick = async () => {
+        try {
+            await mutateAsync();
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     if (loading) {
@@ -51,6 +66,17 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
                 <div className="product-info">
                     <h2>Price: €{product?.price}</h2>
                     <p>{product?.description}</p>
+                    <ul className="input-nav">
+                        <label htmlFor="quantity">Quantity:</label>
+                        <input
+                            type="number"
+                            value={quantity}
+                            onChange={e =>
+                                setQuantity(parseInt(e.target.value, 10))
+                            }
+                            disabled={isLoading}
+                        />
+                    </ul>
                     <ul className="product-nav">
                         <NavButton
                             to="/cart"
@@ -59,7 +85,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({
                             label={`Add to Cart - €${product?.price ?? 'N/A'}`}
                         />
                         <NavButton
-                            to="/"
+                            onClick={handleBuyNowClick}
                             icon={<FontAwesomeIcon icon={faArrowRight} />}
                             label="Buy Now"
                         />

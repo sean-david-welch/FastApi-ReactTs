@@ -5,14 +5,19 @@ import { STRIPE_PUBLIC_KEY } from '../../utils/config';
 
 const stripePromise = loadStripe(STRIPE_PUBLIC_KEY);
 
-export const useCheckoutSession = (product_id: string) => {
+export const useCheckoutSession = (
+    product_id: string | undefined,
+    quantity: number
+) => {
     return useMutation(
-        data =>
-            fetchData({
+        () => {
+            console.log('Sending request with data:', { product_id, quantity });
+            return fetchData({
                 endpoint: `create-checkout-session/${product_id}`,
                 method: 'POST',
-                data: data,
-            }),
+                data: { quantity: quantity },
+            });
+        },
         {
             onSuccess: async data => {
                 const stripe = await stripePromise;

@@ -29,15 +29,16 @@
     min-height: 100vh;
     flex-direction: column;
     align-items: flex-start;
-    margin: 12.5rem 3rem;
+    margin: 2rem 2rem;
 }
 
 .side-nav__menu .nav-item {
     font-size: 1.5rem;
     font-weight: 400;
-    margin: 5rem 0;
+    margin: 5rem auto;
     position: relative;
 }
+
 .side-nav__menu .nav-item,
 .side-nav__menu .nav-item a {
     transition: all 500ms ease-in-out;
@@ -101,8 +102,8 @@
     display: flex;
 }
 
-.side-nav__icon .logo-heading {
-    margin: 0 5rem;
+.logo-heading {
+    margin: 0 auto;
     flex-direction: column;
     align-items: center;
     white-space: nowrap;

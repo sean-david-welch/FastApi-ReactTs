@@ -1,4 +1,4 @@
-from fastapi import FastAPI, status, Request, Response, Depends
+from fastapi import FastAPI, status, Request, Response, Depends, Body
 from fastapi.exceptions import RequestValidationError, HTTPException
 from fastapi.responses import RedirectResponse, JSONResponse, PlainTextResponse
 from fastapi.security import OAuth2PasswordRequestForm
@@ -38,6 +38,8 @@ from models import (
     UserEdit,
     StaticContent,
     AboutContent,
+    CheckoutSession,
+    CheckoutSessionInput,
 )
 from database import (
     create_content_db,
@@ -342,29 +344,33 @@ async def create_payment_intent(data: PaymentIntentData) -> JSONResponse:
         )
 
 
-@app.post("/api/create-checkout-session/{product_id}")
-def create_checkout_session(
-    product_id: str,
-):
+@app.post("/api/create-checkout-session/{product_id}", response_model=CheckoutSession)
+async def create_checkout_session(
+    product_id: str, body: CheckoutSessionInput
+) -> JSONResponse:
     stripe.api_key = settings["STRIPE_SECRET_KEY"]
     frontend_url = "http://localhost:3000/"
-    product = fetch_product(product_id)
+    product = await fetch_product(product_id)
 
     try:
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=["card"],
             line_items=[
                 {
-                    "name": product.name,
-                    "description": product.description,
-                    "amount": int(product.price * 100),
-                    "currency": "eur",
-                    "quantity": 1,
+                    "price_data": {
+                        "currency": "eur",
+                        "product_data": {
+                            "name": product["name"],
+                            "description": product["description"],
+                        },
+                        "unit_amount": int(product["price"] * 100),
+                    },
+                    "quantity": body.quantity,
                 }
             ],
             mode="payment",
-            success_url=frontend_url + "payment/success",
-            cancel_url=frontend_url + "payment/canceled",
+            success_url=frontend_url + "checkout/success",
+            cancel_url=frontend_url + "checkout/canceled",
             automatic_tax={"enabled": True},
         )
     except stripe.error.StripeError as e:

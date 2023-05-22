@@ -8,7 +8,9 @@ function NavButton({ to, label, icon, onClick }: NavButtonProps) {
         if (onClick) {
             onClick(event);
         }
-        navigate(to);
+        if (to) {
+            navigate(to);
+        }
     };
 
     return (

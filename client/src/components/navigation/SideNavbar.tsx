@@ -17,6 +17,7 @@ function SideNavbar() {
         <>
             <div className={`side-nav ${isOpen ? 'open' : 'closed'}`}>
                 <nav className="side-nav__menu">
+                    <LogoHeading headingText="Primal Formulas" />
                     <ul className="nav-list">
                         <NavItem to="/about">Our Story</NavItem>
                         <NavItem to="/shop">Products</NavItem>
@@ -34,7 +35,6 @@ function SideNavbar() {
                 {isOpen && (
                     <div className="side-nav__icon" onClick={toggleSideNavbar}>
                         <FontAwesomeIcon icon={faX} className="navigation" />
-                        <LogoHeading headingText="Primal Formulas" />
                     </div>
                 )}
             </div>

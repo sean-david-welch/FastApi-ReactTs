@@ -14,6 +14,8 @@ export default function AppRoutes() {
     const Success = lazy(() => import('./pages/Success'));
     const ProductPage = lazy(() => import('./pages/ProductPage'));
     const ProductFormPage = lazy(() => import('./pages/ProductFormPage'));
+    const CheckoutSuccess = lazy(() => import('./pages/CheckoutSuccess'));
+    const CheckoutCancled = lazy(() => import('./pages/CheckoutCancle'));
 
     return (
         <CartProvider>
@@ -32,6 +34,14 @@ export default function AppRoutes() {
                         element={<Checkout />}
                     />
                     <Route path="/payment-success" element={<Success />} />
+                    <Route
+                        path="/checkout/success"
+                        element={<CheckoutSuccess />}
+                    />
+                    <Route
+                        path="/checkout/canceled"
+                        element={<CheckoutCancled />}
+                    />
                     <Route path="/login" element={<Login />} />
                     <Route
                         path="/product/:productId"

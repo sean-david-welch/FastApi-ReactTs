@@ -1,7 +1,7 @@
-import { Routes, Route } from 'react-router-dom';
-import { CartProvider } from './context/CartContext';
-import { Suspense, lazy } from 'react';
 import Loading from './components/Loading';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { CartProvider } from './context/CartContext';
+import { useEffect, Suspense, lazy } from 'react';
 
 export default function AppRoutes() {
     const Home = lazy(() => import('./pages/Home'));
@@ -17,8 +17,19 @@ export default function AppRoutes() {
     const CheckoutSuccess = lazy(() => import('./pages/CheckoutSuccess'));
     const CheckoutCancled = lazy(() => import('./pages/CheckoutCancel'));
 
+    const ScrollToTopPage = () => {
+        const { pathname } = useLocation();
+
+        useEffect(() => {
+            window.scrollTo(0, 0);
+        }, [pathname]);
+
+        return null;
+    };
+
     return (
         <CartProvider>
+            <ScrollToTopPage />
             <Suspense fallback={<Loading />}>
                 <Routes>
                     <Route path="/" element={<Home />} />

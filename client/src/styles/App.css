@@ -62,7 +62,6 @@
     }
 
     .side-nav__icon {
-        position: absolute !important;
         margin: 0 auto !important;
         top: 1.15rem !important;
         left: 1.5rem !important;

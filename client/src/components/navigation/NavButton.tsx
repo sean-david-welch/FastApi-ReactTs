@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { NavButtonProps } from '../../Types/LayoutTypes';
+import { NavButtonProps } from '../../types/LayoutTypes';
 
 function NavButton({ to, label, icon, onClick }: NavButtonProps) {
     return (

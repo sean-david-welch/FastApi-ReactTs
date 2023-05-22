@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { LogoHeadingProps } from '../../Types/HomeTypes';
+import { LogoHeadingProps } from '../../types/HomeTypes';
 import useFetchStaticContent from '../../utils/fetchStaticContent';
 
 const LogoHeading: React.FC<LogoHeadingProps> = ({ headingText }) => {

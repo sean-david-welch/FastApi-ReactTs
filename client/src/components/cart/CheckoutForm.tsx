@@ -1,5 +1,5 @@
 import { useCart } from '../../hooks/cart/useCartContext';
-import { PaymentIntentData } from '../../Types/CartTypes';
+import { PaymentIntentData } from '../../types/CartTypes';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import { STRIPE_PUBLIC_KEY } from '../../utils/config';

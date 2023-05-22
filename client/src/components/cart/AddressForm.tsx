@@ -2,7 +2,7 @@ import NavButton from '../navigation/NavButton';
 import LogoHeading from '../navigation/LogoHeading';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { Customer, Address, AddressFormProps } from '../../Types/CartTypes';
+import { Customer, Address, AddressFormProps } from '../../types/CartTypes';
 import { useCustomer } from '../../hooks/cart/useCustomerContext';
 
 const AddressForm: React.FC<AddressFormProps> = () => {

@@ -1,4 +1,4 @@
-import { FetchDataOptions } from '../Types/FetchTypes';
+import { FetchDataOptions } from '../types/FetchTypes';
 import { API_BASE_URL } from './config';
 import axios from 'axios';
 

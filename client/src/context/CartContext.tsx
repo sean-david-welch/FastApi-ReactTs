@@ -3,7 +3,7 @@ import {
     CartItem,
     CartContextData,
     CartProviderProps,
-} from '../Types/CartTypes';
+} from '../types/CartTypes';
 
 export const CartContext = createContext<CartContextData>(
     {} as CartContextData

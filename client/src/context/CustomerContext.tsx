@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { Customer } from '../Types/CartTypes';
+import { Customer } from '../types/CartTypes';
 
 interface CustomerContextProps {
     customer: Customer;

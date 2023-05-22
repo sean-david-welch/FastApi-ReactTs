@@ -1,5 +1,5 @@
 import NavButton from './NavButton';
-import { SectionHeadingProps } from '../../Types/HomeTypes';
+import { SectionHeadingProps } from '../../types/HomeTypes';
 
 const SectionHeading: React.FC<SectionHeadingProps> = ({
     headingText,

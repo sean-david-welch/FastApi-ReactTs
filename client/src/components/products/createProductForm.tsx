@@ -1,4 +1,4 @@
-import { Product } from '../../Types/ProductTypes';
+import { Product } from '../../types/ProductTypes';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProductForm from './ProductForm';

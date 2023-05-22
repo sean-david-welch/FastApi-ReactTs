@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { NavItemProps } from '../../Types/LayoutTypes';
+import { NavItemProps } from '../../types/LayoutTypes';
 
 function NavItem({ to, children }: NavItemProps) {
     return (

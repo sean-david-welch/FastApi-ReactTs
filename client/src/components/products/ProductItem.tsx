@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { Product } from '../../Types/ProductTypes';
+import { Product } from '../../types/ProductTypes';
 import { useCart } from '../../hooks/cart/useCartContext';
 import { useCallback } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

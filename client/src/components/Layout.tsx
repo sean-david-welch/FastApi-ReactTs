@@ -1,7 +1,7 @@
 import Header from './Header';
 import Footer from './Footer';
 import { useLocation } from 'react-router-dom';
-import { LayoutProps } from '../Types/LayoutTypes';
+import { LayoutProps } from '../types/LayoutTypes';
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
     const location = useLocation();

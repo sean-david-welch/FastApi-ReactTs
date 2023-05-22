@@ -1,7 +1,7 @@
 import { FRONTEND_BASE_URL } from '../../utils/config';
 import { useCustomer } from './useCustomerContext';
 import { PaymentIntent } from '@stripe/stripe-js';
-import { UsePaymentProps } from '../../Types/CartTypes';
+import { UsePaymentProps } from '../../types/CartTypes';
 import { useState, useEffect } from 'react';
 
 const usePaymentProcessor = ({

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '../../hooks/login/useAuthContext';
-import { CurrentUserProps } from '../../Types/AuthTypes';
+import { CurrentUserProps } from '../../types/AuthTypes';
 import LogoutButton from './LogoutButton';
 import LogoHeading from '../navigation/LogoHeading';
 import getCurrentUser from '../../hooks/login/useCurrentUser';

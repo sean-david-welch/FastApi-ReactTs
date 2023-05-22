@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { Product } from '../../Types/ProductTypes';
+import { Product } from '../../types/ProductTypes';
 import { AxiosError } from 'axios';
 
 import fetchAuthData from '../../utils/fetchAuthData';

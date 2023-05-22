@@ -4,7 +4,7 @@ import Loading from '../Loading';
 import { useNavigate } from 'react-router-dom';
 import { faCartPlus, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ProductDetailProps } from '../../Types/ProductTypes';
+import { ProductDetailProps } from '../../types/ProductTypes';
 
 const ProductDetail: React.FC<ProductDetailProps> = ({
     product,

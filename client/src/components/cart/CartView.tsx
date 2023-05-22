@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 import { useCart } from '../../hooks/cart/useCartContext';
-import { CartViewProps } from '../../Types/HomeTypes';
+import { CartViewProps } from '../../types/HomeTypes';
 
 const CartView: React.FC<CartViewProps> = ({ renderSectionHeading }) => {
     const [total, setTotal] = useState(0);

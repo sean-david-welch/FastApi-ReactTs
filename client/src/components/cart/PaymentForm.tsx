@@ -1,5 +1,5 @@
 import LogoHeading from '../navigation/LogoHeading';
-import { PaymentFormProps } from '../../Types/CartTypes';
+import { PaymentFormProps } from '../../types/CartTypes';
 import {
     useStripe,
     useElements,

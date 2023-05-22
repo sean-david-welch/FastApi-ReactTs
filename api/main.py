@@ -362,6 +362,7 @@ async def create_checkout_session(
                         "product_data": {
                             "name": product["name"],
                             "description": product["description"],
+                            "images": [product["image"]],
                         },
                         "unit_amount": int(product["price"] * 100),
                     },
@@ -373,6 +374,7 @@ async def create_checkout_session(
             cancel_url=frontend_url + "checkout/canceled",
             automatic_tax={"enabled": True},
         )
+
     except stripe.error.StripeError as e:
         handle_stripe_error(e)
         return JSONResponse(

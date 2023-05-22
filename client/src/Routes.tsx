@@ -15,7 +15,7 @@ export default function AppRoutes() {
     const ProductPage = lazy(() => import('./pages/ProductPage'));
     const ProductFormPage = lazy(() => import('./pages/ProductFormPage'));
     const CheckoutSuccess = lazy(() => import('./pages/CheckoutSuccess'));
-    const CheckoutCancled = lazy(() => import('./pages/CheckoutCancle'));
+    const CheckoutCancled = lazy(() => import('./pages/CheckoutCancel'));
 
     return (
         <CartProvider>

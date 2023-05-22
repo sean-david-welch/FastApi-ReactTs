@@ -21,7 +21,10 @@ const useFetchProducts = (options: FetchProductOptions) => {
     } = useQuery<Product[], Error>(
         ['products', endpoint, isSingleProduct],
         fetchProducts,
-        { retry: false }
+        {
+            retry: false,
+            staleTime: 1000 * 60 * 10 * 24,
+        }
     );
 
     return { products, error, loading };

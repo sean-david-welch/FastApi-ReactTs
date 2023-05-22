@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faCartShopping,
@@ -11,11 +10,11 @@ import NavItem from './NavItem';
 import Loading from '../Loading';
 import NavButton from './NavButton';
 import useTransparentHeader from '../../hooks/navigation/useTransparentHeader';
-import fetchStaticContent from '../../utils/fetchStaticContent';
+import useFetchStaticContent from '../../utils/fetchStaticContent';
 
 function Navbar() {
     const isTransparent = useTransparentHeader();
-    const logoQuery = useQuery(['logo.png'], () => fetchStaticContent('logo'));
+    const logoQuery = useFetchStaticContent('logo', 'png');
 
     if (logoQuery.isLoading) {
         return <Loading />;

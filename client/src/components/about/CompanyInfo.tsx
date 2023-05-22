@@ -1,6 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
 import InfoItem from './InfoItem';
-import fetchAboutInfo from '../../hooks/about/useAboutInfo';
+import useFetchAboutInfo from '../../hooks/about/useAboutInfo';
 import Loading from '../Loading';
 
 interface AboutInfo {
@@ -10,12 +9,7 @@ interface AboutInfo {
 }
 
 const CompanyInfo = () => {
-    const {
-        data: infoItems,
-        isLoading,
-        isError,
-        error,
-    } = useQuery(['infoItems'], fetchAboutInfo);
+    const { data: infoItems, isLoading, isError, error } = useFetchAboutInfo();
 
     if (isLoading) {
         return (

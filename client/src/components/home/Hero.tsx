@@ -2,12 +2,11 @@ import NavButton from '../navigation/NavButton';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { useQuery } from '@tanstack/react-query';
-import fetchStaticContent from '../../utils/fetchStaticContent';
+import useFetchStaticContent from '../../utils/fetchStaticContent';
 import Loading from '../Loading';
 
 export const Hero = () => {
-    const heroQuery = useQuery(['hero1.mp4'], () => fetchStaticContent('hero'));
+    const heroQuery = useFetchStaticContent('hero', 'mp4');
 
     if (heroQuery.isLoading) {
         return (

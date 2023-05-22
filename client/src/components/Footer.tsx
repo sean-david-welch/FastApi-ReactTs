@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faFacebook,
@@ -11,10 +10,10 @@ import {
 import NavItem from './navigation/NavItem';
 import Loading from './Loading';
 import ToTopButton from './navigation/ToTop';
-import fetchStaticContent from '../utils/fetchStaticContent';
+import useFetchStaticContent from '../utils/fetchStaticContent';
 
 function Footer() {
-    const logoQuery = useQuery(['logo.png'], () => fetchStaticContent('logo'));
+    const logoQuery = useFetchStaticContent('logo', 'png');
 
     if (logoQuery.isLoading) {
         return <Loading />;

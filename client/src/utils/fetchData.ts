@@ -27,7 +27,7 @@ const fetchData = async (options: FetchDataOptions) => {
         if (error instanceof Error) {
             throw new Error(error.message);
         } else {
-            throw error; // or throw new Error("An unexpected error occurred.");
+            throw error;
         }
     }
 };

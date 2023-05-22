@@ -1,10 +1,9 @@
-import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { LogoHeadingProps } from '../../Types/HomeTypes';
-import fetchStaticContent from '../../utils/fetchStaticContent';
+import useFetchStaticContent from '../../utils/fetchStaticContent';
 
 const LogoHeading: React.FC<LogoHeadingProps> = ({ headingText }) => {
-    const logoQuery = useQuery(['logo.png'], () => fetchStaticContent('logo'));
+    const logoQuery = useFetchStaticContent('logo', 'png');
 
     if (logoQuery.isLoading) {
         return <div>Loading...</div>;

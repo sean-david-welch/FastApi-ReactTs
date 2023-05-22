@@ -1,4 +1,5 @@
 import fetchData from '../../utils/fetchData';
+import { useQuery } from '@tanstack/react-query';
 
 const fetchAboutInfo = async () => {
     try {
@@ -16,4 +17,11 @@ const fetchAboutInfo = async () => {
     }
 };
 
-export default fetchAboutInfo;
+const useFetchAboutInfo = () => {
+    return useQuery(['infoItems'], fetchAboutInfo, {
+        retry: false,
+        staleTime: 1000 * 60 * 60 * 24,
+    });
+};
+
+export default useFetchAboutInfo;

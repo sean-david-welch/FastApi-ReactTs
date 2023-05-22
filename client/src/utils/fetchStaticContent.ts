@@ -1,4 +1,5 @@
 import fetchData from './fetchData';
+import { useQuery } from '@tanstack/react-query';
 
 const fetchStaticContent = async (name: string) => {
     try {
@@ -17,4 +18,15 @@ const fetchStaticContent = async (name: string) => {
     }
 };
 
-export default fetchStaticContent;
+const useFetchStaticContent = (contentName: string, type: string) => {
+    return useQuery(
+        [`${contentName}.${type}`],
+        () => fetchStaticContent(contentName),
+        {
+            retry: false,
+            staleTime: 1000 * 60 * 60 * 24,
+        }
+    );
+};
+
+export default useFetchStaticContent;

@@ -11,7 +11,11 @@ export const useFetchIntent = (payment_intent_id: string) => {
             });
             return response;
         },
-        { enabled: !!payment_intent_id }
+        {
+            enabled: !!payment_intent_id,
+            retry: false,
+            staleTime: 1000 * 60 * 60,
+        }
     );
 
     return query;

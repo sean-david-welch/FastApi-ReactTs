@@ -16,6 +16,7 @@ const CurrentUser: React.FC<CurrentUserProps> = ({ token }) => {
     } = useQuery(['currentUser', token], () => getCurrentUser(token), {
         enabled: isLoggedIn && loginAttempted,
         retry: false,
+        staleTime: 1000 * 60 * 60,
     });
 
     if (!isLoggedIn) {

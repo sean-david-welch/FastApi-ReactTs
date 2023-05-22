@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../../hooks/login/useAuthContext';
-import loginUser from '../../hooks/login/useLoginUser';
+import useLoginUser from '../../hooks/login/useLoginUser';
 import LogoHeading from '../navigation/LogoHeading';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -10,19 +10,23 @@ const LoginForm: React.FC = () => {
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState<string>('');
     const { setIsLoggedIn, setLoginAttempted } = useAuth();
+    const loginUserMutation = useLoginUser();
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setErrorMessage('');
-        try {
-            const loggedInUser = await loginUser(username, password);
-            if (loggedInUser) {
-                setIsLoggedIn(true);
-                setLoginAttempted(true);
+        loginUserMutation.mutate(
+            { username, password },
+            {
+                onSuccess: () => {
+                    setIsLoggedIn(true);
+                    setLoginAttempted(true);
+                },
+                onError: () => {
+                    setErrorMessage('Invalid username or password');
+                },
             }
-        } catch (error) {
-            setErrorMessage('Invalid username or password');
-        }
+        );
     };
 
     return (

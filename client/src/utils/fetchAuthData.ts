@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { API_BASE_URL } from './config';
 import { FetchAuthDataOptions } from '../types/FetchTypes';
+import { AxiosError } from 'axios';
 
 axios.defaults.baseURL = API_BASE_URL;
 
@@ -30,7 +31,7 @@ const fetchAuthData = async (options: FetchAuthDataOptions) => {
         const responseData = response.data;
 
         return responseData;
-    } catch (error: any) {
+    } catch (error: AxiosError | any) {
         if (error.response && error.response.status === 401) {
             return { is_authenticated: false };
         } else {

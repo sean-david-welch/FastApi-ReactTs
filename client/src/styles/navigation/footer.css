@@ -27,35 +27,25 @@ footer .nav-list {
     justify-content: space-evenly;
     font-size: 1.35rem;
     font-weight: 200;
+    margin: 1rem auto;
+    padding: 0.25rem 1rem 1.5rem 1rem;
+    border-bottom: 2px solid var(--black-color);
+    transition: all 600ms ease-in-out;
 }
 
 footer .nav-list a {
     position: relative;
     transition: all 600ms ease-in-out;
+    border-radius: 1rem;
+    font-weight: 400;
+    padding: 0.5rem 2rem;
+    border: 2px solid var(--dark-color);
 }
 
 footer .nav-list a:hover {
-    color: var(--gold-color);
-}
-
-footer .nav-list a::after {
-    content: '';
-    display: block;
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 125%;
-    height: 0.1rem;
+    color: var(--dark-color);
     background-color: var(--gold-color);
-    opacity: 0;
-    margin-top: 0.25rem;
-    transition: all 600ms ease-in-out;
-}
-
-footer .nav-list a:hover::after {
-    opacity: 1;
-    height: 0.1rem;
+    border: 2px solid var(--black-color);
 }
 
 footer .socials {

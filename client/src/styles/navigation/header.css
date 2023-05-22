@@ -47,8 +47,9 @@ header #logo:hover {
 
 #navbar .nav-list-side {
     display: flex;
-    margin: 0 5rem;
-    align-items: center;
+    margin: 0 1rem;
+    justify-content: flex-end;
+    align-content: end;
 }
 
 #navbar .nav-list-side .nav-list > * {

@@ -25,11 +25,11 @@
 #products .product-card {
     display: flex;
     flex-direction: column;
-    padding: 1rem;
+    padding: 1rem 0;
     border: solid var(--medium-color) 0.2rem;
     background: var(--dark-color);
     border-radius: 1rem;
-    margin: 2rem 5rem;
+    margin: 2rem 2rem;
     transition: all 500ms ease-in-out;
 }
 
@@ -67,7 +67,7 @@
 #products ul .product-nav {
     display: flex;
     align-items: center;
-    margin: 1rem 0;
+    margin: 1rem auto;
 }
 
 /* Individual Product Detail */
@@ -77,8 +77,8 @@
 }
 
 #product-detail .product-detail {
-    margin: 1rem auto 0 auto;
-    padding: 1rem 7.5rem;
+    margin: 1rem 5rem;
+    padding: 1rem auto;
     display: grid;
     grid-template-columns: 2fr 1fr;
     grid-template-rows: 1fr;
